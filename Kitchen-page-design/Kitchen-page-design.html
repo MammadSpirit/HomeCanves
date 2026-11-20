@@ -190,6 +190,13 @@ window.whenThreeReady = function (cb) {
 
 <div id="main-views-wrapper">
 
+  <!-- ابزار زوم شناور (جدا از کنوس) -->
+    <div id="zoom-controls" class="zoom-tools zoom-tools-floating">
+        <button onclick="zoomIn()" title="بزرگ‌نمایی">+</button>
+        <button onclick="initRoomScale()" title="ریست نمایش">⟲</button>
+        <button onclick="zoomOut()" title="کوچک‌نمایی">−</button>
+    </div>
+
     <!-- نمای دو بعدی (فضای اصلی فعلی شما) -->
     <div id="canvas-wrapper" class="design-main-area">
         <!-- بوم نقاشی -->
