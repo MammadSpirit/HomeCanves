@@ -7688,3 +7688,24 @@ modal color
     cursor: not-allowed;
     transform: none;
 }
+
+
+.zoom-tools-floating {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 200;          /* بالاتر از کنوس‌ها (z-index: 10..100) */
+    flex-direction: column; /* عمودی، مثل قبل */
+    gap: 6px;
+    padding: 6px;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: auto;
+}
+.zoom-tools-floating button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+}
