@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  
+    
+    <!-- استایل خطی لودینگ برای اجرای بدون تاخیر -->
+    <style>
+        #page-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #121212;
+            z-index: 999999; /* بیشترین مقدار ممکن */
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #page-loader.hidden {
+            opacity: 0; visibility: hidden; pointer-events: none;
+        }
+        .loader-circle {
+            width: 60px; height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        #page-loader p {
+            color: #ffffff; font-family: tahoma, sans-serif; /* از فونت سیستمی استفاده میکنیم که معطل لود فونت وب نشود */
+            font-size: 16px; animation: pulseText 1.5s infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulseText { 50% { opacity: 0.5; } }
+    </style>
+  
+  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>طراحی هوشمند کابینت (نسخه سه بعدی)</title>
+
+<link rel="stylesheet" href="Kitchen-page-design-css/Kitchen-page-design.css">
+
+
+<!-- ============================================================
+     Three.js r186 — سیستم Import سازگار با معماری HomeCanvas
+     - هسته و addonها فقط از طریق three-bridge.js (ESM)
+     - بقیهٔ پروژه همان اسکریپت کلاسیک می‌ماند (بدون type=module)
+     - کد قدیمی: window.THREE / THREE.OrbitControls / whenThreeReady
+     ============================================================ -->
+<script>
+/* صف آماده شدن THREE — قبل از bridge؛ اسکریپت‌های کلاسیک می‌توانند ثبت کنند */
+window.__threeReadyQueue = window.__threeReadyQueue || [];
+window.whenThreeReady = function (cb) {
+    if (typeof cb !== 'function') return;
+    if (window.THREE && window.THREE.REVISION) {
+        try { cb(window.THREE); } catch (e) { console.error(e); }
+    } else {
+        window.__threeReadyQueue.push(cb);
+    }
+};
+</script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="Kitchen-page-design-js/three-bridge.js"></script>
+<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+<script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+<script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+</head>
+<body>
+
+
+    <!-- بلافاصله بعد از بادی، لودینگ را قرار دهید -->
+    <div id="page-loader">
+        <div class="loader-circle"></div>
+        <p>در حال بارگذاری محیط طراحی...</p>
+    </div>
+
+
+<div id="sidebar-container"></div>
+
+<!-- نگهدارنده پنل تنظیمات ابعاد -->
+<div id="size-panel-container"></div>
+
+<!-- نگهدارنده پنل ویرایش درب که توسط جاوااسکریپت لود می‌شود -->
+<div id="door-panel-container"></div>
+
+<!-- نگهدارنده پنل ویرایش طبقه‌ها که توسط جاوااسکریپت لود می‌شود -->
+<div id="shelves-panel-container"></div>
+
+<!-- نگهدارنده پنل ویرایش صفحه کابینت که توسط جاوااسکریپت لود می‌شود -->
+<div id="countertop-panel-container"></div>
+
+<!-- نگهدارنده پنل ویرایش پاخور که توسط جاوااسکریپت لود می‌شود -->
+<div id="kickboard-panel-container"></div>
+
+<!-- نگهدارنده پنل کاور/نما که توسط جاوااسکریپت لود می‌شود -->
+<div id="facadebox-panel-container"></div>
+
+<!-- نگهدارنده پنل تاج که توسط جاوااسکریپت لود می‌شود -->
+<div id="crown-panel-container"></div>
+
+<!-- نگهدارنده پنل کشوها که توسط جاوااسکریپت لود می‌شود -->
+<div id="drawer-panel-container"></div>
+
+<!-- نگهدارنده پنل مدیریت نما که توسط جاوااسکریپت لود می‌شود -->
+<div id="facade-panel-container"></div>
+
+<!-- نگهدارنده پنل بین کابینتی که توسط جاوااسکریپت لود می‌شود -->
+<div id="interpanel-panel-container"></div>
+
+<!-- نگهدارنده پنل ستون که توسط جاوااسکریپت لود می‌شود -->
+<div id="pillar-panel-container"></div>
+
+<!-- نگهدارنده پنل تنظیمات فضای آشپزخانه که توسط جاوااسکریپت لود می‌شود -->
+<div id="roommaster-panel-container"></div>
+
+<!-- نگهدارنده پنل تنظیمات یخچال که توسط جاوااسکریپت لود می‌شود -->
+<div id="add-fridge-panel-container"></div>
+<!-- نگهدارنده پنل مدیریت رنگ‌ها -->
+<div id="color-manager-panel-container"></div>
+
+<!-- نگهدارنده پنل تنظیمات کلاف یخچال که توسط جاوااسکریپت لود می‌شود -->
+<div id="fridgewrap-panel-container"></div>
+
+
+<div id="hood-panel-container"></div>
+
+<div id="coffeebar-panel-container"></div>
+<div id="quicklayout-panel-container"></div>
+<!-- نگهدارنده پنل چهارچوب کمد دیواری -->
+<div id="charchob-panel-container"></div>
+
+<!-- نگهدارنده پنل روکوب -->
+<div id="rokoob-panel-container"></div>
+
+<!-- نگهدارنده پنل اضافه کردن کشو (کمد دیواری) -->
+<div id="kesho-panel-container"></div>
+<div id="baghel-nama-panel-container"></div>
+<div id="baghel-nama-manage-panel-container"></div>
+<!-- نگهدارنده پنل اضافه کردن ایینه (کمد دیواری) -->
+<div id="ayene-panel-container"></div>
+<!-- نگهدارنده پنل مدیریت ایینه (کمد دیواری) -->
+<div id="ayene-manage-panel-container"></div>
+
+
+<div id="design-panel" class="design-panel">
+    
+    <!-- ========================================== -->
+    <!-- بخش بالا: دکمه‌های ویو و نمای سه‌بعدی -->
+    <!-- ========================================== -->
+   <div class="design-header">
+        
+    <!-- سمت راست: کانتینر دکمه‌های نمای -->
+    <div class="header-right-section">
+        <div id="display-controls-container" class="view-controls"></div>
+    </div>
+
+    <!-- سمت چپ: سوییچ نمای 2D و 3D -->
+    <div class="header-left-section">
+        <!-- سوییچ 2D / Elev / BJS -->
+        <div class="view-toggle" id="view-toggle-btn" title="تغییر نما">
+            <!-- اسلایدر متحرک -->
+            <div class="toggle-slider" id="toggle-slider"></div>
+            
+            <!-- متن های روی سوییچ -->
+            <div class="toggle-text active" id="text-2d">2D</div>
+            <div class="toggle-text" id="text-elev">Elev</div>
+            <div class="toggle-text" id="text-babylon">BJS</div>
+        </div>
+    </div>
+
+</div>
+
+
+    <!-- ========================================== -->
+    <!-- بخش جدید (نوار ابزار): کنترل‌های زوم و ابزارهای دیگر -->
+    <!-- ========================================== -->
+   <div id="toolbar-container"></div>
+
+    <!-- ========================================== -->
+    <!-- بخش وسط: بوم نقاشی (Canvas) -->
+    <!-- ========================================== -->
+
+<div id="main-views-wrapper">
+
+    <!-- نمای دو بعدی (فضای اصلی فعلی شما) -->
+    <div id="canvas-wrapper" class="design-main-area">
+        <!-- بوم نقاشی -->
+        <canvas id="kitchenCanvas"></canvas>
+
+        <!-- دکمه‌های شناور کنار یونیت انتخاب‌شده (قفل / چرخش / کپی) -->
+        <div id="floating-unit-controls" class="floating-unit-controls" style="display:none;" aria-hidden="true">
+            <button type="button" id="float-lock-btn" class="float-unit-btn" title="قفل / باز کردن">🔓</button>
+            <button type="button" id="float-rotate-btn" class="float-unit-btn" title="چرخش ۹۰ درجه">🔄</button>
+            <button type="button" id="float-duplicate-btn" class="float-unit-btn" title="کپی یونیت">⧉</button>
+        </div>
+        
+        <!-- کانتینر پیش‌نمایش واحد -->
+        <div id="mini-preview-container">
+            <div class="mini-preview-header">پیش‌نمایش کابینت</div>
+            <canvas id="unit-preview-canvas"></canvas>
+        </div>
+    </div>
+
+<!-- 🟢 نمای روبرو اصلاح‌شده -->
+<div id="elev-view-container" class="design-main-area" style="display: none; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+    <canvas id="kitchenElevCanvas" style="position: absolute; transform-origin: 0 0; transition: none; cursor: grab;"></canvas>
+</div>
+
+
+
+    <!-- نمای سه بعدی (Three.js) -->
+    <div id="modal-3d-container" class="design-main-area"></div>
+
+    <!-- نمای سه بعدی Babylon.js (تست و توسعه) -->
+    <div id="modal-babylon-container" class="design-main-area" style="display: none;"></div>
+
+</div>
+
+
+
+
+
+    <!-- ========================================== -->
+    <!-- بخش پایین: دکمه لیست برش (با خط جداکننده) -->
+    <!-- ========================================== -->
+    <div class="design-footer">
+    <button class="design-bottom-btn" onclick="toggleCutPanel()" title="لیست برش">
+        <img src="Assets/Icons/cutlist.png" alt="Cut List">
+        <span>لیست برش (Cut Master)</span>
+    </button>
+
+    <!-- دکمه خروجی گرفتن از طراحی -->
+    <button class="design-bottom-btn" onclick="exportDesign()" title="ذخیره فایل طراحی">
+        <span style="font-size: 1.2em;">💾</span>
+        <span>خروجی طراحی</span>
+    </button>
+
+    <!-- دکمه وارد کردن طراحی -->
+    <button class="design-bottom-btn" onclick="document.getElementById('importDesignInput').click()" title="بارگذاری فایل طراحی">
+        <span style="font-size: 1.2em;">📂</span>
+        <span>ورود طراحی</span>
+    </button>
+    <!-- این اینپوت مخفی است و با کلیک روی دکمه بالا باز می‌شود -->
+    <input type="file" id="importDesignInput" style="display: none;" accept=".json" onchange="importDesign(event)">
+</div>
+
+
+    <!-- کانتینرهای مخفی (برای مودال‌ها و سایدبارها) -->
+    <div id="cut-list-sidebar-container"></div>
+    <div id="modal-3d-container"></div>
+
+</div>
+
+
+
+
+    </div>
+</div>
+
+</div>
+
+<!-- نگهدارنده پنل نمایش چیدمان ورق (CutMaster) -->
+<div id="cutmaster-panel-container"></div>
+<script src="Kitchen-page-design-js/Loading-screen.js"></script>
+<script src="Switchview/Switchview-js/Switchview.js"></script>
+<script src="Kitchen-page-design-js/roomGeometry.js"></script>
+<script src="Kitchen-page-design-js/design.js"></script>
+<script src="Kitchen-page-design-js/Loader-3Dview.js"></script>
+
+<script src="Kitchen-page-design-js/Loader-viewmanager.js"></script>
+<script src="Kitchen-page-design-js/Loader-toolbar.js"></script>
+
+<script src="toolbar/toolbar-js/toolbar.js"></script>
+<script src="Kitchen-menu/Menu/quicklayout-panel/quicklayout-panel-js/quicklayout-editor.js"></script>
+<script src="Kitchen-page-design-js/loader-menu.js"></script>
+<script src="Kitchen-page-design-js/Kitchen-page-design.js"></script>
+<script src="Kitchen-menu/Kitchen-menu-js/Kitchen-menu.js"></script>
+
+<script src="Kitchen-page-design-js/Loader-cutmaster.js"></script>
+<script src="3D-view/3D-view-js/view3d.js"></script>
+<script src="3D-view/3D-view-js/view3d-babylon.js"></script>
+<script src="Elev-view/Elev-view-js/elev-view.js"></script>
+
+
+<script src="zoom-controls/zoom-controls-js/zoom-controls.js"></script>
+
+<script src="Kitchen-menu/Kitchen-menu-js/add-items.js"></script>
+<script src="Komod-divari/komod-divari-menu/komod-divar-menu-js/add-item-komod-divari.js"></script>
+
+<script src="Cutmaster-panel/Cutmaster-panel-js/collectPieces.js"></script>
+<script src="Cutmaster-panel/Cutmaster-panel-js/Cut-Sheet-warehouse.js"></script>
+<script src="Cutmaster-panel/Cutmaster-panel-js/cutlist-manual.js"></script>
+<script src="Cutmaster-panel/Cutmaster-panel-js/cut-panel.js"></script>
+
+<script src="Kitchen-menu/Menu/Addfridge-panel/Addfridge-panel-js/fridge.js"></script>
+<script src="Kitchen-menu/Menu/color-manager-panel/color-manager-panel-js/color-manager.js"></script>
+
+
+<script src="Material/all-materials.js"></script>
+<script src="Material/materialModal.js"></script>
+<script src="Kitchen-menu/Menu/Door-panel/Door-panel-js/door-editor.js"></script>
+<script src="Manage-export/output-manager.js"></script>
+<script src="Merg-view/Merg-view-js/view-manager.js"></script>
+<script src="Kitchen-menu/Menu/shelves-panel/shelves-panel-js/shelves-editor.js"></script>
+<script src="Kitchen-menu/Menu/countertop-panel/countertop-panel-js/countertop-editor.js"></script>
+
+<script src="Kitchen-menu/Menu/kickboard-panel/kickboard-panel-js/kickboard-editor.js"></script>
+<script src="Kitchen-menu/Menu/crown-panel/crown-panel-js/crown-editor.js"></script>
+<script src="Kitchen-menu/Menu/facade-panel/facade-panel-js/facade-panel.js"></script>
+<script src="Kitchen-menu/Menu/interpanel-panel/interpanel-panel-js/inter-panel-editor.js"></script>
+<script src="Kitchen-menu/Menu/pillar-panel/pillar-panel-js/pillars.js"></script>
+<script src="Kitchen-menu/Menu/Facadebox-panel/Facadebox-panel-js/facade-box.js"></script>
+<script src="Kitchen-menu/Menu/drawer-panel/drawer-panel-js/drawer-editor.js"></script>
+
+<script src="Kitchen-menu/Menu/roommaster-panel/Roommaster-panel-js/kitchen-panel.js"></script>
+<script src="Kitchen-menu/Menu/Size-panel/Size-panel-js/cabinet-editor.js"></script>
+<script src="Kitchen-menu/Menu/fridgewrap-panel/fridgewrap-panel-js/fridge-wrap-editor.js"></script>
+
+<script src="Kitchen-menu/Menu/hood-panel/hood-panel-js/hood-editor.js"></script>
+
+<script src="Kitchen-menu/Menu/coffeebar-panel/coffeebar-panel-js/coffeebar-panel.js"></script>
+
+<script src="Komod-divari/komod-divari-menu/charchob/charchob-js/charchob.js"></script>
+
+<script src="Komod-divari/komod-divari-menu/rokoob/rokoob-js/rokoob.js"></script>
+
+<script src="Komod-divari/komod-divari-menu/kesho/kesho-js/kesho.js"></script>
+<script src="Komod-divari/komod-divari-menu/baghel-nama/baghel-nama-js/baghel-nama.js"></script>
+<script src="Komod-divari/komod-divari-menu/baghel-nama-manage/baghel-nama-manage-js/baghel-nama-manage.js"></script>
+<script src="Komod-divari/komod-divari-menu/ayene/ayene-js/ayene.js"></script>
+<script src="Komod-divari/komod-divari-menu/ayene-manage/ayene-manage-js/ayene-manage.js"></script>
+
+<!-- ==================== مودال واحد هوشمند ==================== -->
+<div id="universal-material-modal" class="uni-modal-overlay">
+    <div class="uni-modal-content">
+        <div class="uni-modal-header">
+            <h3 id="universal-modal-title">انتخاب طرح و رنگ</h3>
+            <button class="uni-close-btn" onclick="closeUniversalModal()">×</button>
+        </div>
+        
+        <div class="uni-modal-body">
+            <div class="uni-search-wrapper">
+                <input 
+                    type="text" 
+                    id="universal-search-input" 
+                    placeholder="جستجوی نام، کد یا طرح..." 
+                    oninput="filterUniversalModal()"
+                    class="uni-search-input">
+            </div>
+            
+            <div id="universal-grid" class="uni-color-grid">
+                </div>
+        </div>
+
+        <div class="uni-modal-footer">
+            <button class="uni-btn-cancel" onclick="closeUniversalModal()">انصراف</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="Manage-export/export-import.js"></script>
+
+<script src="Kitchen-page-design-js/miniPreview3D.js"></script>
+
+
+<script src="Kitchen-page-design-js/Loading-screen.js"></script>
+
+</body>
+</html>
