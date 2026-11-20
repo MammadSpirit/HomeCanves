@@ -1,0 +1,68 @@
+<div id="closet-drawer-add-panel" class="kickboard-wrapper">
+    <div class="kickboard-header">
+        <h3>اضافه کردن کشو — کمد دیواری</h3>
+        <button class="kickboard-close-btn" onclick="closeClosetDrawerAddPanel()">×</button>
+    </div>
+
+    <div class="kickboard-body">
+        <!-- لیست بخش‌ها با فعال / غیرفعال روی خود ردیف -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">بخش‌های چهارچوب</label>
+            <div id="kesho-cells-list"
+                 style="display:flex; flex-direction:column; gap:6px; max-height:180px; overflow-y:auto;
+                        background:rgba(15,23,42,0.6); padding:8px; border-radius:8px; border:1px solid #334155;">
+            </div>
+            <small style="color:#94a3b8; display:block; margin-top:6px; font-size:11px; line-height:1.5;">
+                بخش را انتخاب کنید و با دکمه فعال/غیرفعال، کشو را روی همان بخش روشن یا خاموش کنید.
+            </small>
+        </div>
+
+        <!-- نوع کشو — در پیش‌نمایش هم نوع و ردیف‌ها نمایش داده می‌شود -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">نوع کشو</label>
+            <div id="kesho-type-options" style="display:flex; flex-direction:column; gap:6px;">
+                <label style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:8px; border:1px solid #334155; cursor:pointer; background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="kesho-drawer-type" value="normal" checked onchange="onKeshoDrawerTypeChange()">
+                    <span style="color:#e2e8f0; font-size:13px;">کشو معمولی</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:8px; border:1px solid #334155; cursor:pointer; background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="kesho-drawer-type" value="hidden" onchange="onKeshoDrawerTypeChange()">
+                    <span style="color:#e2e8f0; font-size:13px;">کشو مخفی</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:8px; border:1px solid #334155; cursor:pointer; background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="kesho-drawer-type" value="sliding" onchange="onKeshoDrawerTypeChange()">
+                    <span style="color:#e2e8f0; font-size:13px;">کشو ریلی</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- ردیف کشو کنار هم — فقط کشو معمولی -->
+        <div class="kickboard-input-group" id="kesho-column-group">
+            <label class="kickboard-label">ردیف کشو (کنار هم)</label>
+            <select id="kesho-column-count" class="modern-input" onchange="onKeshoColumnCountChange()"
+                    style="width:100%; padding:8px 10px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:#e2e8f0;">
+                <option value="1">۱ ردیف</option>
+                <option value="2">۲ ردیف کنار هم</option>
+                <option value="3">۳ ردیف کنار هم</option>
+            </select>
+            <small style="color:#94a3b8; display:block; margin-top:6px; font-size:11px; line-height:1.5;">
+                تعداد ردیف کنار هم؛ برای ریلی حداکثر ۲ ردیف.
+            </small>
+        </div>
+
+        <!-- پیش‌نمایش کل چهارچوب -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">پیش‌نمایش چهارچوب</label>
+            <div id="kesho-preview-wrapper"
+                 style="width:100%; height:260px; background:#0f172a; border-radius:10px; border:1px solid #1e293b; overflow:hidden;">
+                <div id="kesho-preview-3d" style="width:100%; height:100%;"></div>
+            </div>
+        </div>
+
+        <div class="kickboard-actions-container" style="margin-top: 12px;">
+            <button type="button" onclick="closeClosetDrawerAddPanel()" class="kickboard-apply-btn" style="background:#475569;">
+                بستن
+            </button>
+        </div>
+    </div>
+</div>

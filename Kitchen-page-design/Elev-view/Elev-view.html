@@ -1,0 +1,39 @@
+<style>
+    .elev-view-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: #1e293b; /* هم‌رنگ پس‌زمینه اصلی محیط دو بعدی */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #kitchenElevCanvas {
+        background-color: #0f172a; /* رنگ تاریک و حرفه‌ای برای نقشه فنی */
+        border: 1px solid #334155;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .elev-info-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: rgba(15, 23, 42, 0.85);
+        color: #3b82f6;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-family: tahoma, sans-serif;
+        font-size: 13px;
+        border: 1px solid #334155;
+        pointer-events: none;
+    }
+</style>
+
+<div class="elev-view-wrapper">
+    <div class="elev-info-badge">نمای روبرو (خطی دو بعدی)</div>
+    
+    <!-- بوم رسم نمای روبرو -->
+    <canvas id="kitchenElevCanvas"></canvas>
+</div>

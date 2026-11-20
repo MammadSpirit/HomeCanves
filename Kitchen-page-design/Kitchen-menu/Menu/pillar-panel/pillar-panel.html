@@ -1,0 +1,60 @@
+<div id="pillar-editor-panel" class="pillar-wrapper">
+    <div class="pillar-header">
+        <h3>مدیریت ستون</h3>
+        <button class="pillar-close-btn" onclick="closePillarEditorPanel()">×</button>
+    </div>
+    
+    <div class="pillar-body">
+        <div class="pillar-input-group pillar-margin-lg">
+            <button type="button" onclick="addPillar()" class="pillar-add-btn">
+                <span>+ اضافه کردن ستون جدید</span>
+            </button>
+        </div>
+
+        <div class="pillar-input-group">
+            <label class="pillar-label">لیست ستون‌ها</label>
+            <div id="pillars-list-container" class="pillar-list-box">
+                <!-- لیست ستون‌ها در اینجا لود می‌شود -->
+            </div>
+        </div>
+
+        <div class="pillar-input-group pillar-position-box">
+            <label class="pillar-subtitle">موقعیت دقیق (cm)</label>
+            <div class="pillar-flex-row">
+                <div class="pillar-flex-col">
+                    <label class="pillar-small-label">جابه‌جایی X</label>
+                    <input type="number" id="pillar-x" step="0.1" class="pillar-modern-input">
+                </div>
+                <div class="pillar-flex-col">
+                    <label class="pillar-small-label">جابه‌جایی Y</label>
+                    <input type="number" id="pillar-y" step="0.1" class="pillar-modern-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="pillar-input-group pillar-margin-mt">
+            <label class="pillar-label">ابعاد ستون (cm)</label>
+            <div class="pillar-flex-row">
+                <div class="pillar-flex-col">
+                    <label class="pillar-small-label">عرض (Width)</label>
+                    <input type="number" id="pillar-width" step="0.1" class="pillar-modern-input">
+                </div>
+                <div class="pillar-flex-col">
+                    <label class="pillar-small-label">عمق (Depth)</label>
+                    <input type="number" id="pillar-depth" step="0.1" class="pillar-modern-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- کلاس delete-btn برای هماهنگی با جاوااسکریپت شما حفظ شده است -->
+        <button onclick="deleteSelectedPillar()" class="pillar-delete-btn delete-btn">
+            حذف این ستون
+        </button>
+
+        <div class="pillar-actions-container">
+            <button onclick="applyPillarChanges()" class="pillar-apply-btn">
+                اعمال تغییرات نهایی
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<div id="size-panel" class="edit-wrapper">
+    <!-- هدر پنل (ثابت و بدون تغییر موقعیت) -->
+    <div class="edit-header">
+        <h3>ویرایش کابینت</h3>
+        <button class="edit-close-btn" onclick="closeSizePanel()">×</button>
+    </div>
+    
+    <!-- بدنه اصلی با چیدمان دو ستونه جدید -->
+    <div class="edit-body-two-columns">
+        
+        <!-- 📝 ستون سمت راست: فیلدها و اطلاعات -->
+        <div class="edit-right-column">
+            <!-- باکس اول: مقادیر -->
+            <div class="edit-section-box">
+                <div class="edit-section-title">مقادیر ابعاد</div>
+                <div class="edit-grid-container">
+                    <div class="edit-input-group">
+                        <label class="edit-label">عرض (cm)</label>
+                        <input type="number" id="size-width" value="90" step="0.1" title="عرض" class="edit-input" oninput="if(typeof updateSideAnglePreview==='function')updateSideAnglePreview()">
+                    </div>
+                    <div class="edit-input-group">
+                        <label class="edit-label">ارتفاع (cm)</label>
+                        <input type="number" id="size-height" value="72" step="0.1" title="ارتفاع" class="edit-input">
+                    </div>
+                    <div class="edit-input-group">
+                        <label class="edit-label">عمق (cm)</label>
+                        <input type="number" id="size-depth" value="55" step="0.1" title="عمق" class="edit-input" oninput="if(typeof updateSideAnglePreview==='function')updateSideAnglePreview()">
+                    </div>
+                    <div class="edit-input-group">
+                        <label class="edit-label">ارتفاع نصب</label>
+                        <input type="number" id="size-elevation" value="145" step="0.1" min="0" title="ارتفاع نصب" class="edit-input">
+                    </div>
+                    <div class="edit-input-group highlight-group">
+                        <label class="edit-label">زاویه (°)</label>
+                        <input type="number" id="size-angle" value="0" step="1" title="زاویه چرخش" class="edit-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- باکس دوم: موقعیت -->
+            <div class="edit-section-box">
+                <div class="edit-section-title">موقعیت (cm)</div>
+                <div class="edit-position-row">
+                    <div class="edit-input-with-text">
+                        <span class="edit-side-text">X</span>
+                        <input type="number" id="size-x" value="100" step="0.1" class="edit-position-input">
+                    </div>
+                    <div class="edit-input-with-text">
+                        <span class="edit-side-text">Y</span>
+                        <input type="number" id="size-y" value="100" step="0.1" class="edit-position-input">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- زاویه دیواره‌های کناری یونیت -->
+            <div class="edit-section-box" id="side-angle-section">
+                <div class="edit-section-title">زاویه دیوار چپ / راست</div>
+                <div class="edit-grid-container">
+                    <div class="edit-input-group">
+                        <label class="edit-label">دیوار چپ (°)</label>
+                        <input type="number" id="size-side-left" value="0" step="1" min="-45" max="45"
+                            class="edit-input" oninput="updateSideAnglePreview()" title="مثبت = جلوی دیوار به داخل">
+                    </div>
+                    <div class="edit-input-group">
+                        <label class="edit-label">دیوار راست (°)</label>
+                        <input type="number" id="size-side-right" value="0" step="1" min="-45" max="45"
+                            class="edit-input" oninput="updateSideAnglePreview()" title="مثبت = جلوی دیوار به داخل">
+                    </div>
+                </div>
+                <p style="font-size:11px;opacity:0.7;margin:6px 0 8px 0;line-height:1.4;">
+                    ۰ = عمود معمولی · مثبت = جمع‌شدن جلو · منفی = باز شدن جلو
+                </p>
+                <div style="background:rgba(0,0,0,0.25);border-radius:10px;padding:8px;border:1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;text-align:center;">پیش‌نمایش از بالا</div>
+                    <canvas id="side-angle-preview" width="280" height="160" style="width:100%;height:auto;display:block;border-radius:6px;"></canvas>
+                </div>
+            </div>
+
+            <!-- نور زیر کابینت — فقط دیواری / پله دوم -->
+            <div class="edit-section-box" id="under-cabinet-light-section" style="display:none;">
+                <div class="edit-section-title">نور زیر کابینت</div>
+                <label class="edit-label" style="display:flex;align-items:center;gap:10px;cursor:pointer;margin:0;">
+                    <input type="checkbox" id="under-cabinet-light-enabled" onchange="toggleUnderCabinetLight(this.checked)" style="width:18px;height:18px;">
+                    <span>روشن بودن LED زیر کابینت</span>
+                </label>
+                <p style="font-size:11px;opacity:0.7;margin:8px 0 0 0;line-height:1.4;">نور از زیر یونیت دیواری روی صفحه و بین کابینتی می‌افتد.</p>
+            </div>
+
+            <!-- نور داخل کابینت — شیشه / ویترین یا درب باز -->
+            <div class="edit-section-box" id="interior-cabinet-light-section" style="display:none;">
+                <div class="edit-section-title">نور داخل کابینت</div>
+                <label class="edit-label" style="display:flex;align-items:center;gap:10px;cursor:pointer;margin:0;">
+                    <input type="checkbox" id="interior-cabinet-light-enabled" onchange="toggleInteriorCabinetLight(this.checked)" style="width:18px;height:18px;">
+                    <span>فعال بودن نور داخل</span>
+                </label>
+                <p style="font-size:11px;opacity:0.7;margin:8px 0 0 0;line-height:1.4;">برای درب شیشه‌ای/ویترین همیشه، و برای درب معمولی فقط وقتی درب باز است.</p>
+            </div>
+        </div>
+
+         <!-- ⚡ ستون سمت چپ: عملیات درون باکس اختصاصی -->
+        <div class="edit-left-column-actions edit-section-box">
+            <div class="edit-section-title">عملیات</div>
+            <div class="edit-actions-container">
+                <button onclick="applySizeChanges()" class="edit-btn edit-btn-apply apply-btn">
+                    <span>ثبت</span>
+                </button>
+                <button onclick="rotateSelectedCabinet()" class="edit-btn edit-btn-rotate" title="چرخش کابینت">
+                    <span>چرخش</span>
+                </button>
+                <button onclick="deleteSelectedCabinet()" class="edit-btn edit-btn-delete delete-btn" title="حذف">
+                    <span>حذف</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</div>

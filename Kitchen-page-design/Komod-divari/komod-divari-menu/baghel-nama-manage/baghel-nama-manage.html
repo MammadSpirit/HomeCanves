@@ -1,0 +1,99 @@
+<div id="closet-baghel-nama-manage-panel" class="kickboard-wrapper">
+    <div class="kickboard-header">
+        <h3>مدیریت بغل‌نما — کمد دیواری</h3>
+        <button type="button" class="kickboard-close-btn" onclick="closeBaghelNamaManagePanel()">×</button>
+    </div>
+    <div class="kickboard-body">
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">وضعیت سمت‌ها</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <div id="baghel-m-left-row"
+                     style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;border:1px solid #334155;background:rgba(255,255,255,0.02);cursor:pointer;"
+                     onclick="selectBaghelManageSide('left')">
+                    <span style="color:#e2e8f0;font-size:14px;">سمت چپ</span>
+                    <span id="baghel-m-left-status" style="font-size:11px;color:#94a3b8;">غیرفعال</span>
+                </div>
+                <div id="baghel-m-right-row"
+                     style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;border:1px solid #334155;background:rgba(255,255,255,0.02);cursor:pointer;"
+                     onclick="selectBaghelManageSide('right')">
+                    <span style="color:#e2e8f0;font-size:14px;">سمت راست</span>
+                    <span id="baghel-m-right-status" style="font-size:11px;color:#94a3b8;">غیرفعال</span>
+                </div>
+            </div>
+            <small style="color:#94a3b8;display:block;margin-top:8px;font-size:11px;line-height:1.5;">
+                روی هر سمت کلیک کنید تا اندازه و متریال همان سمت را تنظیم کنید.
+            </small>
+        </div>
+
+        <div class="kickboard-input-group" style="margin-top:4px;">
+            <label class="kickboard-label">اندازه — سمت <span id="baghel-m-side-label">چپ</span></label>
+            <p style="font-size:11px;color:#94a3b8;margin:0 0 8px;line-height:1.5;">
+                لبه جلو همیشه هم‌تراز لبه جلوی چهارچوب است. مقدار «جلو» بیرون‌زدگی به سمت جلو و «عرض» گسترش به سمت عقب است.
+            </p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">جلو — بیرون‌زدگی (سانتی‌متر)</label>
+                    <input type="number" id="baghel-m-front"
+                           style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;"
+                           step="0.1" min="0" value="0" onchange="onBaghelManageSizeChange()">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">عرض — به سمت عقب (سانتی‌متر)</label>
+                    <input type="number" id="baghel-m-width"
+                           style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;"
+                           step="0.1" min="0.5" onchange="onBaghelManageSizeChange()">
+                </div>
+                <div style="grid-column:1 / -1;">
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">طول / ارتفاع (سانتی‌متر)</label>
+                    <input type="number" id="baghel-m-height"
+                           style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;"
+                           step="0.1" min="1" onchange="onBaghelManageSizeChange()">
+                </div>
+            </div>
+        </div>
+
+        <!-- جنس ورق + رنگ + پرداخت سطح (مثل پنل درب) -->
+        <div class="kickboard-input-group" style="margin-top:8px;">
+            <label class="kickboard-label">جنس ورق و رنگ — سمت <span id="baghel-m-mat-side-label">چپ</span></label>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">جنس ورق</label>
+                    <select id="baghel-m-material" class="modern-select"
+                            style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;"
+                            onchange="onBaghelManageMaterialChange(this.value)">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">رنگ / تکسچر</label>
+                    <input type="text" id="baghel-m-color"
+                           readonly
+                           onclick="openBaghelManageColorPicker()"
+                           placeholder="انتخاب رنگ..."
+                           style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;cursor:pointer;"
+                           autocomplete="off">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">پرداخت سطح (نور / براقیت)</label>
+                    <select id="baghel-m-finish" class="modern-select"
+                            style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;"
+                            onchange="onBaghelManageFinishChange(this.value)">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                    <p style="margin:6px 0 0;font-size:11px;color:#94a3b8;line-height:1.5;">
+                        فقط بازتاب نور را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="kickboard-actions-container" style="margin-top:12px;">
+            <button type="button" onclick="closeBaghelNamaManagePanel()" class="kickboard-apply-btn" style="background:#475569;">بستن</button>
+        </div>
+    </div>
+</div>

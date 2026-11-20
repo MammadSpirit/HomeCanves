@@ -1,0 +1,448 @@
+<!-- پنل اصلی مدیریت کافه بار -->
+<div id="coffeebar-editor-panel" class="coffeebar-panel-wrapper">
+    <div class="coffeebar-panel-header">
+        <h3>تنظیمات کافه بار</h3>
+        <button class="coffeebar-panel-close" onclick="closeCoffeeBarEditorPanel()">&times;</button>
+    </div>
+
+    <div class="coffeebar-panel-body">
+        
+        <!-- دکمه فعال سازی کلی کافه بار -->
+        <div class="coffeebar-input-group" style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <label class="coffeebar-checkbox-label" style="color: #60a5fa !important; font-weight: bold;">
+                تبدیل این کابینت به کافه بار
+                <input type="checkbox" id="cb-master-toggle" onchange="toggleMasterCoffeeBar(this.checked)">
+                <span class="coffeebar-checkmark"></span>
+            </label>
+        </div>
+
+        <!-- کانتینر تنظیمات اجزا (در صورت فعال شدن کافه بار نمایش داده میشود) -->
+        <div id="coffeebar-parts-container" style="display: none;">
+            
+            <!-- ====== بخش دیواره راست ====== -->
+            <div class="coffeebar-part-section">
+                <h4>دیواره راست</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش دیواره راست
+                        <input type="checkbox" id="cb-right-toggle" checked onchange="toggleCbPart('right', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">جنس ورق</label>
+                    <select id="cb-right-mat" class="modern-select" onchange="updateCbMaterial('right', this.value)"> 
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">رنگ</label>
+                    <input type="text" id="cb-right-color" onclick="openCoffeeBarMaterialModal('right')" placeholder="انتخاب رنگ دیواره راست..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-right-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('right', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                </div>
+
+                <!-- 🟢 تنظیمات ترمووال دیواره راست -->
+                <div class="coffeebar-thermo-box" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed #444;">
+                    <label class="coffeebar-checkbox-label" style="font-weight: bold; color: #f59e0b;">
+                        افزودن ترمووال به دیواره راست
+                        <input type="checkbox" id="cb-right-thermo-toggle" onchange="toggleCbThermo('right', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                    
+                    <div id="cb-right-thermo-details" style="display: none; margin-top: 10px;">
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">تعداد ترمووال</label>
+                            <input type="number" id="cb-right-thermo-count" value="3" min="1" class="modern-input" onchange="updateCbThermoProp('right', 'count', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عمق ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-right-thermo-depth" value="2" step="0.5" class="modern-input" onchange="updateCbThermoProp('right', 'depth', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عرض ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-right-thermo-width" value="4" step="0.5" class="modern-input" onchange="updateCbThermoProp('right', 'width', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">ارتفاع ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-right-thermo-height" value="80" step="1" class="modern-input" onchange="updateCbThermoProp('right', 'height', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">رنگ ترمووال</label>
+                            <input type="text" id="cb-right-thermo-color" onclick="openCoffeeBarThermoMaterialModal('right')" placeholder="انتخاب رنگ ترمووال..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح ترمووال (نور)</label>
+                            <select id="cb-right-thermo-finish" class="modern-select" onchange="if(typeof onCoffeeBarThermoFinishChange==='function') onCoffeeBarThermoFinishChange('right', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== بخش دیواره چپ ====== -->
+            <div class="coffeebar-part-section">
+                <h4>دیواره چپ</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش دیواره چپ
+                        <input type="checkbox" id="cb-left-toggle" checked onchange="toggleCbPart('left', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">جنس ورق</label>
+                    <select id="cb-left-mat" class="modern-select" onchange="updateCbMaterial('left', this.value)"> 
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">رنگ</label>
+                    <input type="text" id="cb-left-color" onclick="openCoffeeBarMaterialModal('left')" placeholder="انتخاب رنگ دیواره چپ..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-left-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('left', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                </div>
+
+                <!-- 🟢 تنظیمات ترمووال دیواره چپ -->
+                <div class="coffeebar-thermo-box" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed #444;">
+                    <label class="coffeebar-checkbox-label" style="font-weight: bold; color: #f59e0b;">
+                        افزودن ترمووال به دیواره چپ
+                        <input type="checkbox" id="cb-left-thermo-toggle" onchange="toggleCbThermo('left', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                    
+                    <div id="cb-left-thermo-details" style="display: none; margin-top: 10px;">
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">تعداد ترمووال</label>
+                            <input type="number" id="cb-left-thermo-count" value="3" min="1" class="modern-input" onchange="updateCbThermoProp('left', 'count', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عمق ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-left-thermo-depth" value="2" step="0.5" class="modern-input" onchange="updateCbThermoProp('left', 'depth', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عرض ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-left-thermo-width" value="4" step="0.5" class="modern-input" onchange="updateCbThermoProp('left', 'width', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">ارتفاع ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-left-thermo-height" value="80" step="1" class="modern-input" onchange="updateCbThermoProp('left', 'height', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">رنگ ترمووال</label>
+                            <input type="text" id="cb-left-thermo-color" onclick="openCoffeeBarThermoMaterialModal('left')" placeholder="انتخاب رنگ ترمووال..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح ترمووال (نور)</label>
+                            <select id="cb-left-thermo-finish" class="modern-select" onchange="if(typeof onCoffeeBarThermoFinishChange==='function') onCoffeeBarThermoFinishChange('left', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== بخش سقف ====== -->
+            <div class="coffeebar-part-section">
+                <h4>سقف کافه بار</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش سقف
+                        <input type="checkbox" id="cb-top-toggle" checked onchange="toggleCbPart('top', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">جنس ورق</label>
+                    <select id="cb-top-mat" class="modern-select" onchange="updateCbMaterial('top', this.value)"> 
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">رنگ</label>
+                    <input type="text" id="cb-top-color" onclick="openCoffeeBarMaterialModal('top')" placeholder="انتخاب رنگ سقف..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-top-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('top', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                </div>
+
+                <!-- 🟢 تنظیمات ترمووال سقف -->
+                <div class="coffeebar-thermo-box" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed #444;">
+                    <label class="coffeebar-checkbox-label" style="font-weight: bold; color: #f59e0b;">
+                        افزودن ترمووال به سقف
+                        <input type="checkbox" id="cb-top-thermo-toggle" onchange="toggleCbThermo('top', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                    
+                    <div id="cb-top-thermo-details" style="display: none; margin-top: 10px;">
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">تعداد ترمووال</label>
+                            <input type="number" id="cb-top-thermo-count" value="3" min="1" class="modern-input" onchange="updateCbThermoProp('top', 'count', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عمق ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-top-thermo-depth" value="2" step="0.5" class="modern-input" onchange="updateCbThermoProp('top', 'depth', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عرض ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-top-thermo-width" value="4" step="0.5" class="modern-input" onchange="updateCbThermoProp('top', 'width', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">ارتفاع ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-top-thermo-height" value="80" step="1" class="modern-input" onchange="updateCbThermoProp('top', 'height', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">رنگ ترمووال</label>
+                            <input type="text" id="cb-top-thermo-color" onclick="openCoffeeBarThermoMaterialModal('top')" placeholder="انتخاب رنگ ترمووال..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح ترمووال (نور)</label>
+                            <select id="cb-top-thermo-finish" class="modern-select" onchange="if(typeof onCoffeeBarThermoFinishChange==='function') onCoffeeBarThermoFinishChange('top', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== بخش کف ====== -->
+            <div class="coffeebar-part-section">
+                <h4>کف کافه بار</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش کف
+                        <input type="checkbox" id="cb-bottom-toggle" checked onchange="toggleCbPart('bottom', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">جنس ورق</label>
+                    <select id="cb-bottom-mat" class="modern-select" onchange="updateCbMaterial('bottom', this.value)"> 
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">رنگ</label>
+                    <input type="text" id="cb-bottom-color" onclick="openCoffeeBarMaterialModal('bottom')" placeholder="انتخاب رنگ کف..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-bottom-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('bottom', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                </div>
+
+                <!-- 🟢 تنظیمات ترمووال کف -->
+                <div class="coffeebar-thermo-box" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed #444;">
+                    <label class="coffeebar-checkbox-label" style="font-weight: bold; color: #f59e0b;">
+                        افزودن ترمووال به کف
+                        <input type="checkbox" id="cb-bottom-thermo-toggle" onchange="toggleCbThermo('bottom', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                    
+                    <div id="cb-bottom-thermo-details" style="display: none; margin-top: 10px;">
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">تعداد ترمووال</label>
+                            <input type="number" id="cb-bottom-thermo-count" value="3" min="1" class="modern-input" onchange="updateCbThermoProp('bottom', 'count', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عمق ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-bottom-thermo-depth" value="2" step="0.5" class="modern-input" onchange="updateCbThermoProp('bottom', 'depth', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عرض ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-bottom-thermo-width" value="4" step="0.5" class="modern-input" onchange="updateCbThermoProp('bottom', 'width', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">ارتفاع ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-bottom-thermo-height" value="80" step="1" class="modern-input" onchange="updateCbThermoProp('bottom', 'height', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">رنگ ترمووال</label>
+                            <input type="text" id="cb-bottom-thermo-color" onclick="openCoffeeBarThermoMaterialModal('bottom')" placeholder="انتخاب رنگ ترمووال..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح ترمووال (نور)</label>
+                            <select id="cb-bottom-thermo-finish" class="modern-select" onchange="if(typeof onCoffeeBarThermoFinishChange==='function') onCoffeeBarThermoFinishChange('bottom', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== بخش پشت (فیبر/بک) ====== -->
+            <div class="coffeebar-part-section">
+                <h4>پشت کافه بار (فیبر)</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش پشت کار
+                        <input type="checkbox" id="cb-back-toggle" checked onchange="toggleCbPart('back', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">جنس ورق</label>
+                    <select id="cb-back-mat" class="modern-select" onchange="updateCbMaterial('back', this.value)"> 
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+                <div class="coffeebar-input-group">
+                    <label class="group-title">رنگ</label>
+                    <input type="text" id="cb-back-color" onclick="openCoffeeBarMaterialModal('back')" placeholder="انتخاب رنگ پشت..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-back-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('back', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                </div>
+
+<!-- 🟢 تنظیمات ترمووال پشت (فیبر) -->
+                <div class="coffeebar-thermo-box" style="margin-top: 10px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed #444;">
+                    <label class="coffeebar-checkbox-label" style="font-weight: bold; color: #f59e0b;">
+                        افزودن ترمووال به پشت
+                        <input type="checkbox" id="cb-back-thermo-toggle" onchange="toggleCbThermo('back', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                    
+                    <div id="cb-back-thermo-details" style="display: none; margin-top: 10px;">
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">تعداد ترمووال</label>
+                            <input type="number" id="cb-back-thermo-count" value="3" min="1" class="modern-input" onchange="updateCbThermoProp('back', 'count', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عمق ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-back-thermo-depth" value="2" step="0.5" class="modern-input" onchange="updateCbThermoProp('back', 'depth', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">عرض ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-back-thermo-width" value="4" step="0.5" class="modern-input" onchange="updateCbThermoProp('back', 'width', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">ارتفاع ترمووال (سانتی‌متر)</label>
+                            <input type="number" id="cb-back-thermo-height" value="80" step="1" class="modern-input" onchange="updateCbThermoProp('back', 'height', this.value)">
+                        </div>
+                        <div class="coffeebar-input-group">
+                            <label class="group-title">رنگ ترمووال</label>
+                            <input type="text" id="cb-back-thermo-color" onclick="openCoffeeBarThermoMaterialModal('back')" placeholder="انتخاب رنگ ترمووال..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح ترمووال (نور)</label>
+                            <select id="cb-back-thermo-finish" class="modern-select" onchange="if(typeof onCoffeeBarThermoFinishChange==='function') onCoffeeBarThermoFinishChange('back', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====== بخش پیشخوان جلویی (بدون ترمووال) ====== -->
+            <div class="coffeebar-part-section">
+                <h4>پیشخوان جلویی</h4>
+                <div class="coffeebar-input-group">
+                    <label class="coffeebar-checkbox-label">
+                        نمایش پیشخوان جلویی
+                        <input type="checkbox" id="cb-front-toggle" onchange="toggleCbPart('front', this.checked)">
+                        <span class="coffeebar-checkmark"></span>
+                    </label>
+                </div>
+
+                <div id="cb-front-details" style="display: none; padding-left: 20px; border-left: 2px solid #333;">
+                    <div class="coffeebar-input-group">
+                        <label class="coffeebar-checkbox-label">
+                            پیشخوان به صورت نیم‌دایره باشد
+                            <input type="checkbox" id="cb-front-curved" onchange="updateCbFrontProperty('isCurved', this.checked)">
+                            <span class="coffeebar-checkmark"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="coffeebar-input-group" id="cb-front-height-group" style="display: none;">
+                        <label class="group-title">ارتفاع ورق نیم‌دایره از سقف (سانتی‌متر)</label>
+                        <input type="number" id="cb-front-height" value="80" class="modern-input" onchange="updateCbFrontProperty('height', this.value)">
+                    </div>
+
+                    <div class="coffeebar-input-group">
+                        <label class="group-title">جنس ورق</label>
+                        <select id="cb-front-mat" class="modern-select" onchange="updateCbMaterial('front', this.value)"> 
+                            <option value="mdf">MDF (ام دی اف)</option>
+                            <option value="highGloss">High-Gloss (هایگلاس)</option>
+                            <option value="leteron">Leteron (لترون)</option>
+                        </select>
+                    </div>
+                    <div class="coffeebar-input-group">
+                        <label class="group-title">رنگ</label>
+                        <input type="text" id="cb-front-color" onclick="openCoffeeBarMaterialModal('front')" placeholder="انتخاب رنگ پیشخوان..." class="modern-input" autocomplete="off" readonly style="cursor: pointer;">
+                        <div>
+                            <label class="group-title">پرداخت سطح (نور / براقیت)</label>
+                            <select id="cb-front-finish" class="modern-select" onchange="if(typeof onCoffeeBarFinishChange==='function') onCoffeeBarFinishChange('front', this.value)">
+                                <option value="matte">مات (Matte)</option>
+                                <option value="semiMatte">نیمه‌مات</option>
+                                <option value="satin">ساتین</option>
+                                <option value="highGloss">براق / های‌گلاس</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- دکمه ثبت -->
+            <div style="padding: 15px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <button onclick="applyCoffeeBarSettings()" style="width: 100%; background: #10b981; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px;">اعمال تغییرات</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div id="crown-editor-panel" class="crown-panel-wrapper">
+    <div class="crown-panel-header">
+        <h3>مدیریت تاج</h3>
+        <button class="crown-panel-close" onclick="closeCrownEditorPanel()">×</button>
+    </div>
+    
+    <div class="crown-panel-body">
+        <div class="crown-cabinet-id-wrapper">
+            <h4>
+                کابینت شماره: <span id="crown-panel-cabinet-id">-</span>
+            </h4>
+        </div>
+
+<div class="crown-input-group crown-margin-bottom">
+            <label class="checkbox-label">
+                <input type="checkbox" id="crown-enabled" checked onchange="updateCrownPreview()">
+                <span class="checkmark"></span>
+                فعال‌سازی تاج (کلی)
+            </label>
+        </div>
+
+        <div class="crown-input-group crown-margin-bottom">
+            <label class="checkbox-label">
+                <input type="checkbox" id="crown-led-light" onchange="updateCrownPreview()">
+                <span class="checkmark"></span>
+                افزودن لاین نور LED به تاج
+            </label>
+            <small class="crown-helper-text">یک نوار نور درخشان زیر لبه‌ی تاج اضافه می‌شود</small>
+        </div>
+
+        <div class="crown-input-group">
+            <label>ارتفاع تاج (cm)</label>
+            <input type="number" id="crown-height" value="5" min="2" max="20" step="1" class="modern-input" oninput="updateCrownPreview()">
+        </div>
+
+        <div class="crown-input-group">
+            <label>پیش‌آمدگی تاج (cm)</label>
+            <input type="number" id="crown-projection" value="2" min="0" max="10" step="0.5" class="modern-input" oninput="updateCrownPreview()">
+            <small class="crown-helper-text">میزان جلو آمدن تاج نسبت به بدنه</small>
+        </div>
+
+        <div class="crown-input-group">
+            <label class="crown-section-title">طرف‌های فعال تاج</label>
+            <div class="crown-sides-grid">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="cr-front" checked onchange="updateCrownPreview()">
+                    <span class="checkmark"></span> جلو
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="cr-back" onchange="updateCrownPreview()">
+                    <span class="checkmark"></span> عقب
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="cr-left" onchange="updateCrownPreview()">
+                    <span class="checkmark"></span> سمت چپ
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="cr-right" onchange="updateCrownPreview()">
+                    <span class="checkmark"></span> سمت راست
+                </label>
+            </div>
+        </div>
+
+        <div class="crown-input-group">
+            <label>جنس ورق تاج</label>
+            <select 
+                id="crown-panel-material" 
+                class="modern-select" 
+                onchange="updateCrownMaterials(this.value)">
+                <option value="mdf">MDF (ام دی اف)</option>
+                <option value="highGloss">High-Gloss (هایگلاس)</option>
+                <option value="leteron">Leteron (لترون)</option>
+            </select>
+        </div>
+
+        <div class="crown-input-group">
+            <label>رنگ تاج</label>
+            <div class="color-search-container">
+                <input 
+                    type="text" 
+                    id="crown-color-search" 
+                    placeholder="برای انتخاب متریال تاج کلیک کنید" 
+                    class="color-search-input modern-input"
+                    readonly
+                    onclick="openCrownMaterialModal()"
+                    onfocus="openCrownMaterialModal()"
+                    autocomplete="off">
+            </div>
+        </div>
+
+        <!-- پرداخت سطح — جدا از جنس ورق؛ فقط نور / براقیت -->
+        <div class="crown-input-group">
+            <label>پرداخت سطح (نور / براقیت)</label>
+            <select id="crown-panel-finish" class="modern-select" onchange="if(typeof onCrownFinishChange==='function') onCrownFinishChange(this.value)">
+                <option value="matte">مات (Matte)</option>
+                <option value="semiMatte">نیمه‌مات</option>
+                <option value="satin">ساتین</option>
+                <option value="highGloss">براق / های‌گلاس</option>
+            </select>
+            <p style="margin: 6px 0 0; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+                فقط بازتاب نور روی تکسچر را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+            </p>
+        </div>
+
+        <div class="crown-preview-wrapper">
+            <div id="crown-preview-3d" class="crown-preview-canvas"></div>
+            <p class="crown-preview-label">پیش‌نمایش (دید از بالا)</p>
+        </div>
+
+        <div class="crown-panel-actions">
+            <button onclick="applyCrownSettings()" class="action-btn apply-btn crown-apply-btn">
+                <img src="Assets/Icons/check.png" class="btn-icon"> اعمال تغییرات
+            </button>
+        </div>
+    </div>
+</div>

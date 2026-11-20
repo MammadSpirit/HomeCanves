@@ -1,0 +1,1120 @@
+<div id="facade-box-editor-panel" class="facadebox-panel">
+    <div class="facadebox-panel-header">
+        <h3>مدیریت باکس نما (دکوری)</h3>
+        <button class="facadebox-panel-close" onclick="closeFacadeBoxPanel()">×</button>
+    </div>
+
+    <div class="facadebox-panel-body">
+        
+        <!-- وضعیت کلی باکس در صحنه -->
+        <div class="facadebox-status-group">
+            <label class="checkbox-label">
+                <input type="checkbox" id="facade-box-enabled" checked>
+                <span class="checkmark"></span>
+                وضعیت باکس در صحنه
+            </label>
+        </div>
+
+        <div class="facadebox-section-title-wrapper">
+            <h4 class="facadebox-section-title">مدیریت پنل‌های دیواره (۱۶ میل)</h4>
+        </div>
+
+
+        <!-- ۱. دیواره سمت چپ (حالت کشویی - بدون تغییر در محتوا) -->
+<!-- ========================================== -->
+<details open class="facadebox-accordion accordion-left">
+    
+    <!-- بخش تیتر که همیشه دیده می‌شود و با کلیک روی آن منو باز/بسته می‌شود -->
+    <summary class="facadebox-accordion-summary">
+        <label class="checkbox-label text-blue" onclick="event.stopPropagation()">
+            <input type="checkbox" id="facade-box-left-enabled" checked onchange="updateFacadeBoxLive()">
+            <span class="checkmark"></span> دیواره سمت چپ
+        </label>
+        <span class="accordion-icon text-blue">▼</span>
+    </summary>
+
+    <!-- کل محتوای اصلی شما بدون هیچ تغییری در اینجا قرار گرفت -->
+    <div class="facadebox-accordion-content">
+        
+        <!-- گزینه های سمت چپ و راست -->
+        <div class="facadebox-radio-group">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-left-pos-left" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت چپ
+            </label>
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-left-pos-right" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت راست
+            </label>
+        </div>
+        
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-3">
+                <label>عرض (cm)</label>
+                <input type="number" id="facade-box-left-w" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-3">
+                <label>ارتفاع (cm)</label>
+                <input type="number" id="facade-box-left-h" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-3">
+                <label>ضخامت (قطر)</label>
+                <input type="number" id="facade-box-left-t" value="1.6" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+        </div>
+
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-1">
+                <label>نوع ورق</label>
+                <select id="facade-box-left-material" class="modern-select" onchange="updateFacadeBoxMaterials('left')">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+        </div>
+        <div class="color-search-container" >
+            <input type="text" id="facade-box-left-color" placeholder="انتخاب رنگ دیواره چپ..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('left')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح دیواره (نور)</label>
+                    <select id="facade-box-left-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تنظیمات ترمووال -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-left-thermowall-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی ترمووال
+            </label>
+            
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-3">
+                    <label>تعداد</label>
+                    <input type="number" id="facade-box-left-thermowall-count" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-3">
+                    <label>عرض(cm)</label>
+                    <input type="number" id="facade-box-left-thermowall-w" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-3">
+                    <label>عمق(cm)</label>
+                    <input type="number" id="facade-box-left-thermowall-d" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+            </div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق ترمووال</label>
+                    <select id="facade-box-left-thermowall-material" class="modern-select" onchange="updateFacadeBoxMaterials('left-thermowall')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-left-thermowall-color" placeholder="انتخاب رنگ ترمووال چپ..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('left-thermowall')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح ترمووال (نور)</label>
+                    <select id="facade-box-left-thermowall-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات طبقات روکار -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-left-shelf-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی طبقات
+            </label>
+
+            <div class="facadebox-sub-form">
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-4">
+                        <label>عرض</label>
+                        <input type="number" id="facade-box-left-shelf-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>طول</label>
+                        <input type="number" id="facade-box-left-shelf-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ضخامت</label>
+                        <input type="number" id="facade-box-left-shelf-t" class="modern-input" value="1.6" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع نصب</label>
+                        <input type="number" id="facade-box-left-shelf-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add" onclick="addFacadeShelfToList('left')">
+                        + افزودن طبقه
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeShelf('left')">
+                    حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-left-shelves-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق طبقات</label>
+                    <select id="facade-box-left-shelf-material" class="modern-select" onchange="updateFacadeBoxMaterials('left-shelf')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-left-shelf-color" placeholder="انتخاب رنگ طبقات چپ..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('left-shelf')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح طبقات (نور)</label>
+                    <select id="facade-box-left-shelf-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات باکس توکار (Niche) -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-left-niche-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی باکس توکار
+            </label>
+
+            <!-- باکس دریافت اطلاعات باکس توکار -->
+            <div class="facadebox-sub-form">
+                
+                <!-- تنظیمات اتصال به کنج (جدید) -->
+                <div class="facadebox-niche-edge-setting">
+                    <label>موقعیت قرارگیری روی دیوار (اتصال به کنج):</label>
+                    <div class="facadebox-radio-group">
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-left-niche-edge" value="none" checked onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> آزاد (دستی)
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-left-niche-edge" value="left" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به چپ
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-left-niche-edge" value="right" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به راست
+                        </label>
+                    </div>
+                </div>
+
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-4">
+                        <label>عرض سوراخ</label>
+                        <input type="number" id="facade-box-left-niche-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع سوراخ</label>
+                        <input type="number" id="facade-box-left-niche-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>عمق به داخل</label>
+                        <input type="number" id="facade-box-left-niche-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع از کف</label>
+                        <input type="number" id="facade-box-left-niche-posy" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>فاصله افقی</label>
+                        <input type="number" id="facade-box-left-niche-posx" class="modern-input" value="0" placeholder="cm" title="در صورت انتخاب چسبیده به چپ/راست، این مقدار خودکار تنظیم می‌شود" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add-purple" onclick="addFacadeNicheToList('left')">
+                        + افزودن باکس
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeNiche('left')">
+                    حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <!-- محفظه نمایش لیست باکس‌های توکار -->
+            <div id="facade-box-left-niches-list" class="facadebox-items-list"></div>
+
+            <!-- انتخاب متریال و رنگ داخلی باکس -->
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق داخلی</label>
+                    <select id="facade-box-left-niche-material" class="modern-select" onchange="updateFacadeBoxMaterials('left-niche')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-left-niche-color" placeholder="انتخاب رنگ باکس چپ..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('left-niche')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح باکس توکار (نور)</label>
+                    <select id="facade-box-left-niche-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+</details>
+
+
+<!-- ۲. دیواره سمت راست -->
+<!-- ========================================== -->
+<details open class="facadebox-accordion accordion-right">
+    <summary class="facadebox-accordion-summary">
+        <label class="checkbox-label text-green" onclick="event.stopPropagation()">
+            <input type="checkbox" id="facade-box-right-enabled" checked onchange="updateFacadeBoxLive()">
+            <span class="checkmark"></span> دیواره سمت راست
+        </label>
+        <span class="accordion-icon text-green">▼</span>
+    </summary>
+
+    <div class="facadebox-accordion-content">
+        <!-- گزینه های سمت چپ و راست (تراز دیواره) -->
+        <div class="facadebox-radio-group">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-right-pos-left" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت چپ
+            </label>
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-right-pos-right" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت راست
+            </label>
+        </div>
+        
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-3">
+                <label>عرض (cm)</label>
+                <input type="number" id="facade-box-right-w" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-3">
+                <label>ارتفاع (cm)</label>
+                <input type="number" id="facade-box-right-h" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-3">
+                <label>ضخامت (قطر)</label>
+                <input type="number" id="facade-box-right-t" value="1.6" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+        </div>
+
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-1">
+                <label>نوع ورق</label>
+                <select id="facade-box-right-material" class="modern-select" onchange="updateFacadeBoxMaterials('right')">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+        </div>
+        <div class="color-search-container">
+            <input type="text" id="facade-box-right-color" placeholder="انتخاب رنگ دیواره راست..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('right')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح دیواره (نور)</label>
+                    <select id="facade-box-right-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تنظیمات ترمووال -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-right-thermowall-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی ترمووال
+            </label>
+            
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-3">
+                    <label>تعداد</label>
+                    <input type="number" id="facade-box-right-thermowall-count" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-3">
+                    <label>عرض(cm)</label>
+                    <input type="number" id="facade-box-right-thermowall-w" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-3">
+                    <label>عمق(cm)</label>
+                    <input type="number" id="facade-box-right-thermowall-d" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+            </div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق ترمووال</label>
+                    <select id="facade-box-right-thermowall-material" class="modern-select" onchange="updateFacadeBoxMaterials('right-thermowall')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-right-thermowall-color" placeholder="انتخاب رنگ ترمووال راست..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('right-thermowall')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح ترمووال (نور)</label>
+                    <select id="facade-box-right-thermowall-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات طبقات -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-right-shelf-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی طبقات
+            </label>
+
+            <div class="facadebox-sub-form">
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-4">
+                        <label>عرض</label>
+                        <input type="number" id="facade-box-right-shelf-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>طول</label>
+                        <input type="number" id="facade-box-right-shelf-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ضخامت</label>
+                        <input type="number" id="facade-box-right-shelf-t" class="modern-input" value="1.6" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع نصب</label>
+                        <input type="number" id="facade-box-right-shelf-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add" onclick="addFacadeShelfToList('right')">
+                        + افزودن طبقه
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeShelf('right')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-right-shelves-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق طبقات</label>
+                    <select id="facade-box-right-shelf-material" class="modern-select" onchange="updateFacadeBoxMaterials('right-shelf')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-right-shelf-color" placeholder="انتخاب رنگ طبقات راست..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('right-shelf')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح طبقات (نور)</label>
+                    <select id="facade-box-right-shelf-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات باکس توکار (Niche) -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-right-niche-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی باکس توکار
+            </label>
+
+            <div class="facadebox-sub-form">
+                
+                <!-- تنظیمات اتصال به کنج -->
+                <div class="facadebox-niche-edge-setting">
+                    <label>موقعیت قرارگیری روی دیوار (اتصال به کنج):</label>
+                    <div class="facadebox-radio-group">
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-right-niche-edge" value="none" checked onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> آزاد (دستی)
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-right-niche-edge" value="left" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به چپ
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-right-niche-edge" value="right" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به راست
+                        </label>
+                    </div>
+                </div>
+
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-4">
+                        <label>عرض سوراخ</label>
+                        <input type="number" id="facade-box-right-niche-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع سوراخ</label>
+                        <input type="number" id="facade-box-right-niche-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>عمق به داخل</label>
+                        <input type="number" id="facade-box-right-niche-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>ارتفاع از کف</label>
+                        <input type="number" id="facade-box-right-niche-posy" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-4">
+                        <label>فاصله افقی</label>
+                        <input type="number" id="facade-box-right-niche-posx" class="modern-input" value="0" placeholder="cm" title="در صورت انتخاب چسبیده به چپ/راست، این مقدار خودکار تنظیم می‌شود" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add-purple" onclick="addFacadeNicheToList('right')">
+                        + افزودن باکس
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeNiche('right')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-right-niches-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق داخلی</label>
+                    <select id="facade-box-right-niche-material" class="modern-select" onchange="updateFacadeBoxMaterials('right-niche')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-right-niche-color" placeholder="انتخاب رنگ باکس راست..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('right-niche')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح باکس توکار (نور)</label>
+                    <select id="facade-box-right-niche-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</details>
+
+<!-- ۳. دیواره جلو -->
+<!-- ========================================== -->
+<details open class="facadebox-accordion accordion-front">
+    <summary class="facadebox-accordion-summary text-yellow">
+        <label class="checkbox-label" onclick="event.stopPropagation()">
+            <input type="checkbox" id="facade-box-front-enabled" checked onchange="updateFacadeBoxLive()">
+            <span class="checkmark"></span> دیواره جلو (Front)
+        </label>
+        <span class="accordion-icon text-yellow">▼</span>
+    </summary>
+
+    <div class="facadebox-accordion-content">
+        <!-- گزینه های سمت چپ و راست -->
+        <div class="facadebox-radio-group">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-front-pos-left" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت چپ
+            </label>
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-front-pos-right" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت راست
+            </label>
+        </div>
+        
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-4">
+                <label>عرض (cm)</label>
+                <input type="number" id="facade-box-front-w" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-4">
+                <label>ارتفاع (cm)</label>
+                <input type="number" id="facade-box-front-h" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-4">
+                <label>ضخامت (قطر)</label>
+                <input type="number" id="facade-box-front-t" value="1.6" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+        </div>
+
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-1">
+                <label>نوع ورق</label>
+                <select id="facade-box-front-material" class="modern-select" onchange="updateFacadeBoxMaterials('front')">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+        </div>
+        <div class="color-search-container">
+            <input type="text" id="facade-box-front-color" placeholder="انتخاب رنگ دیواره جلو..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('front')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح دیواره (نور)</label>
+                    <select id="facade-box-front-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تنظیمات ترمووال -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-front-thermowall-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی ترمووال
+            </label>
+            
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-4">
+                    <label>تعداد</label>
+                    <input type="number" id="facade-box-front-thermowall-count" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-4">
+                    <label>عرض(cm)</label>
+                    <input type="number" id="facade-box-front-thermowall-w" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-4">
+                    <label>عمق(cm)</label>
+                    <input type="number" id="facade-box-front-thermowall-d" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+            </div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق ترمووال</label>
+                    <select id="facade-box-front-thermowall-material" class="modern-select" onchange="updateFacadeBoxMaterials('front-thermowall')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-front-thermowall-color" placeholder="انتخاب رنگ ترمووال جلو..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('front-thermowall')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح ترمووال (نور)</label>
+                    <select id="facade-box-front-thermowall-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات طبقات -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-front-shelf-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی طبقات
+            </label>
+
+            <div class="facadebox-sub-form">
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-3">
+                        <label>عرض</label>
+                        <input type="number" id="facade-box-front-shelf-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>طول</label>
+                        <input type="number" id="facade-box-front-shelf-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ضخامت</label>
+                        <input type="number" id="facade-box-front-shelf-t" class="modern-input" value="1.6" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع نصب</label>
+                        <input type="number" id="facade-box-front-shelf-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add" onclick="addFacadeShelfToList('front')">
+                        + افزودن طبقه
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeShelf('front')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-front-shelves-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق طبقات</label>
+                    <select id="facade-box-front-shelf-material" class="modern-select" onchange="updateFacadeBoxMaterials('front-shelf')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-front-shelf-color" placeholder="انتخاب رنگ طبقات جلو..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('front-shelf')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح طبقات (نور)</label>
+                    <select id="facade-box-front-shelf-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات باکس توکار (Niche) -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-front-niche-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی باکس توکار
+            </label>
+
+            <div class="facadebox-sub-form">
+                
+                <!-- تنظیمات اتصال به کنج -->
+                <div class="facadebox-niche-edge-setting">
+                    <label>موقعیت قرارگیری روی دیوار (اتصال به کنج):</label>
+                    <div class="facadebox-radio-group">
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-front-niche-edge" value="none" checked onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> آزاد (دستی)
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-front-niche-edge" value="left" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به چپ
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-front-niche-edge" value="right" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به راست
+                        </label>
+                    </div>
+                </div>
+
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-3">
+                        <label>عرض سوراخ</label>
+                        <input type="number" id="facade-box-front-niche-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع سوراخ</label>
+                        <input type="number" id="facade-box-front-niche-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>عمق به داخل</label>
+                        <input type="number" id="facade-box-front-niche-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع از کف</label>
+                        <input type="number" id="facade-box-front-niche-posy" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>فاصله افقی</label>
+                        <input type="number" id="facade-box-front-niche-posx" class="modern-input" value="0" placeholder="cm" title="در صورت انتخاب چسبیده به چپ/راست، این مقدار خودکار تنظیم می‌شود" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add-purple" onclick="addFacadeNicheToList('front')">
+                        + افزودن باکس
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeNiche('front')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-front-niches-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق داخلی</label>
+                    <select id="facade-box-front-niche-material" class="modern-select" onchange="updateFacadeBoxMaterials('front-niche')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-front-niche-color" placeholder="انتخاب رنگ باکس جلو..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('front-niche')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح باکس توکار (نور)</label>
+                    <select id="facade-box-front-niche-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</details>
+
+<!-- ۴. دیواره عقب -->
+<!-- ========================================== -->
+<details open class="facadebox-accordion accordion-back">
+    <summary class="facadebox-accordion-summary text-yellow">
+        <label class="checkbox-label" onclick="event.stopPropagation()">
+            <input type="checkbox" id="facade-box-back-enabled" checked onchange="updateFacadeBoxLive()">
+            <span class="checkmark"></span> دیواره عقب (Back)
+        </label>
+        <span class="accordion-icon text-yellow">▼</span>
+    </summary>
+
+    <div class="facadebox-accordion-content">
+        <!-- گزینه های سمت چپ و راست -->
+        <div class="facadebox-radio-group">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-back-pos-left" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت چپ
+            </label>
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-back-pos-right" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> سمت راست
+            </label>
+        </div>
+        
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-4">
+                <label>عرض (cm)</label>
+                <input type="number" id="facade-box-back-w" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-4">
+                <label>ارتفاع (cm)</label>
+                <input type="number" id="facade-box-back-h" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+            <div class="facadebox-input-col-4">
+                <label>ضخامت (قطر)</label>
+                <input type="number" id="facade-box-back-t" value="1.6" class="modern-input" oninput="updateFacadeBoxLive()">
+            </div>
+        </div>
+
+        <div class="facadebox-input-row">
+            <div class="facadebox-input-col-1">
+                <label>نوع ورق</label>
+                <select id="facade-box-back-material" class="modern-select" onchange="updateFacadeBoxMaterials('back')">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+        </div>
+        <div class="color-search-container">
+            <input type="text" id="facade-box-back-color" placeholder="انتخاب رنگ دیواره عقب..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('back')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح دیواره (نور)</label>
+                    <select id="facade-box-back-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تنظیمات ترمووال -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-back-thermowall-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی ترمووال
+            </label>
+            
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-4">
+                    <label>تعداد</label>
+                    <input type="number" id="facade-box-back-thermowall-count" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-4">
+                    <label>عرض(cm)</label>
+                    <input type="number" id="facade-box-back-thermowall-w" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+                <div class="facadebox-input-col-4">
+                    <label>عمق(cm)</label>
+                    <input type="number" id="facade-box-back-thermowall-d" class="modern-input" oninput="updateFacadeBoxLive()">
+                </div>
+            </div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق ترمووال</label>
+                    <select id="facade-box-back-thermowall-material" class="modern-select" onchange="updateFacadeBoxMaterials('back-thermowall')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-back-thermowall-color" placeholder="انتخاب رنگ ترمووال عقب..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('back-thermowall')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح ترمووال (نور)</label>
+                    <select id="facade-box-back-thermowall-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات طبقات -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-back-shelf-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی طبقات
+            </label>
+
+            <div class="facadebox-sub-form">
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-3">
+                        <label>عرض</label>
+                        <input type="number" id="facade-box-back-shelf-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>طول</label>
+                        <input type="number" id="facade-box-back-shelf-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ضخامت</label>
+                        <input type="number" id="facade-box-back-shelf-t" class="modern-input" value="1.6" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع نصب</label>
+                        <input type="number" id="facade-box-back-shelf-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add" onclick="addFacadeShelfToList('back')">
+                        + افزودن طبقه
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeShelf('back')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-back-shelves-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق طبقات</label>
+                    <select id="facade-box-back-shelf-material" class="modern-select" onchange="updateFacadeBoxMaterials('back-shelf')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-back-shelf-color" placeholder="انتخاب رنگ طبقات عقب..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('back-shelf')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح طبقات (نور)</label>
+                    <select id="facade-box-back-shelf-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- تنظیمات باکس توکار (Niche) -->
+        <div class="facadebox-divider-section">
+            <label class="checkbox-label text-light">
+                <input type="checkbox" id="facade-box-back-niche-enabled" onchange="updateFacadeBoxLive()">
+                <span class="checkmark"></span> فعال‌سازی باکس توکار
+            </label>
+
+            <div class="facadebox-sub-form">
+                
+                <!-- تنظیمات اتصال به کنج -->
+                <div class="facadebox-niche-edge-setting">
+                    <label>موقعیت قرارگیری روی دیوار (اتصال به کنج):</label>
+                    <div class="facadebox-radio-group">
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-back-niche-edge" value="none" checked onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> آزاد (دستی)
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-back-niche-edge" value="left" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به چپ
+                        </label>
+                        <label class="checkbox-label text-light">
+                            <input type="radio" name="facade-box-back-niche-edge" value="right" onchange="updateFacadeBoxLive()">
+                            <span class="checkmark"></span> چسبیده به راست
+                        </label>
+                    </div>
+                </div>
+
+                <div class="facadebox-input-row">
+                    <div class="facadebox-input-col-3">
+                        <label>عرض سوراخ</label>
+                        <input type="number" id="facade-box-back-niche-w" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع سوراخ</label>
+                        <input type="number" id="facade-box-back-niche-h" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>عمق به داخل</label>
+                        <input type="number" id="facade-box-back-niche-d" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>ارتفاع از کف</label>
+                        <input type="number" id="facade-box-back-niche-posy" class="modern-input" placeholder="cm" oninput="updateFacadeBoxLive()">
+                    </div>
+                    <div class="facadebox-input-col-3">
+                        <label>فاصله افقی</label>
+                        <input type="number" id="facade-box-back-niche-posx" class="modern-input" value="0" placeholder="cm" title="در صورت انتخاب چسبیده به چپ/راست، این مقدار خودکار تنظیم می‌شود" oninput="updateFacadeBoxLive()">
+                    </div>
+                </div>
+                
+                <div class="facadebox-btn-group">
+                    <button type="button" class="facadebox-btn btn-add-purple" onclick="addFacadeNicheToList('back')">
+                        + افزودن باکس
+                    </button>
+                    <button type="button" class="facadebox-btn btn-delete" onclick="deleteSelectedFacadeNiche('back')">
+                      حذف انتخابی 
+                    </button>
+                </div>
+            </div>
+
+            <div id="facade-box-back-niches-list" class="facadebox-items-list"></div>
+
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>نوع ورق داخلی</label>
+                    <select id="facade-box-back-niche-material" class="modern-select" onchange="updateFacadeBoxMaterials('back-niche')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input type="text" id="facade-box-back-niche-color" placeholder="انتخاب رنگ باکس عقب..." class="color-search-input" readonly onclick="openFacadeBoxMaterialModal('back-niche')">
+            <div class="facadebox-input-row">
+                <div class="facadebox-input-col-1">
+                    <label>پرداخت سطح باکس توکار (نور)</label>
+                    <select id="facade-box-back-niche-finish" class="modern-select" onchange="updateFacadeBoxLive()">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</details>
+
+
+        <!-- ========================================== -->
+        <!-- پیش‌نمایش 3D -->
+        <!-- ========================================== -->
+         <div class="facadebox-preview-wrapper">
+            <div id="facade-box-preview-3d" class="facadebox-preview-canvas"></div>
+            <p class="facadebox-preview-caption">پیش‌نمایش تعاملی (با ماوس بچرخانید)</p>
+        </div>
+
+        <!-- دکمه اعمال تغییرات -->
+        <div class="facadebox-panel-actions">
+            <button onclick="applyFacadeBoxSettings()" class="facadebox-btn btn-apply">
+                <img src="Assets/Icons/check.png" class="btn-icon" alt="تایید"> اعمال تنظیمات باکس
+            </button>
+        </div>
+    </div>
+</div>

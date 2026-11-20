@@ -1,0 +1,97 @@
+<div id="kickboard-editor-panel" class="kickboard-wrapper">
+    <div class="kickboard-header">
+        <h3>مدیریت پاخور</h3>
+        <button class="kickboard-close-btn" onclick="closeKickboardEditorPanel()">×</button>
+    </div>
+    
+    <div class="kickboard-body">
+        <div class="kickboard-title-container">
+            <h4 class="kickboard-title">
+                کابینت شماره: <span id="kickboard-panel-cabinet-id">-</span>
+            </h4>
+        </div>
+
+        <div class="kickboard-input-group kickboard-margin-bottom">
+            <label class="kickboard-checkbox-label">
+                <input type="checkbox" id="kickboard-enabled" checked onchange="updateKickboardPreview()">
+                <span class="kickboard-checkmark"></span>
+                فعال‌سازی پاخور (کلی)
+            </label>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">ارتفاع پاخور (cm)</label>
+            <input type="number" id="kickboard-height" value="14" min="5" max="25" step="1" class="kickboard-modern-input" oninput="updateKickboardPreview()">
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">عقب‌رفتگی پاخور (cm)</label>
+            <input type="number" id="kickboard-recess" value="0" min="0" max="15" step="0.5" class="kickboard-modern-input" oninput="updateKickboardPreview()">
+            <small class="kickboard-hint-text">فاصله از لبه جلوی کابینت — معمولاً ۵ سانت</small>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-subtitle">طرف‌های فعال پاخور</label>
+            <div class="kickboard-grid-2col">
+                <label class="kickboard-checkbox-label">
+                    <input type="checkbox" id="kb-front" checked onchange="updateKickboardPreview()">
+                    <span class="kickboard-checkmark"></span> جلو
+                </label>
+                <label class="kickboard-checkbox-label">
+                    <input type="checkbox" id="kb-back" onchange="updateKickboardPreview()">
+                    <span class="kickboard-checkmark"></span> عقب
+                </label>
+                <label class="kickboard-checkbox-label">
+                    <input type="checkbox" id="kb-left" onchange="updateKickboardPreview()">
+                    <span class="kickboard-checkmark"></span> سمت چپ
+                </label>
+                <label class="kickboard-checkbox-label">
+                    <input type="checkbox" id="kb-right" onchange="updateKickboardPreview()">
+                    <span class="kickboard-checkmark"></span> سمت راست
+                </label>
+            </div>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">جنس ورق پاخور</label>
+            <select id="kickboard-panel-material" class="kickboard-modern-select" onchange="updateKickboardMaterials(this.value)">
+                <option value="mdf">MDF (ام دی اف)</option>
+                <option value="highGloss">High-Gloss (هایگلاس)</option>
+                <option value="leteron">Leteron (لترون)</option>
+            </select>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">رنگ پاخور</label>
+            <div class="kickboard-color-search-container">
+                <input type="text" id="kickboard-color-search" placeholder="برای انتخاب متریال پاخور کلیک کنید" class="kickboard-color-search-input" readonly onclick="openKickboardMaterialModal()" onfocus="openKickboardMaterialModal()" autocomplete="off">
+            </div>
+        </div>
+
+        <!-- پرداخت سطح — جدا از جنس ورق؛ فقط نور / براقیت -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">پرداخت سطح (نور / براقیت)</label>
+            <select id="kickboard-panel-finish" class="kickboard-modern-select" onchange="if(typeof onKickboardFinishChange==='function') onKickboardFinishChange(this.value)">
+                <option value="matte">مات (Matte)</option>
+                <option value="semiMatte">نیمه‌مات</option>
+                <option value="satin">ساتین</option>
+                <option value="highGloss">براق / های‌گلاس</option>
+            </select>
+            <p style="margin: 6px 0 0; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+                فقط بازتاب نور روی تکسچر را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+            </p>
+        </div>
+
+
+        <div class="kickboard-preview-container">
+            <div id="kickboard-preview-3d" class="kickboard-3d-box"></div>
+            <p class="kickboard-hint-text">پیش‌نمایش (دید از بالا)</p>
+        </div>
+
+        <div class="kickboard-actions-container">
+            <button onclick="applyKickboardSettings()" class="kickboard-apply-btn">
+                <img src="Assets/Icons/check.png" class="kickboard-btn-icon" alt="check"> اعمال تغییرات
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<div id="hoodWrapEditorPanel" class="hood-wrap-panel-wrapper hidden">
+    <div class="hood-wrap-header">
+        <h3>تنظیمات کلاف هود</h3>
+        <button class="hood-wrap-close" onclick="closeHoodWrapEditorPanel()" title="بستن">
+            &times;
+        </button>
+    </div>
+    
+    <div class="hood-wrap-body" style="max-height: 70vh; overflow-y: auto;">
+        <div class="hood-wrap-main-section">
+            <div class="hood-wrap-inputs-wrapper">
+                
+                <div class="hood-section-box">
+                    <div class="hood-wrap-input-group">
+                        <label for="hoodCeilingHeight">ارتفاع سقف کلاف (cm):</label>
+                        <input type="number" id="hoodCeilingHeight" class="hood-wrap-input" value="40" step="1" onchange="updateHoodSettings()">
+                    </div>
+                    
+                    <div class="hood-wrap-input-group hood-checkbox-group" style="margin-top: 10px;">
+                        <label for="showMetalHood">نمایش شماتیک هود استیل:</label>
+                        <label class="hood-switch">
+                            <input type="checkbox" id="showMetalHood" checked onchange="updateHoodSettings()">
+                            <span class="hood-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="hood-section-box">
+                    <div class="hood-wrap-input-group hood-checkbox-group section-header">
+                        <label>پنل ۱۶ میل پشت</label>
+                        <label class="hood-switch">
+                            <input type="checkbox" id="enableHoodBack" checked onchange="updateHoodSettings()">
+                            <span class="hood-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="hood-wrap-input-group">
+                        <label>جنس ورق</label>
+                        <select id="hood-back-material" class="hood-wrap-input" onchange="updateHoodMaterialType('back', this.value)">
+                            <option value="mdf">MDF (ام دی اف)</option>
+                            <option value="highGloss">High-Gloss (هایگلاس)</option>
+                            <option value="leteron">Leteron (لترون)</option>
+                        </select>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>رنگ</label>
+                        <div class="hood-color-search-container">
+                            <input type="text" id="hood-back-color" onclick="openHoodColorPicker('back')" placeholder="انتخاب رنگ... (کلیک کنید)" class="hood-wrap-input" autocomplete="off" readonly style="cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>پرداخت سطح (نور / براقیت)</label>
+                        <select id="hood-back-finish" class="hood-wrap-input" onchange="if(typeof onHoodFinishChange==='function') onHoodFinishChange('back', this.value)">
+                            <option value="matte">مات (Matte)</option>
+                            <option value="semiMatte">نیمه‌مات</option>
+                            <option value="satin">ساتین</option>
+                            <option value="highGloss">براق / های‌گلاس</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hood-section-box">
+                    <div class="hood-wrap-input-group hood-checkbox-group section-header">
+                        <label>۱۶ میل دیواره‌ها (چپ و راست)</label>
+                        <label class="hood-switch">
+                            <input type="checkbox" id="enableHoodSides" checked onchange="updateHoodSettings()">
+                            <span class="hood-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="hood-wrap-input-group">
+                        <label>جنس ورق</label>
+                        <select id="hood-sides-material" class="hood-wrap-input" onchange="updateHoodMaterialType('sides', this.value)">
+                            <option value="mdf">MDF (ام دی اف)</option>
+                            <option value="highGloss">High-Gloss (هایگلاس)</option>
+                            <option value="leteron">Leteron (لترون)</option>
+                        </select>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>رنگ</label>
+                        <div class="hood-color-search-container">
+                            <input type="text" id="hood-sides-color" onclick="openHoodColorPicker('sides')" placeholder="انتخاب رنگ... (کلیک کنید)" class="hood-wrap-input" autocomplete="off" readonly style="cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>پرداخت سطح (نور / براقیت)</label>
+                        <select id="hood-sides-finish" class="hood-wrap-input" onchange="if(typeof onHoodFinishChange==='function') onHoodFinishChange('sides', this.value)">
+                            <option value="matte">مات (Matte)</option>
+                            <option value="semiMatte">نیمه‌مات</option>
+                            <option value="satin">ساتین</option>
+                            <option value="highGloss">براق / های‌گلاس</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hood-section-box">
+                    <div class="hood-wrap-input-group hood-checkbox-group section-header">
+                        <label>۱۶ میل سقف کلاف</label>
+                        <label class="hood-switch">
+                            <input type="checkbox" id="enableHoodCeiling" checked onchange="updateHoodSettings()">
+                            <span class="hood-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="hood-wrap-input-group">
+                        <label>جنس ورق</label>
+                        <select id="hood-ceiling-material" class="hood-wrap-input" onchange="updateHoodMaterialType('ceiling', this.value)">
+                            <option value="mdf">MDF (ام دی اف)</option>
+                            <option value="highGloss">High-Gloss (هایگلاس)</option>
+                            <option value="leteron">Leteron (لترون)</option>
+                        </select>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>رنگ</label>
+                        <div class="hood-color-search-container">
+                            <input type="text" id="hood-ceiling-color" onclick="openHoodColorPicker('ceiling')" placeholder="انتخاب رنگ... (کلیک کنید)" class="hood-wrap-input" autocomplete="off" readonly style="cursor: pointer;">
+                        </div>
+                    </div>
+
+                    <div class="hood-wrap-input-group">
+                        <label>پرداخت سطح (نور / براقیت)</label>
+                        <select id="hood-ceiling-finish" class="hood-wrap-input" onchange="if(typeof onHoodFinishChange==='function') onHoodFinishChange('ceiling', this.value)">
+                            <option value="matte">مات (Matte)</option>
+                            <option value="semiMatte">نیمه‌مات</option>
+                            <option value="satin">ساتین</option>
+                            <option value="highGloss">براق / های‌گلاس</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="hood-wrap-footer" style="padding: 15px; border-top: 1px solid #334155; text-align: center; background: #1e293b;">
+        <button class="action-btn" onclick="applyHoodChanges()" style="background: #2563eb; color: white; padding: 10px 30px; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; width: 100%; transition: background 0.3s; font-family: inherit;">
+            اعمال تغییرات و بستن
+        </button>
+    </div>
+</div>

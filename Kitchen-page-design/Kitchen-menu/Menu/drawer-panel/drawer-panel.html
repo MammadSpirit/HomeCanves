@@ -1,0 +1,147 @@
+<div id="drawer-editor-panel" class="drawer-panel-wrapper">
+    <div class="drawer-panel-header">
+        <h3>مدیریت بدنه کشو</h3>
+        <button class="drawer-panel-close" onclick="closeDrawerEditorPanel()">×</button>
+    </div>
+    
+    <div class="drawer-panel-body">
+        <!-- شماره کابینت -->
+        <div class="drawer-cabinet-id-wrapper">
+            <h4>کابینت شماره: <span id="drawer-panel-cabinet-id">-</span></h4>
+        </div>
+
+        <!-- 🔥 گزینه اختصاصی برای یونیت ترکیبی (جدید) -->
+        <div class="drawer-input-group" id="combo-drawer-group" style="display: none; background: rgba(251, 191, 36, 0.1); padding: 12px; border-radius: 8px; border: 1px solid #fbbf24; margin-bottom: 15px;">
+            <label class="drawer-checkbox-label" style="color: #fbbf24; font-weight: bold; margin-bottom: 5px;">
+                <input type="checkbox" id="combo-drawer-enabled" checked disabled>
+                <span class="drawer-checkmark"></span>
+                حالت تک درب / تک کشو (مخصوص این یونیت)
+            </label>
+            <small style="color: #cbd5e1; display: block; font-size: 11px; line-height: 1.6;">
+                * این یونیت ترکیبی است. تغییرات شما فقط روی کشوی بالا اعمال می‌شود و فضای پایین مختص درب‌ها باقی می‌ماند.
+            </small>
+        </div>
+
+        <!-- ۱. گزینه فعال‌سازی کشو (استاندارد) -->
+        <div class="drawer-input-group" id="standard-drawer-enabled-group">
+            <label class="drawer-checkbox-label">
+                <input type="checkbox" id="drawer-enabled" checked onchange="updateDrawerPreview()">
+                <span class="drawer-checkmark"></span>
+                تبدیل کابینت به دراور (کشودار)
+            </label>
+        </div>
+
+        <!-- ۲. گزینه تعداد کشوها -->
+        <div class="drawer-input-group" id="standard-drawer-count-group">
+            <label>تعداد کشوها</label>
+            <input type="number" id="drawer-count" value="3" min="1" max="10" step="1" class="modern-input" oninput="handleDrawerCountChange()">
+        </div>
+
+        <!-- انتخاب ستون (فقط حالت کمد دیواری چندردیفه) -->
+        <div class="drawer-input-group" id="closet-column-tabs-group" style="display:none;">
+            <label>ردیف / ستون کشو</label>
+            <div id="closet-column-tabs" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+            <small style="color:#94a3b8; font-size:11px; display:block; margin-top:6px;">
+                هر ستون را جدا انتخاب کنید و تعداد و ارتفاع کشوهای همان ستون را تنظیم کنید.
+            </small>
+        </div>
+        <div class="drawer-input-group" id="closet-column-count-group" style="display:none;">
+            <label>تعداد ردیف کنار هم (۱ تا ۳)</label>
+            <div class="door-stepper" style="display:flex; align-items:center; gap:8px; max-width:180px;">
+                <button type="button" class="door-stepper-btn" onclick="changeClosetColumnCount(-1)"
+                    style="width:36px; height:36px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; font-size:18px; cursor:pointer;">−</button>
+                <input type="number" id="closet-column-count" value="1" min="1" max="3" readonly
+                    class="door-stepper-input modern-input"
+                    style="width:64px; text-align:center; pointer-events:none;">
+                <button type="button" class="door-stepper-btn" onclick="changeClosetColumnCount(1)"
+                    style="width:36px; height:36px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; font-size:18px; cursor:pointer;">+</button>
+            </div>
+        </div>
+
+        <!-- تنظیمات محل قرارگیری کشو (فقط کمد دیواری — کشو معمولی) -->
+        <div id="closet-housing-settings-group" style="display:none; margin:12px 0; padding:12px; border-radius:10px; border:1px solid #334155; background:rgba(15,23,42,0.5);">
+            <label style="display:block; color:#e2e8f0; font-weight:600; margin-bottom:10px; font-size:13px;">
+                تنظیمات محل قرارگیری کشو
+            </label>
+            <div class="drawer-input-group" style="margin-bottom:10px;">
+                <label style="font-size:12px; color:#94a3b8;">ارتفاع دیواره کناری به‌ازای هر کشو (سانتی‌متر)</label>
+                <input type="number" id="closet-housing-side-per" value="22.5" min="10" max="80" step="0.1" class="modern-input" oninput="updateDrawerPreview()">
+                <small style="color:#64748b; font-size:11px;">پیش‌فرض ۲۲.۵ — ارتفاع کل دیواره = این مقدار × تعداد کشو</small>
+            </div>
+            <div class="drawer-input-group" style="margin-bottom:10px;">
+                <label style="font-size:12px; color:#94a3b8;">عمق قطعه کف و سقف (سانتی‌متر)</label>
+                <input type="number" id="closet-housing-strip-depth" value="12" min="4" max="40" step="0.5" class="modern-input" oninput="updateDrawerPreview()">
+                <small style="color:#64748b; font-size:11px;">پیش‌فرض ۱۲ — دو تکه جلو و عقب</small>
+            </div>
+            <div class="drawer-input-group" style="margin-bottom:10px;">
+                <label style="font-size:12px; color:#94a3b8;">ضخامت دیواره کناری و تیغه وسط (سانتی‌متر)</label>
+                <input type="number" id="closet-housing-wall-thick" value="1.6" min="0.8" max="5" step="0.1" class="modern-input" oninput="updateDrawerPreview()">
+                <small style="color:#64748b; font-size:11px;">پیش‌فرض ۱.۶ (۱۶ میل)</small>
+            </div>
+            <div class="drawer-input-group" style="margin-bottom:10px;">
+                <label style="font-size:12px; color:#94a3b8;">عمق محل قرارگیری / بدنه (سانتی‌متر)</label>
+                <input type="number" id="closet-housing-depth" value="50" min="20" max="80" step="1" class="modern-input" oninput="updateDrawerPreview()">
+                <small style="color:#64748b; font-size:11px;">پیش‌فرض ۵۰</small>
+            </div>
+            <div class="drawer-input-group" style="margin-bottom:10px;">
+                <label style="font-size:12px; color:#94a3b8;">عرض محل قرارگیری (سانتی‌متر)</label>
+                <input type="number" id="closet-housing-width" value="" min="10" max="300" step="0.5" class="modern-input" placeholder="عرض کامل بخش" oninput="updateDrawerPreview()">
+                <small style="color:#64748b; font-size:11px;">خالی = برابر عرض بخش. اگر کمتر باشد محل کوچک‌تر می‌شود و کشوها دوباره حساب می‌شوند.</small>
+            </div>
+            <div class="drawer-input-group" style="margin-bottom:0;">
+                <label style="font-size:12px; color:#94a3b8;">موقعیت افقی محل قرارگیری</label>
+                <div id="closet-housing-align" style="display:flex; gap:6px; margin-top:6px;">
+                    <button type="button" class="door-stepper-btn" data-align="left" onclick="setClosetHousingAlign('left')"
+                        style="flex:1; height:34px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; font-size:12px; cursor:pointer;">چپ</button>
+                    <button type="button" class="door-stepper-btn" data-align="center" onclick="setClosetHousingAlign('center')"
+                        style="flex:1; height:34px; border-radius:8px; border:1px solid #22c55e; background:#22c55e; color:#fff; font-size:12px; cursor:pointer;">وسط</button>
+                    <button type="button" class="door-stepper-btn" data-align="right" onclick="setClosetHousingAlign('right')"
+                        style="flex:1; height:34px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; font-size:12px; cursor:pointer;">راست</button>
+                </div>
+                <input type="hidden" id="closet-housing-align-value" value="center">
+            </div>
+        </div>
+
+        <!-- ۳. گزینه فاصله بین کشوها (بادخور) - فقط یک بار -->
+        <div class="drawer-input-group" id="standard-drawer-gap-group">
+            <label>فاصله بین کشوها (بادخور - سانتی‌متر)</label>
+            <input type="number" id="drawer-gap" value="0.2" min="0" max="5" step="0.1" class="modern-input" oninput="updateDrawerPreview()">
+        </div>
+
+
+        <!-- گزینه اضافه کردن سقف ۱۶ میل -->
+        <div class="drawer-input-group">
+            <label class="drawer-checkbox-label">
+                <input type="checkbox" id="drawer-top-panel" onchange="updateDrawerPreview()">
+                <span class="drawer-checkmark"></span>
+                سقف ۱۶ میل برای بدنه کشو
+            </label>
+        </div>
+
+        <!-- گزینه فعال‌سازی پایه‌ها -->
+        <div class="drawer-input-group">
+            <label class="drawer-checkbox-label">
+                <input type="checkbox" id="drawer-legs-enabled" checked onchange="updateDrawerPreview()">
+                <span class="drawer-checkmark"></span>
+                نمایش پایه‌ها برای بدنه کشو
+            </label>
+        </div>
+
+        <!-- ۴. ظرف خالی برای تنظیمات اختصاصی هر کشو -->
+        <div id="dynamic-drawers-container" class="drawer-dynamic-container">
+        </div>
+
+        <!-- ۵. قسمت پیش‌نمایش -->
+        <div class="drawer-preview-wrapper">
+            <div id="drawer-preview-3d" class="drawer-preview-3d-box"></div>
+            <p class="drawer-preview-label">پیش‌نمایش سه‌بعدی کشوها</p>
+        </div>
+
+        <!-- ۶. دکمه اعمال تغییرات -->
+        <div class="drawer-panel-actions">
+            <button onclick="applyDrawerSettings()" class="drawer-apply-btn">
+                <img src="Assets/Icons/check.png" class="btn-icon" alt="check"> اعمال تغییرات
+            </button>
+        </div>
+    </div>
+</div>

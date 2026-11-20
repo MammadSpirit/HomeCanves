@@ -1,0 +1,513 @@
+<!-- سربرگ منو -->
+<div id="main-menu-header" class="menu-header" onclick="toggleMainSidebar()">
+    <img src="Assets/Icons/menu.png" class="menu-header-icon" alt="منو">
+    <span class="menu-toggle-text">منو</span>
+</div>
+
+<!-- 🌟 دکمه‌های سوئیچ بین حالت آشپزخانه و کمد دیواری -->
+<div class="app-mode-switch">
+    <button class="mode-btn active" id="mode-kitchen-btn" onclick="switchAppMode('kitchen')">
+        <img src="Assets/Icons/kitchen.png" alt="آشپزخانه">
+        <span>آشپزخانه</span>
+    </button>
+    <button class="mode-btn" id="mode-closet-btn" onclick="switchAppMode('closet')">
+        <img src="Assets/Icons/closet.png" alt="کمد دیواری">
+        <span>کمد دیواری</span>
+    </button>
+</div>
+
+<div id="main-sidebar">
+    <!-- 🟢 منوی آشپزخانه -->
+    <div class="sidebar-menu mode-container" id="kitchen-menu-container">
+        
+        <!-- بخش اضافه کردن -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/add.png" class="section-icon" alt="اضافه کردن">
+                    <span>اضافه کردن</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel" onclick="openQuickLayoutPanel()">
+                    <img src="Assets/Icons/quick-layout.png" class="item-icon" alt="چیدمان سریع">
+                    <span>چیدمان سریع</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- دسته زمینی‌ها -->
+
+                <!-- دسته زمینی‌ها -->
+                <button class="add-item-btn floor" onclick="addFloorCabinet()">
+                    <img src="Assets/Icons/cabinet-floor.png" class="item-icon" alt="زمینی">
+                    <span>زمینی</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addDrawerBody()">
+                    <img src="Assets/Icons/drawer.png" class="item-icon" alt="بدنه کشو">
+                    <span>بدنه کشو</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addBaseCabinetWithDrawer()">
+                    <img src="Assets/Icons/cabinet-drawer-doors.png" class="item-icon" alt="زمینی در و کشو">
+                    <span>زمینی (در و کشو)</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addWaterproofBody()">
+                    <img src="Assets/Icons/waterproof-cabinet.png" class="item-icon" alt="بدنه ضد آب">
+                    <span>بدنه ضد آب</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addOvenCabinet()">
+                    <img src="Assets/Icons/oven.png" class="item-icon" alt="یونیت فر">
+                    <span>یونیت فر</span>
+                    <div class="indicator"></div>
+                </button>
+
+
+                <!-- لوازم خانگی و کلاف‌های زمینی -->
+                <button class="add-item-btn floor" onclick="addFridgeWrap()">
+                    <img src="Assets/Icons/fridge.png" class="item-icon" alt="کلاف یخچال">
+                    <span>کلاف یخچال</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel" onclick="openFridgePanel(event)">
+                    <img src="Assets/Icons/fridge-appliance.png" class="item-icon" alt="یخچال">
+                    <span>یخچال</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addWashingMachine()">
+                    <img src="Assets/Icons/washing-machine.png" class="item-icon" alt="ماشین لباسشویی">
+                    <span>ماشین لباسشویی</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addDishwasher()">
+                    <img src="Assets/Icons/dishwasher.png" class="item-icon" alt="ماشین ظرفشویی">
+                    <span>ماشین ظرفشویی</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <!-- دسته دیواری‌ها -->
+                <button class="add-item-btn wall" onclick="addWallCabinet()">
+                    <img src="Assets/Icons/cabinet-wall.png" class="item-icon" alt="دیواری">
+                    <span>دیواری</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall-top" onclick="addUpperWallCabinet()">
+                    <img src="Assets/Icons/double-wall.png" class="item-icon" alt="دیواری پله ۲">
+                    <span>دیواری (پله ۲)</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall" onclick="addDishRackBody()">
+                    <img src="Assets/Icons/dish-rack.png" class="item-icon" alt="بدنه آب چکان">
+                    <span>بدنه آب چکان</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall" onclick="addHiddenHoodBody()">
+                    <img src="Assets/Icons/hood-hidden.png" class="item-icon" alt="بدنه هود مخفی">
+                    <span>بدنه هود مخفی</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall" onclick="addHoodWrap()">
+                    <img src="Assets/Icons/hood-wrap.png" class="item-icon" alt="کلاف هود">
+                    <span>کلاف هود</span>
+                    <div class="indicator"></div>
+                </button>
+                        
+                <!-- سایر -->
+                <button class="add-item-btn floor" onclick="addFacadeBox()">
+                    <img src="Assets/Icons/facade-box.png" class="item-icon" alt="باکس نما">
+                    <span>باکس نما</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor" onclick="addCoffeeBar()">
+                    <img src="Assets/Icons/coffee-bar.png" class="item-icon" alt="کافه بار">
+                    <span>کافه بار</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش مدیریت کابینت -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/cabinet.png" class="section-icon" alt="کابینت">
+                    <span>مدیریت کابینت</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openEditSizePanel()">
+                    <img src="Assets/Icons/edit.png" class="item-icon" alt="ویرایش">
+                    <span>ویرایش کابینت</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openDoorEditorPanel()" id="door-editor-btn" disabled>
+                    <img src="Assets/Icons/door.png" class="item-icon" alt="درب">
+                    <span>درب‌ها</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openColorManagerPanel(event)">
+                    <img src="Assets/Icons/door.png" class="item-icon" alt="مدیریت رنگ‌ها">
+                    <span>مدیریت رنگ‌ها</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openShelvesEditorPanel()">
+                    <img src="Assets/Icons/shelves.png" class="item-icon" alt="طبقه">
+                    <span>طبقه‌ها</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openKickboardEditorPanel()">
+                    <img src="Assets/Icons/kickboard.png" class="item-icon" alt="پاخور">
+                    <span>پاخور</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall has-panel manage-btn" onclick="openCrownEditorPanel()">
+                    <img src="Assets/Icons/crown.png" class="item-icon" alt="تاج">
+                    <span>تاج کابینت</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openFridgeWrapEditorPanel()">
+                    <img src="Assets/Icons/fridge.png" class="item-icon" alt="کلاف یخچال">
+                    <span>مدیریت کلاف یخچال</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn wall has-panel manage-btn" onclick="openHoodWrapEditorPanel()">
+                    <img src="Assets/Icons/hood.png" class="item-icon" alt="کلاف هود">
+                    <span>مدیریت کلاف هود</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openFacadeEditorPanel()">
+                    <img src="Assets/Icons/facade.png" class="item-icon" alt="نما">
+                    <span>نمای کابینت</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openCoffeeBarEditorPanel()">
+                    <img src="Assets/Icons/coffeebar.png" class="item-icon" alt="کافه بار">
+                    <span>مدیریت کافه بار</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش مدیریت صفحه -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/countertop.png" class="section-icon" alt="صفحه">
+                    <span>مدیریت صفحه</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openCountertopEditorPanel()" id="countertop-editor-btn">
+                    <img src="Assets/Icons/countertop.png" class="item-icon" alt="صفحه">
+                    <span>صفحه کابینت</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش بدنه کشو -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/drawer.png" class="section-icon" alt="کشو">
+                    <span>بدنه کشو</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openDrawerEditorPanel()" id="drawer-editor-btn">
+                    <img src="Assets/Icons/drawer.png" class="item-icon" alt="کشو">
+                    <span>مدیریت کشو</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش ورق بین‌کابینتی -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/interpanel.png" class="section-icon" alt="بین کابینتی">
+                    <span>ورق بین‌کابینتی</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openInterPanelEdit()">
+                    <img src="Assets/Icons/interpanel-add.png" class="item-icon" alt="جدید">
+                    <span>بین‌کابینتی</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش باکس نما -->
+        <div class="menu-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/facade-box.png" class="section-icon" alt="باکس نما">
+                    <span>باکس نما</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openFacadeBoxPanel()" id="facade-box-editor-btn">
+                    <img src="Assets/Icons/facade-box.png" class="item-icon" alt="تنظیمات باکس نما">
+                    <span>باکس نما</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش ستون‌ها -->
+        <div class="menu-section" id="pillar-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/pillar.png" class="section-icon" alt="ستون">
+                    <span>ستون‌ها</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openPillarEditorPanel()">
+                    <img src="Assets/Icons/pillar-edit.png" class="item-icon" alt="مدیریت ستون">
+                    <span>مدیریت و افزودن ستون</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش آشپزخانه -->
+        <div class="menu-section" id="kitchen-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/kitchen.png" class="section-icon" alt="آشپزخانه">
+                    <span>آشپزخانه</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn highlight-btn" onclick="openRoomMasterPanel()">
+                    <img src="Assets/Icons/room-resize.png" class="item-icon" alt="مدیریت فضا">
+                    <span>تنظیمات ابعاد و محیط</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش نمای سه بعدی -->
+        <div class="menu-section" id="view3d-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/3d-view.png" class="section-icon" alt="نمای سه بعدی">
+                    <span>نمای سه بعدی</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="toggleLamp(this)">
+                    <span>💡 روشن/خاموش لامپ</span>
+                    <div class="indicator"></div>
+                </button>
+                
+                <button class="add-item-btn floor has-panel manage-btn" onclick="Kitchen3D.toggleHighQuality(this)">
+                    <span>🌟 کیفیت بالا</span>
+                    <div class="indicator"></div>
+                </button>
+                
+                <button class="add-item-btn floor has-panel manage-btn" onclick="KitchenBabylon.exportImage()">
+                    <span>📸 خروجی عکس</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="KitchenBabylon.exportGLB()">
+                    <span>📥 دانلود فایل GLB</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+  <!-- 🟡 کانتینر منوی کمد دیواری -->
+<div class="sidebar-menu mode-container" id="closet-menu-container" style="display: none;">
+        
+                <!-- 🌟 بخش اضافه کردن کمد دیواری -->
+        <div class="menu-section" id="closet-add-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/add.png" class="section-icon" alt="اضافه کردن">
+                    <span>اضافه کردن</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+                <!-- دکمه چهارچوب -->
+<!-- اضافه کردن سریع چهارچوب پیش‌فرض ۱۰۰×۱۰۰ -->
+                <button class="add-item-btn floor" onclick="addClosetFrameDefault()">
+                    <img src="Assets/Icons/frame.png" class="item-icon" alt="اضافه کردن چهارچوب">
+                    <span>اضافه کردن چهارچوب</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- اضافه کردن کشو (کمد دیواری) -->
+                <button class="add-item-btn floor has-panel" onclick="openClosetDrawerAddPanel()">
+                    <img src="Assets/Icons/drawer.png" class="item-icon" alt="اضافه کردن کشو">
+                    <span>اضافه کردن کشو</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- اضافه کردن بغل‌نما -->
+                <button class="add-item-btn floor has-panel" onclick="openBaghelNamaPanel()">
+                    <img src="Assets/Icons/frame.png" class="item-icon" alt="اضافه کردن بغل‌نما">
+                    <span>اضافه کردن بغل‌نما</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- اضافه کردن ایینه -->
+                <button class="add-item-btn floor has-panel" onclick="openAyenePanel()">
+                    <img src="Assets/Icons/frame.png" class="item-icon" alt="اضافه کردن ایینه">
+                    <span>اضافه کردن ایینه</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+<!-- 🌟 بخش مدیریت کمد دیواری -->
+        <div class="menu-section" id="closet-management-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/management.png" class="section-icon" alt="مدیریت کمد دیواری">
+                    <span>مدیریت کمد دیواری</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+
+            <div class="section-content">
+              <!-- ویرایش چهارچوب موجود -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openClosetFrameEditorPanel()">
+                    <img src="Assets/Icons/edit.png" class="item-icon" alt="ویرایش چهارچوب">
+                    <span>چهارچوب</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- پنل روکوب -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openRokoobPanel()">
+                    <img src="Assets/Icons/rokoob.png" class="item-icon" alt="روکوب">
+                    <span>روکوب</span>
+                    <div class="indicator"></div>
+                </button>
+                
+                <!-- پنل طبقه (مخصوص کمد دیواری) -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openClosetShelvesEditorPanel()" id="closet-shelves-editor-btn">
+                    <img src="Assets/Icons/shelves.png" class="item-icon" alt="طبقه">
+                    <span>طبقه‌ها</span>
+                    <div class="indicator"></div>
+                </button>
+                 <button class="add-item-btn floor has-panel manage-btn" onclick="openClosetDoorEditorPanel()" id="closet-door-editor-btn">
+                    <img src="Assets/Icons/door.png" class="item-icon" alt="درب">
+                    <span>درب‌ها</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- مدیریت کشو کمد — فقط با انتخاب چهارچوب -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openClosetDrawerManagePanel()" id="closet-drawer-manage-btn">
+                    <img src="Assets/Icons/drawer.png" class="item-icon" alt="کشو">
+                    <span>کشوها</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- مدیریت بغل‌نما — پنل جدا از اضافه کردن -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openBaghelNamaManagePanel()" id="closet-baghel-manage-btn">
+                    <img src="Assets/Icons/frame.png" class="item-icon" alt="بغل‌نما">
+                    <span>بغل‌نما</span>
+                    <div class="indicator"></div>
+                </button>
+                <!-- مدیریت ایینه -->
+                <button class="add-item-btn floor has-panel manage-btn" onclick="openAyeneManagePanel()" id="closet-ayene-manage-btn">
+                    <img src="Assets/Icons/frame.png" class="item-icon" alt="ایینه">
+                    <span>ایینه</span>
+                    <div class="indicator"></div>
+                </button>
+                
+            </div>
+        </div>
+        
+        <!-- بخش اتاق (آشپزخانه سابق) -->
+        <div class="menu-section" id="closet-room-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/room.png" class="section-icon" alt="اتاق">
+                    <span>اتاق</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn highlight-btn" onclick="openRoomMasterPanel()">
+                    <img src="Assets/Icons/room-resize.png" class="item-icon" alt="مدیریت فضا">
+                    <span>تنظیمات ابعاد و محیط</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش نمای سه بعدی -->
+        <div class="menu-section" id="closet-view3d-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <img src="Assets/Icons/3d-view.png" class="section-icon" alt="نمای سه بعدی">
+                    <span>نمای سه بعدی</span>
+                </div>
+                <img src="Assets/Icons/chevron-down.png" class="toggle-icon" alt="باز کردن">
+            </div>
+            
+            <div class="section-content">
+                <button class="add-item-btn floor has-panel manage-btn" onclick="toggleLamp(this)">
+                    <span>💡 روشن/خاموش لامپ</span>
+                    <div class="indicator"></div>
+                </button>
+                
+                <button class="add-item-btn floor has-panel manage-btn" onclick="Kitchen3D.toggleHighQuality(this)">
+                    <span>🌟 کیفیت بالا</span>
+                    <div class="indicator"></div>
+                </button>
+                
+                <button class="add-item-btn floor has-panel manage-btn" onclick="KitchenBabylon.exportImage()">
+                    <span>📸 خروجی عکس</span>
+                    <div class="indicator"></div>
+                </button>
+
+                <button class="add-item-btn floor has-panel manage-btn" onclick="KitchenBabylon.exportGLB()">
+                    <span>📥 دانلود فایل GLB</span>
+                    <div class="indicator"></div>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

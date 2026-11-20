@@ -1,0 +1,224 @@
+<div id="fridge-wrap-editor-panel" class="fridge-warp-panel">
+    <div class="fridge-warp-panel-header">
+        <h3>مدیریت کلاف یخچال</h3>
+        <button class="fridge-warp-panel-close" onclick="closeFridgeWrapEditorPanel()">×</button>
+    </div>
+
+    <div class="fridge-warp-panel-body">
+        <div class="fridge-wrap-input-group fridge-wrap-disabled-group">
+            <label class="checkbox-label">
+                <input type="checkbox" id="fridge-wrap-enabled">
+                <span class="checkmark"></span>
+                وضعیت کلاف در صحنه
+            </label>
+        </div>
+
+        <div class="fridge-wrap-section-wrapper">
+            <h4 class="fridge-wrap-section-title">تنظیمات ساختار و بدنه کلاف</h4>
+        </div>
+
+        <div class="fridge-wrap-card">
+            <label class="checkbox-label fridge-wrap-blue-title">
+                <input type="checkbox" id="fridge-side-left-enabled" checked onchange="updateFridgeWrapLive()">
+                <span class="checkmark"></span> دیواره سمت چپ (دوبل)
+            </label>
+            <div class="fridge-wrap-row">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">ارتفاع چپ</label>
+                    <input type="number" id="fridge-side-left-h" value="240" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">عمق چپ</label>
+                    <input type="number" id="fridge-side-left-d" value="60" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+            </div>
+        </div>
+
+        <div class="fridge-wrap-card">
+            <label class="checkbox-label fridge-wrap-blue-title">
+                <input type="checkbox" id="fridge-side-right-enabled" checked onchange="updateFridgeWrapLive()">
+                <span class="checkmark"></span> دیواره سمت راست (دوبل)
+            </label>
+            <div class="fridge-wrap-row">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">ارتفاع راست</label>
+                    <input type="number" id="fridge-side-right-h" value="240" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">عمق راست</label>
+                    <input type="number" id="fridge-side-right-d" value="60" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+            </div>
+        </div>
+
+        <div class="fridge-wrap-input-group fridge-wrap-border-top-solid">
+            <label class="checkbox-label fridge-wrap-gold-title">
+                <input type="checkbox" id="fridge-bridge-enabled" checked onchange="updateFridgeWrapLive()">
+                <span class="checkmark"></span> تنظیمات یونیت هوایی (پل)
+            </label>
+            
+            <div class="fridge-wrap-grid">
+                <div class="fridge-wrap-half-width">
+                    <label class="fridge-wrap-label-md">عرض (دهنه)</label>
+                    <input type="number" id="fridge-bridge-w" value="95" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-half-width">
+                    <label class="fridge-wrap-label-md">ارتفاع یونیت</label>
+                    <input type="number" id="fridge-bridge-h" value="40" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-half-width">
+                    <label class="fridge-wrap-label-md">عمق یونیت</label>
+                    <input type="number" id="fridge-bridge-d" value="60" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-half-width">
+                    <label class="fridge-wrap-label-md">ارتفاع نصب</label>
+                    <input type="number" id="fridge-bridge-y" value="200" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- بخش جدید: تنظیمات قاب دور یخچال            -->
+        <!-- ========================================== -->
+        <div class="fridge-wrap-input-group fridge-wrap-gold-card">
+            <label class="checkbox-label fridge-wrap-gold-title fridge-wrap-bold fridge-wrap-mb-15">
+                <input type="checkbox" id="fridge-frame-enabled" checked onchange="updateFridgeWrapLive()">
+                <span class="checkmark"></span> قاب دور یخچال (پیش‌آمدگی)
+            </label>
+
+            <!-- تنظیمات ابعاد قاب -->
+            <div class="fridge-wrap-grid fridge-wrap-mb-15">
+                <div class="fridge-wrap-flex-1 fridge-wrap-min-w-45">
+                    <label class="fridge-wrap-label-md">جلو آمدن (سانتی‌متر)</label>
+                    <input type="number" id="fridge-frame-protrusion" value="5" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+                <div class="fridge-wrap-flex-1 fridge-wrap-min-w-45">
+                    <label class="fridge-wrap-label-md">عمق / ضخامت قاب</label>
+                    <input type="number" id="fridge-frame-depth" value="1.6" class="modern-input" oninput="updateFridgeWrapLive()">
+                </div>
+            </div>
+
+            <!-- تنظیمات رنگ قاب -->
+            <h4 class="fridge-wrap-color-title fridge-wrap-gold-title">🎨 رنگ قاب دور یخچال</h4>
+            <div class="fridge-wrap-row fridge-wrap-mb-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">جنس ورق قاب</label>
+                    <select id="fridge-frame-material-type" class="modern-select" onchange="updateFridgeWrapMaterials('frame')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input 
+                    type="text" 
+                    id="fridge-frame-color-search" 
+                    placeholder="انتخاب رنگ قاب..." 
+                    class="color-search-input"
+                    readonly
+                    onclick="openFridgeMaterialModal('frame')" 
+                    autocomplete="off">
+            </div>
+            <div class="fridge-wrap-row fridge-wrap-mt-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">پرداخت سطح قاب (نور)</label>
+                    <select id="fridge-frame-finish" class="modern-select" onchange="if(typeof onFridgeWrapFinishChange==='function') onFridgeWrapFinishChange('frame', this.value)">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- پایان بخش قاب دور یخچال -->
+
+        <!-- ========================================== -->
+        <!-- تنظیمات رنگ دیواره سمت چپ -->
+        <!-- ========================================== -->
+        <div class="fridge-wrap-input-group fridge-wrap-border-top-solid fridge-wrap-mt-15">
+            <h4 class="fridge-wrap-color-title fridge-wrap-blue-title">🎨 رنگ دیواره سمت چپ</h4>
+            <div class="fridge-wrap-row fridge-wrap-mb-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">جنس ورق چپ</label>
+                    <select id="fridge-left-material-type" class="modern-select" onchange="updateFridgeWrapMaterials('left')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input 
+                    type="text" 
+                    id="fridge-left-color-search" 
+                    placeholder="انتخاب رنگ دیواره چپ..." 
+                    class="color-search-input"
+                    readonly
+                    onclick="openFridgeMaterialModal('left')" 
+                    autocomplete="off">
+            </div>
+            <div class="fridge-wrap-row fridge-wrap-mt-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">پرداخت سطح چپ (نور)</label>
+                    <select id="fridge-left-finish" class="modern-select" onchange="if(typeof onFridgeWrapFinishChange==='function') onFridgeWrapFinishChange('left', this.value)">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- تنظیمات رنگ دیواره سمت راست -->
+        <!-- ========================================== -->
+        <div class="fridge-wrap-input-group fridge-wrap-border-top-dashed fridge-wrap-mt-15">
+            <h4 class="fridge-wrap-color-title fridge-wrap-blue-title">🎨 رنگ دیواره سمت راست</h4>
+            <div class="fridge-wrap-row fridge-wrap-mb-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">جنس ورق راست</label>
+                    <select id="fridge-right-material-type" class="modern-select" onchange="updateFridgeWrapMaterials('right')">
+                        <option value="mdf">MDF (ام دی اف)</option>
+                        <option value="highGloss">High-Gloss (هایگلاس)</option>
+                        <option value="leteron">Leteron (لترون)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="color-search-container">
+                <input 
+                    type="text" 
+                    id="fridge-right-color-search" 
+                    placeholder="انتخاب رنگ دیواره راست..." 
+                    class="color-search-input"
+                    readonly
+                    onclick="openFridgeMaterialModal('right')"
+                    autocomplete="off">
+            </div>
+            <div class="fridge-wrap-row fridge-wrap-mt-10">
+                <div class="fridge-wrap-col">
+                    <label class="fridge-wrap-label">پرداخت سطح راست (نور)</label>
+                    <select id="fridge-right-finish" class="modern-select" onchange="if(typeof onFridgeWrapFinishChange==='function') onFridgeWrapFinishChange('right', this.value)">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="fridge-wrap-preview-container">
+            <div id="fridge-preview-3d" class="fridge-wrap-preview-3d-box"></div>
+            <p class="fridge-wrap-preview-hint">پیش‌نمایش تعاملی (با ماوس بچرخانید)</p>
+        </div>
+
+        <div class="fridge-warp-panel-actions fridge-wrap-center-actions">
+            <button onclick="applyFridgeWrapSettings()" class="action-btn apply-btn btn-large">
+                <img src="Assets/Icons/check.png" class="btn-icon" alt="تایید"> اعمال تغییرات کلاف
+            </button>
+        </div>
+    </div>
+</div>

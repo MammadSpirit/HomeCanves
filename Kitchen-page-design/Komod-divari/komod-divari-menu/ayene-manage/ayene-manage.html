@@ -1,0 +1,88 @@
+<div id="closet-ayene-manage-panel" class="kickboard-wrapper">
+    <div class="kickboard-header">
+        <h3>مدیریت ایینه — کمد دیواری</h3>
+        <button type="button" class="kickboard-close-btn" onclick="closeAyeneManagePanel()">×</button>
+    </div>
+
+    <div class="kickboard-body">
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">چهارچوب انتخاب‌شده</label>
+            <p id="ayene-m-unit-info" style="font-size:12px;color:#94a3b8;margin:0;line-height:1.5;">
+                ابتدا یک چهارچوب را از صحنه انتخاب کنید.
+            </p>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">وضعیت ایینه</label>
+            <div id="ayene-m-status-box"
+                 style="padding:12px 14px;border-radius:10px;border:1px solid #334155;background:rgba(255,255,255,0.02);">
+                <span id="ayene-m-status-text" style="color:#94a3b8;font-size:13px;">بدون ایینه</span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+                <button type="button" class="kickboard-apply-btn" style="flex:1;min-width:110px;background:#0284c7;"
+                        onclick="setAyeneManageEnabled(true)">فعال</button>
+                <button type="button" class="kickboard-apply-btn" style="flex:1;min-width:110px;background:#475569;"
+                        onclick="setAyeneManageEnabled(false)">غیرفعال</button>
+                <button type="button" class="kickboard-apply-btn" style="flex:1;min-width:110px;background:#ef4444;"
+                        onclick="removeAyeneFromUnit()">حذف ایینه</button>
+            </div>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">محل قرارگیری</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid #334155;cursor:pointer;background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="ayene-m-placement" value="front" onchange="onAyeneManagePlacementChange()">
+                    <span style="color:#e2e8f0;font-size:13px;">جلوی چهارچوب</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid #334155;cursor:pointer;background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="ayene-m-placement" value="inside" onchange="onAyeneManagePlacementChange()">
+                    <span style="color:#e2e8f0;font-size:13px;">داخل کمد</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid #334155;cursor:pointer;background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="ayene-m-placement" value="side-left" onchange="onAyeneManagePlacementChange()">
+                    <span style="color:#e2e8f0;font-size:13px;">بغل چپ</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:1px solid #334155;cursor:pointer;background:rgba(255,255,255,0.02);">
+                    <input type="radio" name="ayene-m-placement" value="side-right" onchange="onAyeneManagePlacementChange()">
+                    <span style="color:#e2e8f0;font-size:13px;">بغل راست</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">ابعاد (سانتی‌متر)</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">عرض</label>
+                    <input type="number" id="ayene-m-width" class="kickboard-input" min="5" step="0.1"
+                           oninput="onAyeneManageDimChange()">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">ارتفاع</label>
+                    <input type="number" id="ayene-m-height" class="kickboard-input" min="5" step="0.1"
+                           oninput="onAyeneManageDimChange()">
+                </div>
+            </div>
+        </div>
+
+        <div class="kickboard-preview-container">
+            <label class="kickboard-label" style="display:flex;justify-content:space-between;">
+                <span>پیش‌نمایش چهارچوب</span>
+                <span style="color:#38bdf8;font-size:11px;">ایینه با رنگ آبی مشخص است</span>
+            </label>
+            <div id="ayene-m-preview-wrapper" style="width:100%;height:260px;background:#090d16;border-radius:10px;border:1px solid #1e293b;overflow:hidden;position:relative;">
+                <svg id="ayene-m-preview-svg" style="width:100%;height:100%;display:block;"></svg>
+            </div>
+        </div>
+
+        <div class="kickboard-actions-container" style="margin-top:12px;display:flex;gap:8px;">
+            <button type="button" onclick="applyAyeneManageSettings()" class="kickboard-apply-btn" style="flex:1;">
+                ذخیره تغییرات
+            </button>
+            <button type="button" onclick="closeAyeneManagePanel()" class="kickboard-apply-btn" style="background:#475569;flex:0.6;">
+                بستن
+            </button>
+        </div>
+    </div>
+</div>

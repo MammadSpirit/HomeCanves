@@ -1,0 +1,201 @@
+<div id="countertop-editor-panel" class="countertop-panel">
+    <div class="countertop-header">
+        <h3>مدیریت صفحه کابینت</h3>
+        <button class="countertop-close" onclick="closeCountertopEditorPanel()">×</button>
+    </div>
+
+    <!-- =========================================
+         بخش ثابت در بالا (وضعیت و لیست صفحه‌ها)
+         ========================================= -->
+    <div class="panel-fixed-top">
+        <div class="panel-section">
+            <div class="flex-between mb-2">
+                <span class="section-title">وضعیت صفحه</span>
+<label class="modern-toggle">
+    <input type="checkbox" id="countertop-enabled">
+    <span class="modern-slider"></span> <!-- تغییر یافته -->
+</label>
+
+            </div>
+            <button type="button" onclick="addNewCountertop()" class="countertop-btn full-width mb-2">
+                + اضافه کردن صفحه جدید
+            </button>
+            <label class="input-label">لیست صفحه‌ها</label>
+            <div id="countertop-list-container"></div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         بخش میانی قابل اسکرول (تمام تنظیمات اصلی)
+         ========================================= -->
+    <div class="countertop-body">
+        
+        <!-- بخش ۲: اطلاعات و ابعاد کلی -->
+        <div class="panel-section">
+            <div class="section-title mb-2">ابعاد و موقعیت صفحه (cm)</div>
+            
+            <div class="info-box mb-2">
+                موقعیت روی کابینت: 
+                طول: <span id="countertop-pos-length">180</span> | 
+                عرض: <span id="countertop-pos-width">60</span> | 
+                ارتفاع: <span id="countertop-pos-height">90</span>
+            </div>
+
+            <div class="input-grid">
+                <div>
+                    <label class="input-label">طول</label>
+                    <input type="number" id="countertop-length" value="180" step="1" class="countertop-input">
+                </div>
+                <div>
+                    <label class="input-label">عرض</label>
+                    <input type="number" id="countertop-width" value="60" step="1" class="countertop-input">
+                </div>
+                <div>
+                    <label class="input-label">موقعیت X</label>
+                    <input type="number" id="countertop-pos-x" value="0" class="countertop-input" placeholder="X">
+                </div>
+                <div>
+                    <label class="input-label">موقعیت Y</label>
+                    <input type="number" id="countertop-pos-y" value="0" class="countertop-input" placeholder="Y">
+                </div>
+                <div class="full-width">
+                    <label class="input-label">ارتفاع نصب صفحه از زمین</label>
+                    <input type="number" id="countertop-height" value="90" step="1" min="70" max="120" class="countertop-input">
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label class="input-label">ضخامت صفحه</label>
+                <div class="radio-flex">
+                    <label class="countertop-radio-pill"><input type="radio" name="countertop-thickness" onchange="if(typeof onCountertopThicknessChange==='function') onCountertopThicknessChange()" value="3.2"><span>۳.۲ سانت</span></label>
+                    <label class="countertop-radio-pill"><input type="radio" name="countertop-thickness" onchange="if(typeof onCountertopThicknessChange==='function') onCountertopThicknessChange()" value="4.8"><span>۴.۸ سانت</span></label>
+                    <label class="countertop-radio-pill"><input type="radio" name="countertop-thickness" onchange="if(typeof onCountertopThicknessChange==='function') onCountertopThicknessChange()" value="custom"><span>کاستوم</span></label>
+                </div>
+                <div id="custom-thickness-wrapper" class="mt-2">
+                    <input type="number" id="custom-thickness" oninput="if(typeof onCountertopThicknessChange==='function') onCountertopThicknessChange()" placeholder="ضخامت دلخواه (cm)" min="1" max="10" step="0.1" class="countertop-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش ۳: جهت‌گیری و چرخش -->
+        <div class="panel-section">
+            <div class="section-title mb-2">چرخش صفحه</div>
+            <div class="countertop-rotation-group">
+                <!-- دکمه چرخش ۹۰ درجه -->
+                <button type="button" onclick="rotateCountertop()" class="countertop-btn flex-1">
+                    <img src="Assets/Icons/rotate.png" class="btn-icon"> ۹۰ درجه
+                </button>
+                
+                <!-- فیلد چرخش با زاویه دستی -->
+                <div class="custom-angle-wrapper flex-1">
+                    <input type="number" id="countertop-custom-angle" class="countertop-input custom-angle-input" 
+                           placeholder="زاویه..." oninput="applyCustomCountertopAngle(this.value)">
+                    <span class="angle-unit">درجه</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش ۴: متریال -->
+        <div class="panel-section">
+            <div class="section-title mb-2">جنس ورق و رنگ صفحه</div>
+            <select id="countertop-panel-material-type" class="countertop-select mb-2" onchange="renderCountertopMaterialGrid()">
+                <option value="mdf-countertop">MDF (ام دی اف صفحه)</option>
+                <option value="countertop">صفحه کابینت (شرکتی/کورین)</option> 
+            </select>
+            <div class="color-search-container">
+                <input type="text" id="countertop-color-search" placeholder="برای انتخاب متریال کلیک کنید" class="color-search-input" readonly onclick="openCountertopMaterialModal()" onfocus="openCountertopMaterialModal()" autocomplete="off">
+            </div>
+            <!-- پرداخت سطح — جدا از جنس ورق؛ فقط نور / براقیت -->
+            <div class="section-title mb-2" style="margin-top: 12px;">پرداخت سطح (نور / براقیت)</div>
+            <select id="countertop-panel-finish" class="countertop-select mb-2" onchange="if(typeof onCountertopFinishChange==='function') onCountertopFinishChange(this.value)">
+                <option value="matte">مات (Matte)</option>
+                <option value="semiMatte">نیمه‌مات</option>
+                <option value="satin">ساتین</option>
+                <option value="highGloss">براق / های‌گلاس</option>
+            </select>
+            <p style="margin: 0; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+                فقط بازتاب نور روی تکسچر را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+            </p>
+        </div>
+
+
+        <!-- بخش ۵: تنظیمات گاز -->
+        <div class="panel-section">
+            <div class="flex-between mb-2">
+                <span class="section-title">تنظیمات محل گاز</span>
+<label class="modern-toggle">
+    <input type="checkbox" id="gas-enabled">
+    <span class="modern-slider"></span> <!-- تغییر یافته -->
+</label>
+
+            </div>
+            
+            <div id="gas-position-wrapper">
+                <div class="input-grid mt-2">
+                    <div class="full-width flex-gap">
+                        <select id="gas-material-type" class="countertop-select flex-1"><option value="steel">گاز استیل</option><option value="glass">گاز شیشه‌ای</option></select>
+                        <select id="gas-burner-type" class="countertop-select flex-1"><option value="5">۵ شعله</option><option value="4">۴ شعله</option><option value="3">۳ شعله</option><option value="2">۲ شعله</option></select>
+                    </div>
+                    <div><label class="input-label">طول گاز</label><input type="number" id="gas-width" value="60" step="any" class="countertop-input"></div>
+                    <div><label class="input-label">عرض گاز</label><input type="number" id="gas-depth" value="50" step="any" class="countertop-input"></div>
+                    <div><label class="input-label">موقعیت X</label><input type="number" id="gas-x" value="0" step="any" class="countertop-input" placeholder="X"></div>
+                    <div><label class="input-label">موقعیت Y</label><input type="number" id="gas-y" value="0" step="any" class="countertop-input" placeholder="Y"></div>
+                </div>
+                <button type="button" onclick="rotateGasOnly()" class="countertop-btn full-width mt-2">
+                    <img src="Assets/Icons/rotate.png" class="btn-icon"> چرخش گاز
+                </button>
+            </div>
+        </div>
+
+        <!-- بخش ۶: تنظیمات سینک -->
+        <div class="panel-section">
+            <div class="flex-between mb-2">
+                <span class="section-title">تنظیمات محل سینک</span>
+               <label class="modern-toggle">
+    <input type="checkbox" id="sink-enabled">
+    <span class="modern-slider"></span> <!-- تغییر یافته -->
+</label>
+
+            </div>
+
+            <div id="sink-position-wrapper">
+                <select id="sink-material-type" class="countertop-select mb-2 mt-2">
+                    <option value="steel">سینک استیل</option><option value="black">سینک مشکی</option><option value="white">سینک سفید</option>
+                </select>
+                <div class="flex-gap mb-2">
+                    <select id="sink-model-type" class="countertop-select flex-2"><option value="double-tray">دو لگن با سینی</option><option value="double">دو لگن</option><option value="single-tray">تک لگن با سینی</option><option value="single">تک لگن</option></select>
+                    <select id="sink-direction" class="countertop-select flex-1"><option value="right">لگن راست</option><option value="left">لگن چپ</option></select>
+                </div>
+                <div class="input-grid">
+                    <div><label class="input-label">طول سینک</label><input type="number" id="sink-width" value="80" step="any" class="countertop-input"></div>
+                    <div><label class="input-label">عرض سینک</label><input type="number" id="sink-depth" value="50" step="any" class="countertop-input"></div>
+                    <div><label class="input-label">موقعیت X</label><input type="number" id="sink-x" value="0" step="any" class="countertop-input"></div>
+                    <div><label class="input-label">موقعیت Y</label><input type="number" id="sink-y" value="0" step="any" class="countertop-input"></div>
+                </div>
+                <button type="button" onclick="rotateSinkOnly()" class="countertop-btn full-width mt-2">
+                    <img src="Assets/Icons/rotate.png" class="btn-icon"> چرخش سینک
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         بخش ثابت در پایین (پیش‌نمایش و حذف)
+         ========================================= -->
+    <div class="panel-fixed-bottom">
+        <div class="panel-section text-center mb-0">
+            <p class="section-title mb-2">پیش‌نمایش صفحه کابینت</p>
+            <canvas id="countertop-preview-canvas" width="300" height="150" class="preview-canvas"></canvas>
+            <button type="button" onclick="deleteCountertop()" class="countertop-btn delete-btn full-width mt-3">
+                 حذف این صفحه
+            </button>
+        </div>
+    </div>
+
+    <!-- فوتر با دکمه اعمال -->
+    <div class="countertop-actions">
+        <button onclick="applyCountertopSettings()" class="action-btn apply-btn">
+            <img src="Assets/Icons/check.png" class="btn-icon"> اعمال تغییرات
+        </button>
+    </div>
+</div>

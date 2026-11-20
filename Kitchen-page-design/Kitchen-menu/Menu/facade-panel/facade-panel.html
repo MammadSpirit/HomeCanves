@@ -1,0 +1,260 @@
+<div id="facade-editor-panel" class="facade-panel-wrapper">
+    <div class="facade-panel-header">
+        <h3>مدیریت نما</h3>
+        <button class="facade-panel-close" onclick="closeFacadeEditorPanel()">×</button>
+    </div>
+    
+    <div class="facade-panel-body">
+        <!-- نمایش شماره کابینت -->
+        <div class="facade-cabinet-id-wrapper">
+            <h4>کابینت شماره: <span id="facade-panel-cabinet-id">-</span></h4>
+        </div>
+
+        <!-- 1. فعال سازی نما -->
+        <div class="facade-input-group facade-mb-15">
+            <label class="facade-checkbox-label">
+                <input type="checkbox" id="facade-enabled" checked onchange="updateFacadePreview()">
+                <span class="facade-checkmark"></span>
+                فعال‌سازی نما (کلی)
+            </label>
+        </div>
+
+        <!-- طرف‌های فعال نما -->
+        <div class="facade-input-group facade-mb-18">
+            <label class="facade-section-label">طرف‌های فعال نما</label>
+            <div class="facade-grid-2col">
+                <label class="facade-checkbox-label">
+                    <input type="checkbox" id="facade-left" onchange="updateFacadePreview()">
+                    <span class="facade-checkmark"></span> سمت چپ
+                </label>
+                <label class="facade-checkbox-label">
+                    <input type="checkbox" id="facade-right" checked onchange="updateFacadePreview()">
+                    <span class="facade-checkmark"></span> سمت راست
+                </label>
+            </div>
+        </div>
+
+        <!-- ابعاد نما -->
+        <div class="facade-input-group">
+            <label class="facade-section-label">ابعاد نما (cm)</label>
+            <div class="facade-grid-2col">
+                <div>
+                    <label class="facade-micro-label">طول</label>
+                    <input type="number" id="facade-length" value="280" min="10" step="1" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">عرض</label>
+                    <input type="number" id="facade-width" value="60" min="10" step="1" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= بخش تنظیمات 16 میل ================= -->
+        <div class="facade-section facade-16mm-section">
+            <label class="facade-checkbox-label facade-mb-15">
+                <input type="checkbox" id="facade-16mm-enabled" onchange="updateFacadePreview()">
+                <span class="facade-checkmark"></span>
+                فعال‌سازی پنل ۱۶ میل (بستر نما)
+            </label>
+            
+            <div class="facade-input-group">
+                <label>جنس ورق ۱۶ میل</label>
+                <select id="facade-16mm-material-type" class="modern-select" onchange="updateFacadeMaterials('16mm', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+
+            <div class="facade-input-group">
+                <label>رنگ ۱۶ میل</label>
+                <div class="color-search-container">
+                    <input type="text" id="facade-16mm-color-search" placeholder="برای انتخاب کلیک کنید" class="color-search-input" readonly onclick="openFacadeMaterialModal('16mm')" onfocus="openFacadeMaterialModal('16mm')">
+                </div>
+            </div>
+
+            <div class="facade-input-group">
+                <label>پرداخت سطح ۱۶ میل (نور)</label>
+                <select id="facade-16mm-finish" class="modern-select" onchange="if(typeof onFacadeFinishChange==='function') onFacadeFinishChange('16mm', this.value)">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            <!-- فیلدهای وارد کردن مقدار طول و عرض کاستوم ۱۶ میل -->
+            <div class="facade-grid-2col facade-mt-10">
+                <div>
+                    <label class="facade-micro-label">طول کاستوم (cm)</label>
+                    <input type="number" id="facade-custom-16mm-length" value="0" min="0" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">عرض کاستوم (cm)</label>
+                    <input type="number" id="facade-custom-16mm-width" value="0" min="0" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+            </div>
+
+            <!-- فیلدهای انتخاب موقعیت طول و عرض کاستوم ۱۶ میل -->
+            <div class="facade-grid-2col facade-mt-10">
+                <div>
+                    <label class="facade-micro-label">موقعیت طول کاستوم</label>
+                    <select id="facade-custom-16mm-length-pos" class="modern-select" onchange="updateFacadePreview()">
+                        <option value="start">ابتدا</option>
+                        <option value="center" selected>وسط</option>
+                        <option value="end">انتها</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="facade-micro-label">موقعیت عرض کاستوم</label>
+                    <select id="facade-custom-16mm-width-pos" class="modern-select" onchange="updateFacadePreview()">
+                        <option value="start">ابتدا</option>
+                        <option value="center" selected>وسط</option>
+                        <option value="end">انتها</option>
+                    </select>
+                </div>
+            </div>
+
+
+        <!-- ================= بخش تنظیمات ترمووال ================= -->
+        <div class="facade-section facade-thermo-section">
+            <label class="facade-checkbox-label facade-mb-15">
+                <input type="checkbox" id="facade-thermowall-enabled" onchange="updateFacadePreview()">
+                <span class="facade-checkmark"></span>
+                فعال‌سازی ترمووال
+            </label>
+            
+            <div class="facade-input-group">
+                <label>جنس ورق ترمووال</label>
+                <select id="facade-thermo-material-type" class="modern-select" onchange="updateFacadeMaterials('thermo', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+
+            <div class="facade-input-group">
+                <label>رنگ ترمووال</label>
+                <div class="color-search-container">
+                    <input type="text" id="facade-thermo-color-search" placeholder="برای انتخاب کلیک کنید" class="color-search-input" readonly onclick="openFacadeMaterialModal('thermo')" onfocus="openFacadeMaterialModal('thermo')">
+                </div>
+            </div>
+
+            <div class="facade-input-group">
+                <label>پرداخت سطح ترمووال (نور)</label>
+                <select id="facade-thermo-finish" class="modern-select" onchange="if(typeof onFacadeFinishChange==='function') onFacadeFinishChange('thermo', this.value)">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            
+                        <div class="facade-mt-10 facade-mb-10">
+                <label class="facade-micro-label">تعداد ترمووال</label>
+                <input type="number" id="facade-thermowall-count" value="1" min="1" max="50" step="1" class="modern-input" oninput="updateFacadePreview()">
+            </div>
+
+            <!-- فیلدهای جدید ارتفاع و موقعیت ارتفاعی ترمووال -->
+            <div class="facade-grid-2col facade-mt-10 facade-mb-10">
+                <div>
+                    <label class="facade-micro-label">ارتفاع ترمووال (cm) <span style="font-size:9px;color:#888;">(0 = کل ارتفاع)</span></label>
+                    <input type="number" id="facade-thermowall-custom-height" value="0" min="0" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">موقعیت ارتفاعی</label>
+                    <select id="facade-thermowall-height-pos" class="modern-select" onchange="updateFacadePreview()">
+                        <option value="start">ابتدا</option>
+                        <option value="center" selected>وسط</option>
+                        <option value="end">انتها</option>
+                    </select>
+                </div>
+            </div>
+
+            
+            <div class="facade-grid-2col">
+                <div>
+                    <label class="facade-micro-label">عرض ترمووال (cm)</label>
+                    <input type="number" id="facade-thermowall-width" value="4" min="1" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">عمق / بیرون‌زدگی (cm)</label>
+                    <input type="number" id="facade-thermowall-thickness" value="2" min="0.5" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= بخش تنظیمات نما صفحه (جدید) ================= -->
+        <div class="facade-section facade-worktop-section">
+            <label class="facade-checkbox-label facade-mb-15">
+                <input type="checkbox" id="facade-worktop-enabled" onchange="updateFacadePreview()">
+                <span class="facade-checkmark"></span>
+                فعال‌سازی نما صفحه
+            </label>
+            
+            <div class="facade-input-group">
+                <label>جنس ورق نما صفحه</label>
+                <select id="facade-worktop-material-type" class="modern-select" onchange="typeof updateFacadeLive === 'function' ? updateFacadeLive() : updateFacadePreview()">
+                    <option value="countertop" selected>صفحه کابینت (HPL / شرکتی)</option>
+                    <option value="mdf">ام دی اف (MDF)</option>
+                </select>
+            </div>
+
+            <div class="facade-input-group">
+                <label>رنگ نما صفحه</label>
+                <div class="color-search-container">
+                    <input type="text" id="facade-worktop-color-search" placeholder="برای انتخاب کلیک کنید" class="color-search-input" readonly onclick="openFacadeMaterialModal('worktop')" onfocus="openFacadeMaterialModal('worktop')">
+                </div>
+            </div>
+
+            <div class="facade-input-group">
+                <label>پرداخت سطح نما صفحه (نور)</label>
+                <select id="facade-worktop-finish" class="modern-select" onchange="if(typeof onFacadeFinishChange==='function') onFacadeFinishChange('worktop', this.value)">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            
+            <div class="facade-grid-2col facade-mt-10">
+                <div>
+                    <label class="facade-micro-label">ارتفاع (cm)</label>
+                    <input type="number" id="facade-worktop-height" value="5" min="1" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">ضخامت / عمق (cm)</label>
+                    <input type="number" id="facade-worktop-thickness" value="3.2" min="1" step="0.1" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+            </div>
+                        <!-- فیلدهای جدید عرض نما صفحه و موقعیت عرضی -->
+            <div class="facade-grid-2col facade-mt-10">
+                <div>
+                    <label class="facade-micro-label">عرض نما صفحه (cm) <span style="font-size:9px;color:#888;">(0 = کل عرض)</span></label>
+                    <input type="number" id="facade-worktop-custom-width" value="0" min="0" step="0.5" class="modern-input" oninput="updateFacadePreview()">
+                </div>
+                <div>
+                    <label class="facade-micro-label">موقعیت عرضی</label>
+                    <select id="facade-worktop-width-pos" class="modern-select" onchange="updateFacadePreview()">
+                        <option value="start">ابتدا</option>
+                        <option value="center" selected>وسط</option>
+                        <option value="end">انتها</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- پیش نمایش مینی سه بعدی -->
+        <div class="facade-preview-wrapper">
+            <div id="facade-preview-3d" class="facade-preview-3d-box"></div>
+            <p class="facade-preview-label">پیش‌نمایش کابینت انتخاب شده</p>
+        </div>
+
+        <!-- گزینه اعمال تغییرات -->
+        <div class="facade-panel-actions">
+            <button onclick="applyFacadeSettings()" class="facade-apply-btn">
+                <img src="Assets/Icons/check.png" class="btn-icon"> اعمال تغییرات
+            </button>
+        </div>
+    </div>
+</div>

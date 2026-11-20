@@ -1,0 +1,56 @@
+<div id="add-fridge-panel" class="add-fridge-panel-wrapper">
+    <!-- دکمه ضربدر آمد اینجا تا کل ارتفاع پنل را بگیرد -->
+    <button class="add-fridge-close" onclick="closeFridgePanel()">×</button>
+
+    <!-- هدر: فقط عنوان وسط -->
+    <div class="add-fridge-header">
+        <h3>تنظیمات یخچال</h3>
+    </div>
+    
+    <div class="add-fridge-body">
+        <!-- بخش راست و وسط: شامل تنظیمات و دکمه‌ها -->
+        <div class="add-fridge-main-section">
+            
+            <!-- ورودی‌ها (وسط پنل) -->
+            <div class="add-fridge-inputs-wrapper">
+                <div class="add-fridge-input-group">
+                    <label>مدل یخچال</label>
+                    <select id="fridge-door-count" onchange="updateFridgePreview()" class="add-fridge-select">
+                        <option value="1">تک درب (بالا/پایین)</option>
+                        <option value="2">دو درب (ساید بای ساید)</option>
+                    </select>
+                </div>
+
+                <div class="add-fridge-input-group">
+                    <label>عرض (cm)</label>
+                    <input type="number" id="fridge-input-width" value="90" step="0.1" oninput="updateFridgePreview()" class="add-fridge-input">
+                </div>
+
+                <div class="add-fridge-input-group">
+                    <label>ارتفاع (cm)</label>
+                    <input type="number" id="fridge-input-height" value="180" step="0.1" oninput="updateFridgePreview()" class="add-fridge-input">
+                </div>
+            </div>
+
+            <!-- دکمه‌های عملیاتی (پایین وسط) -->
+            <div class="add-fridge-actions">
+                <button id="fridge-add-btn" onclick="applyAndAddFridge()" class="add-fridge-btn add-btn">
+                    افزودن به نقشه
+                </button>
+                <button id="fridge-edit-btn" onclick="saveFridgeEdit()" class="add-fridge-btn edit-btn">
+                    ذخیره تغییرات
+                </button>
+                <button id="fridge-delete-btn" onclick="deleteExistingFridge()" class="add-fridge-btn delete-btn">
+                    حذف
+                </button>
+            </div>
+            
+        </div>
+
+        <!-- بخش سمت چپ: پیش‌نمایش (با خط جداکننده) -->
+        <div class="add-fridge-preview-group">
+            <label>پیش‌نمایش زنده</label>
+            <canvas id="fridge-preview-canvas" width="200" height="240"></canvas>
+        </div>
+    </div>
+</div>

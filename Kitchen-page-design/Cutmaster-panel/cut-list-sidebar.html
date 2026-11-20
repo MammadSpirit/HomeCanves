@@ -1,0 +1,528 @@
+<div id="cut-master-modal-overlay" class="cut-modal-overlay">
+    <div class="cut-panel-container">
+        <div class="cut-panel-header">
+            <div class="main-mode-tabs">
+                <button class="mode-tab-btn active" onclick="switchMainMode('layout')">📊 نمایش چیدمان ورق</button>
+                <button class="mode-tab-btn" onclick="switchMainMode('settings')">⚙️ تنظیمات کات مستر</button>
+            </div>
+            <button onclick="toggleCutPanel()" class="close-cut-panel">×</button>
+        </div>
+
+        <div id="main-mode-layout" class="main-mode-content active">
+            <div class="cut-panel-tabs">
+<button class="tab-btn active" data-tab="sheet">ورقها</button>
+<button class="tab-btn" data-tab="backsplash">بین کابینتی</button>
+                <button class="tab-btn" data-tab="fiber">سه میل</button>
+                <button class="tab-btn" data-tab="pvc">PVC ضد آب</button>
+                <button class="tab-btn" data-tab="countertop">صفحه کابینت</button>
+            </div>
+
+            <div class="cut-panel-content">
+<div id="sheet-sheet" class="sheet-tab active">
+    <div id="sheet-cut-preview" class="cut-preview-graphic"></div>
+</div>
+<div id="sheet-backsplash" class="sheet-tab">
+    <div id="backsplash-cut-preview" class="cut-preview-graphic"></div>
+</div>
+                <div id="sheet-fiber" class="sheet-tab">
+                    <div id="fiber-cut-preview" class="cut-preview-graphic"></div>
+                </div>
+                <div id="sheet-pvc" class="sheet-tab">
+                    <div id="pvc-cut-preview" class="cut-preview-graphic"></div>
+                </div>
+                <div id="sheet-countertop" class="sheet-tab"> <div id="countertop-cut-preview" class="cut-preview-graphic"></div>
+</div>
+            </div>
+        </div>
+        <div id="main-mode-settings" class="main-mode-content">
+            <div class="cut-panel-tabs settings-subtabs">
+                <button class="tab-btn active" onclick="switchSettingsSubTab('sheets-config')">📄 ورق ها</button>
+                <button class="tab-btn" onclick="switchSettingsSubTab('cuts-config')">✂️ برش</button>
+            </div>
+
+            <div class="cut-panel-content">
+                <div id="subtab-sheets-config" class="settings-tab-content active">
+                    <div class="settings-card">
+                        <h4>📦 مدیریت و تنظیمات ابعاد ورق‌ها</h4>
+                        <p class="settings-description">
+                            برای هر متریال می‌توانید چندین ورق با ابعاد متفاوت وارد کنید. برای باز یا بسته شدن هر بخش روی هدر آن کلیک کنید.
+                        </p>
+                        
+                      <div class="sheets-accordion-container">
+                            
+    <!-- ورق بدنه -->
+    <div class="accordion-item open">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+<span class="status-dot sheet-dot"></span>
+               <strong>ورقها</strong>
+            </div>
+            <div class="accordion-meta">
+                <span class="meta-badge bg-purple">مدیریت لیست ورق‌ها</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+        </div>
+        <div class="accordion-content">
+            <div class="accordion-inner-wrapper">
+                <div class="inner-actions-bar">
+                   <button type="button" class="btn-add-new-sheet" onclick="addNewSheetRow('sheet')">➕ افزودن ورق جدید</button>
+                </div>
+<div id="sheets-list-container-sheet" class="nested-sheets-list">
+                    <div class="sheet-item-row">
+                        <div class="input-field-group width-90">
+                            <label>طول (cm)</label>
+                            <input type="number" class="sheet-w" value="366" min="1">
+                        </div>
+                        <div class="input-field-group width-90">
+                            <label>عرض (cm)</label>
+                            <input type="number" class="sheet-h" value="183" min="1">
+                        </div>
+                        <div class="input-field-group width-70">
+                            <label>تعداد</label>
+                            <input type="number" class="sheet-qty" value="10" min="1">
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>جنس ورق</label>
+                            <select class="sheet-material-type" onchange="handleMaterialTypeChange(this)">
+                                <option value="mdf" selected>ام‌دی‌اف (MDF)</option>
+                                <option value="leteron">لترون</option>
+                                <option value="highGloss">هایگلاس</option>
+                            </select>
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>طرح و رنگ</label>
+                            <div class="sheet-color-trigger" onclick="openSheetColorPicker(this)">
+                                <span class="sheet-color-preview default-white"></span>
+                                <span class="sheet-color-text">سفید یخچالی</span>
+                            </div>
+                        </div>
+                        <div class="input-field-group checkbox-field">
+                            <label class="unlimited-label">
+                                <input type="checkbox" class="sheet-unlimited" onchange="handleQtyDisable(this)">
+                                <span>♾️ نامحدود</span>
+                            </label>
+                        </div>
+                        <div class="row-delete-action">
+                            <button type="button" class="btn-delete-row" onclick="this.closest('.sheet-item-row').remove()">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- جایگزین کل ساختار آکاردئون <div class="accordion-item"> مربوط به ورق درب شود -->
+<div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+            <span class="status-dot backsplash-dot" style="background-color: #3b82f6;"></span>
+            <strong>ورق بین کابینتی</strong>
+        </div>
+        <div class="accordion-meta">
+            <span class="meta-badge bg-blue">مدیریت لیست ورق‌ها</span>
+            <span class="arrow-icon">▼</span>
+        </div>
+    </div>
+    <div class="accordion-content">
+        <div class="accordion-inner-wrapper">
+            <div class="inner-actions-bar">
+                <button type="button" class="btn-add-new-sheet" onclick="addNewSheetRow('backsplash')">➕ افزودن ورق جدید</button>
+            </div> 
+            <div id="sheets-list-container-backsplash" class="nested-sheets-list">
+                <div class="sheet-item-row">
+                    <div class="input-field-group width-90">
+                        <label>طول (cm)</label>
+                        <input type="number" class="sheet-w" value="280" min="1">
+                    </div>
+                    <div class="input-field-group width-90">
+                        <label>عرض (cm)</label>
+                        <input type="number" class="sheet-h" value="122" min="1">
+                    </div>
+                    <div class="input-field-group width-70">
+                        <label>تعداد</label>
+                        <input type="number" class="sheet-qty" value="1" min="1" disabled class="disabled-qty">
+                    </div>
+                    <div class="input-field-group width-120">
+                        <label>جنس ورق</label>
+                        <select class="sheet-material-type" onchange="handleMaterialTypeChange(this)">
+                            <option value="backsplash" selected>بین کابینتی (ماربل شیت)</option>
+                            <option value="highGloss">هایگلاس</option>
+                            <option value="mdf">ام‌دی‌اف (MDF)</option>
+                        </select>
+                    </div>
+                    <div class="input-field-group width-120">
+                        <label>طرح و رنگ</label>
+                        <div class="sheet-color-trigger" onclick="openSheetColorPicker(this)">
+                            <span class="sheet-color-preview default-highgloss"></span>
+                            <span class="sheet-color-text">طرح سنگ مرمر</span>
+                        </div>
+                    </div>
+                    <div class="input-field-group checkbox-field">
+                        <label class="unlimited-label">
+                            <input type="checkbox" class="sheet-unlimited" checked onchange="handleQtyDisable(this)">
+                            <span>♾️ نامحدود</span>
+                        </label>
+                    </div>
+                    <div class="row-delete-action">
+                        <button type="button" class="btn-delete-row" onclick="this.closest('.sheet-item-row').remove()">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- 🌟 ورق صفحه کابینت 🌟 -->
+    <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">
+            <span class="status-dot countertop-dot"></span>
+            <strong>ورق صفحه کابینت</strong>
+        </div>
+        <div class="accordion-meta">
+            <span class="meta-badge bg-orange">مدیریت لیست ورق‌ها</span>
+            <span class="arrow-icon">▼</span>
+        </div>
+    </div>
+    <div class="accordion-content">
+        <div class="accordion-inner-wrapper">
+            <div class="inner-actions-bar">
+                <button type="button" class="btn-add-new-sheet" onclick="addNewSheetRow('countertop')">➕ افزودن ورق جدید</button>
+            </div>
+            <div id="sheets-list-container-countertop" class="nested-sheets-list">
+                <div class="sheet-item-row">
+                    <div class="input-field-group width-90">
+                        <label>طول (cm)</label>
+                        <input type="number" class="sheet-w" value="410" min="1">
+                    </div>
+                    <div class="input-field-group width-90">
+                        <label>عرض (cm)</label>
+                        <input type="number" class="sheet-h" value="60" min="1">
+                    </div>
+                    <div class="input-field-group width-70">
+                        <label>تعداد</label>
+                        <input type="number" class="sheet-qty" value="1" min="1">
+                    </div>
+                    <div class="input-field-group width-120">
+                        <label>جنس ورق</label>
+                        <select class="sheet-material-type" onchange="handleMaterialTypeChange(this)">
+                            <option value="countertop" selected>صفحه کابینت (۳سم/۵سم)</option>
+                            <option value="mdf">ام‌دی‌اف (MDF)</option>
+                        </select>
+                    </div>
+                    <div class="input-field-group width-120">
+                        <label>طرح و رنگ</label>
+                        <div class="sheet-color-trigger" onclick="openSheetColorPicker(this)">
+                            <span class="sheet-color-preview default-white"></span>
+                            <span class="sheet-color-text">سفید مات</span>
+                        </div>
+                    </div>
+                    <div class="input-field-group checkbox-field">
+                        <label class="unlimited-label">
+                            <input type="checkbox" class="sheet-unlimited" onchange="handleQtyDisable(this)">
+                            <span>♾️ نامحدود</span>
+                        </label>
+                    </div>
+                    <div class="row-delete-action">
+                        <button type="button" class="btn-delete-row" onclick="this.closest('.sheet-item-row').remove()">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- ورق سه میل -->
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+                <span class="status-dot fiber-dot"></span>
+                <strong>ورق سه میل</strong>
+            </div>
+            <div class="accordion-meta">
+                <span class="meta-badge bg-yellow">مدیریت لیست ورق‌ها</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+        </div>
+        <div class="accordion-content">
+            <div class="accordion-inner-wrapper">
+                <div class="inner-actions-bar">
+                    <button type="button" class="btn-add-new-sheet" onclick="addNewSheetRow('fiber')">➕ افزودن ورق جدید</button>
+                </div>
+                <div id="sheets-list-container-fiber" class="nested-sheets-list">
+                    <div class="sheet-item-row">
+                        <div class="input-field-group width-90">
+                            <label>طول (cm)</label>
+                            <input type="number" class="sheet-w" value="244" min="1">
+                        </div>
+                        <div class="input-field-group width-90">
+                            <label>عرض (cm)</label>
+                            <input type="number" class="sheet-h" value="183" min="1">
+                        </div>
+                        <div class="input-field-group width-70">
+                            <label>تعداد</label>
+                            <input type="number" class="sheet-qty" value="1" min="1" disabled class="disabled-qty">
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>جنس ورق</label>
+                            <select class="sheet-material-type" onchange="handleMaterialTypeChange(this)">
+                                <option value="Fibr" selected>سه میل پرینتی</option>
+                            </select>
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>طرح و رنگ</label>
+                            <div class="sheet-color-trigger" onclick="openSheetColorPicker(this)">
+                                <span class="sheet-color-preview default-white"></span>
+                                <span class="sheet-color-text">سفید پرینتی</span>
+                            </div>
+                        </div>
+                        <div class="input-field-group checkbox-field">
+                            <label class="unlimited-label">
+                                <input type="checkbox" class="sheet-unlimited" checked onchange="handleQtyDisable(this)">
+                                <span>♾️ نامحدود</span>
+                            </label>
+                        </div>
+                        <div class="row-delete-action">
+                            <button type="button" class="btn-delete-row" onclick="this.closest('.sheet-item-row').remove()">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ورق PVC ضد آب -->
+    <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+                <span class="status-dot pvc-dot"></span>
+                <strong>ورق PVC ضد آب</strong>
+            </div>
+            <div class="accordion-meta">
+                <span class="meta-badge bg-green">مدیریت لیست ورق‌ها</span>
+                <span class="arrow-icon">▼</span>
+            </div>
+        </div>
+        <div class="accordion-content">
+            <div class="accordion-inner-wrapper">
+                <div class="inner-actions-bar">
+                    <button type="button" class="btn-add-new-sheet" onclick="addNewSheetRow('pvc')">➕ افزودن ورق جدید</button>
+                </div>
+                <div id="sheets-list-container-pvc" class="nested-sheets-list">
+                    <div class="sheet-item-row">
+                        <div class="input-field-group width-90">
+                            <label>طول (cm)</label>
+                            <input type="number" class="sheet-w" value="244" min="1">
+                        </div>
+                        <div class="input-field-group width-90">
+                            <label>عرض (cm)</label>
+                            <input type="number" class="sheet-h" value="122" min="1">
+                        </div>
+                        <div class="input-field-group width-70">
+                            <label>تعداد</label>
+                            <input type="number" class="sheet-qty" value="1" min="1" disabled class="disabled-qty">
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>جنس ورق</label>
+                            <select class="sheet-material-type" onchange="handleMaterialTypeChange(this)">
+                                <option value="PVC" selected>پی‌وی‌سی (PVC)</option>
+                            </select>
+                        </div>
+                        <div class="input-field-group width-120">
+                            <label>طرح و رنگ</label>
+                            <div class="sheet-color-trigger" onclick="openSheetColorPicker(this)">
+                                <span class="sheet-color-preview default-pvc"></span>
+                                <span class="sheet-color-text">پی‌وی‌سی سفید</span>
+                            </div>
+                        </div>
+                        <div class="input-field-group checkbox-field">
+                            <label class="unlimited-label">
+                                <input type="checkbox" class="sheet-unlimited" checked onchange="handleQtyDisable(this)">
+                                <span>♾️ نامحدود</span>
+                            </label>
+                        </div>
+                        <div class="row-delete-action">
+                            <button type="button" class="btn-delete-row" onclick="this.closest('.sheet-item-row').remove()">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+                    </div>
+                </div>
+                <div id="subtab-cuts-config" class="settings-tab-content">
+                    <div class="settings-card">
+                        <h4>✂️ تنظیمات پیشرفته ضخامت تیغه و بهینه‌سازی برش</h4>
+                        <p class="settings-description">
+                            این تنظیمات مستقیماً روی چیدمان قطعات و محاسبات فواصل دستگاه برش (اره دورکن / CNC) تأثیر می‌گذارند.
+                        </p>
+
+                        <div class="cuts-settings-grid">
+                            <div class="setting-input-box">
+                                <label>ضخامت تیغه اره (Kerf) - میلی‌متر</label>
+                                <input type="number" id="cut-param-kerf" value="3.5" min="0" max="10" step="0.1">
+                                <span class="input-help">مقدار خوراک بار تیغه (معمولاً 3.2 الی 4 میل)</span>
+                            </div>
+
+                           <div class="setting-input-box">
+    <label>جهت چرخش قطعات</label>
+    <select id="cut-param-orientation">
+        <option value="custom">سفارشی (بر اساس تنظیمات هر قطعه)</option>
+        <option value="free">غیر مهم (چرخش آزاد - بهینه‌ترین چیدمان)</option>
+        <option value="horizontal">افقی (قطعات به صورت افقی چیده شوند)</option>
+        <option value="vertical">عمودی (قطعات به صورت عمودی چیده شوند)</option>
+    </select>
+    <span class="input-help">
+        سفارشی: تبعیت از تنظیمات چرخش تک‌تک قطعات در جدول<br>
+        غیر مهم: چرخش آزاد برای کمترین پرت<br>
+        افقی: اولویت چیدمان افقی (خط برش بهتر)<br>
+        عمودی: اولویت چیدمان عمودی (رگه چوب یا ظاهر یکنواخت)
+    </span>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="cut-panel-footer">
+    <button onclick="openManualListModal()" class="manual-btn">📝 لیست قطعات دستی</button>
+    <button onclick="optimizeCuts()" class="refresh-btn">محاسبه چیدمان</button>
+    <button onclick="openIsolatedPiecesModal()" class="isolated-btn" style="background: linear-gradient(135deg, #a855f7, #7c3aed); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.2s;">👁️ مشاهده قطعات برش‌خورده</button>
+    <button onclick="exportCutMasterFile()" class="export-btn">📥 خروجی فایل کات مستر</button>
+</div>
+
+    </div>
+</div>
+
+<div id="manual-pieces-modal" class="manual-modal-overlay">
+    <div class="manual-modal-wrapper"> 
+        <div class="manual-modal-header">
+            <h3>📋 لیست قطعات سفارشی و دستی (Manual Pieces)</h3>
+            <button onclick="closeManualListModal()" class="manual-modal-close">×</button>
+        </div>
+        
+        <div class="manual-modal-form">
+            <div class="form-group width-110">
+                <label>نوع قطعه</label>
+                <select id="manual-type" onchange="handleManualTypeChange(this)">
+                   <option value="sheet" selected>ورقها</option>
+<option value="backsplash">بین کابینتی</option>
+                    <option value="fiber">سه میل</option>
+                    <option value="pvc">PVC ضد آب</option>
+                    <option value="countertop">صفحه کابینت</option>
+                </select>
+            </div>
+            <div class="form-group width-75">
+                <label>طول (cm)</label>
+                <input type="number" id="manual-w" value="100" min="1">
+            </div>
+            <div class="form-group width-75">
+                <label>عرض (cm)</label>
+                <input type="number" id="manual-h" value="60" min="1">
+            </div>
+            <div class="form-group width-60">
+                <label>تعداد</label>
+                <input type="number" id="manual-count" value="1" min="1">
+            </div>
+
+            <div class="form-group width-75">
+                <label>خدمات طول</label>
+                <select id="manual-service-w">
+                    <option value="-" selected>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="S">S</option>
+                    <option value="SS">SS</option>
+                    <option value="F">F</option>
+                    <option value="FF">FF</option>
+                    <option value="1S">1S</option>
+                    <option value="2S">2S</option>
+                    <option value="1F">1F</option>
+                </select>
+            </div>
+
+            <div class="form-group width-75">
+                <label>خدمات عرض</label>
+                <select id="manual-service-h">
+                    <option value="-" selected>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="S">S</option>
+                    <option value="SS">SS</option>
+                    <option value="F">F</option>
+                    <option value="FF">FF</option>
+                    <option value="1S">1S</option>
+                    <option value="2S">2S</option>
+                    <option value="1F">1F</option>
+                </select>
+            </div>
+
+            <div class="form-group width-90">
+                <label>چرخش (راه‌نما)</label>
+                <select id="manual-rotation">
+                    <option value="none" selected>غیر مهم</option>
+                    <option value="horizontal">افقی</option>
+                    <option value="vertical">عمودی</option>
+                </select>
+            </div>
+            
+            <div class="form-group width-130">
+                <label>جنس ورق</label>
+                <select id="manual-material-type" class="sheet-material-type">
+                    <option value="mdf" selected>ام‌دی‌اف (MDF)</option>
+                    <option value="leteron">لترون</option>
+                    <option value="highGloss">هایگلاس</option>
+                    <option value="countertop">صفحه کابینت</option>
+                    <option value="backsplash">ماربل شیت</option>
+                    <option value="PVC">پی‌وی‌سی (PVC)</option>
+                    <option value="Fibr">سه میل پرینتی</option>
+                </select>
+            </div>
+
+            <div class="form-group width-70-center">
+                <label>طرح و رنگ</label>
+                <div id="manual-color-preview" class="manual-color-circle-trigger default-white-bg" 
+                     onclick="openManualColorPicker()" 
+                     data-hex="#FFFFFF" 
+                     title="سفید یخچالی">
+                </div>
+            </div>
+
+            <button onclick="addManualPieceRow()" class="form-add-btn">➕ افزودن به لیست</button>
+        </div>
+
+        <div class="manual-table-container">
+            <table class="manual-pieces-table">
+                <thead>
+                    <tr>
+                        <th>قطعه</th>
+                        <th>طول (cm)</th>
+                        <th>عرض (cm)</th>
+                        <th>تعداد</th>
+                        <th>خدمات طول</th>
+                        <th>خدمات عرض</th>
+                        <th>چرخش</th>
+                        <th>جنس ورق</th>
+                        <th>طرح و رنگ</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="manual-pieces-tbody"></tbody>
+            </table>
+        </div>
+
+        <div class="manual-modal-footer">
+            <button onclick="clearAllManualPieces()" class="btn-clear-all">🗑️ پاک کردن همه</button>
+            <button onclick="applyManualPiecesAndRecompute()" class="btn-submit-pieces">✅ اعمال و محاسبه چیدمان کات</button>
+        </div>
+    </div>
+</div>
+

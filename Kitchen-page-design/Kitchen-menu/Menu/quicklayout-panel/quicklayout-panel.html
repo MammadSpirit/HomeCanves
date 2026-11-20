@@ -1,0 +1,109 @@
+<div id="quicklayout-panel-wrapper" class="door-panel-wrapper">
+    <div class="door-panel-header">
+        <h3>چیدمان سریع</h3>
+        <button class="door-panel-close" onclick="closeQuickLayoutPanel()">×</button>
+    </div>
+    <div class="door-panel-body">
+
+        <div class="door-panel-card">
+            <div class="door-input-group no-margin">
+                <label>چیدمان روی دیوار</label>
+                <select id="quicklayout-wall-select" class="modern-select" onchange="onQuickLayoutWallChange()"></select>
+            </div>
+        </div>
+
+        <div class="door-panel-card">
+            <div class="door-input-group no-margin">
+                <label>نمای دو بعدی اتاق</label>
+                <canvas id="quicklayout-room-canvas" width="280" height="220" style="width:100%; height:220px; border-radius:8px; margin-top:6px;"></canvas>
+            </div>
+        </div>
+
+        <div class="door-panel-card">
+            <div class="door-input-group no-margin">
+                <label>انتخاب یونیت</label>
+<select id="quicklayout-unit-select" class="modern-select" onchange="onQuickLayoutUnitSelectChange()"></select>
+            </div>
+            <button type="button" class="door-stepper-btn" style="width:100%; height:38px; border-radius:8px; border:1px solid #334155; margin-top:10px;" onclick="addItemToQuickLayoutPreview()">+ افزودن به پیش‌نمایش</button>
+        </div>
+
+       <!-- 🌟 کارت جدید: تنظیمات درب برای یونیت انتخاب‌شده/قالب پیش‌فرض -->
+        <div class="door-panel-card">
+            <div class="door-input-group no-margin">
+                <label>تنظیمات درب</label>
+                <select id="quicklayout-item-doortype" class="modern-select" style="margin-top:6px;" onchange="onQuickLayoutFieldChange()">
+                    <option value="side">افقی (لولایی)</option>
+                    <option value="lift">جکی (بالا بازشو)</option>
+                    <option value="lift-side">جکی کنار هم</option>
+                    <option value="split">قدی دو تکه</option>
+                    <option value="combo">ترکیبی</option>
+                    <option value="jaki-ghadi">جکی و قدی</option>
+                    <option value="drawer">درب کشو</option>
+                    <option value="drawer-ghadi">کشو و قدی</option>
+                </select>
+               <div style="margin-top:8px;">
+                    <span class="door-mini-label">تعداد درب</span>
+                    <div class="door-stepper">
+                        <button type="button" class="door-stepper-btn" onclick="changeQuickLayoutDoorCount(-1)">-</button>
+                        <input type="number" id="quicklayout-item-doorcount" class="door-stepper-input" value="2" readonly>
+                        <button type="button" class="door-stepper-btn" onclick="changeQuickLayoutDoorCount(1)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="door-panel-card">
+            <div class="door-input-group no-margin">
+                <label>لیست چیدمان</label>
+                <div id="quicklayout-preview" style="font-size:12px; color:#cbd5e1; display:flex; flex-direction:column; gap:4px; max-height:150px; overflow-y:auto; margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- 🌟 بخش ویرایش اندازه و موقعیت آیتم انتخاب‌شده (شبیه پنل ویرایش کابینت) -->
+<!-- 🌟 پنل کامل ویرایش (دقیقاً مثل پنل ویرایش کابینت) - همیشه دیده می‌شه و به‌عنوان قالب پیش‌فرض هم عمل می‌کنه -->
+        <div class="door-panel-card" id="quicklayout-edit-wrapper">
+            <div class="door-input-group no-margin">
+                <label>مقادیر ابعاد و موقعیت</label>
+                <div class="door-grid-2" style="gap:8px; margin-top:6px;">
+                    <div>
+                        <span class="door-mini-label">عرض (cm)</span>
+                        <input type="number" id="quicklayout-item-w" class="modern-input" step="0.1" value="90" oninput="onQuickLayoutFieldChange()">
+                    </div>
+                    <div>
+                        <span class="door-mini-label">ارتفاع (cm)</span>
+                        <input type="number" id="quicklayout-item-h" class="modern-input" step="0.1" value="73.6" oninput="onQuickLayoutFieldChange()">
+                    </div>
+                    <div>
+                        <span class="door-mini-label">عمق (cm)</span>
+                        <input type="number" id="quicklayout-item-d" class="modern-input" step="0.1" value="55" oninput="onQuickLayoutFieldChange()">
+                    </div>
+                    <div>
+                        <span class="door-mini-label">ارتفاع نصب (cm)</span>
+                        <input type="number" id="quicklayout-item-elevation" class="modern-input" step="0.1" value="14" oninput="onQuickLayoutFieldChange()">
+                    </div>
+                    <div>
+                        <span class="door-mini-label">زاویه (°)</span>
+                        <input type="number" id="quicklayout-item-angle" class="modern-input" step="1" value="0" oninput="onQuickLayoutFieldChange()">
+                    </div>
+                </div>
+
+                <div class="door-grid-2" style="gap:8px; margin-top:12px;">
+                    <div>
+                        <span class="door-mini-label">موقعیت X (cm)</span>
+                        <input type="number" id="quicklayout-item-x" class="modern-input" step="0.1" value="100" oninput="onQuickLayoutXYManualChange()">
+                    </div>
+                    <div>
+                        <span class="door-mini-label">موقعیت Y (cm)</span>
+                        <input type="number" id="quicklayout-item-y" class="modern-input" step="0.1" value="100" oninput="onQuickLayoutXYManualChange()">
+                    </div>
+                </div>
+
+                <div class="door-grid-2" style="gap:8px; margin-top:12px;">
+                    <button type="button" class="door-stepper-btn" style="height:36px; border-radius:8px; border:1px solid #334155;" onclick="rotateQuickLayoutSelectedField()">چرخش ۹۰°</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <button class="door-apply-btn" onclick="applyQuickLayoutToScene()">تایید و اضافه کردن به صحنه</button>
+</div>

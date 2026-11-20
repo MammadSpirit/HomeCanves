@@ -1,0 +1,99 @@
+<!-- فایل: toolbar.html -->
+<div class="design-toolbar">
+    
+    <!-- بخش اول: ابزارهای زوم -->
+    <div id="zoom-controls" class="zoom-tools">
+        <button onclick="zoomIn()" title="بزرگ‌نمایی">+</button>
+        <button onclick="initRoomScale()" title="ریست نمایش">⟲</button>
+        <button onclick="zoomOut()" title="کوچک‌نمایی">−</button>
+    </div>
+    
+    <!-- خط جداکننده -->
+    <div class="toolbar-divider"></div>
+
+    <!-- دکمه قفل کردن عمومی ۲ بعدی -->
+    <button id="toolbar-lock-btn" onclick="toggleLock()" title="قفل / باز کردن یونیت" class="toolbar-btn toolbar-lock-btn">
+        🔓
+    </button>
+    <!-- ========================================== -->
+    <!-- بخش دوم (الف): کنترل‌های نمای 2D -->
+    <!-- ========================================== -->
+    <div id="toolbar-2d-controls" class="toolbar-position-group">
+
+        <!-- دکمه چرخش سریع -->
+        <button id="toolbar-rotate-btn" onclick="rotateSelectedCabinetFromToolbar()" title="چرخش ۹۰ درجه" class="toolbar-btn">
+            🔄
+        </button>
+
+        <!-- دکمه کپی یونیت (با تمام مشخصات و ابعاد) -->
+        <button id="toolbar-duplicate-btn" onclick="duplicateSelectedCabinetFromToolbar()" title="کپی یونیت" class="toolbar-btn">
+            ⧉
+        </button>
+
+        <!-- موقعیت X -->
+        <div class="toolbar-input-wrapper" title="موقعیت افقی (X)">
+            <input type="number" id="toolbar-pos-x" value="0" step="0.1" class="toolbar-number-input">
+            <span class="toolbar-unit">cm</span>
+            <img src="Assets/Icons/chaporastx.png" class="toolbar-icon" alt="X">
+        </div>
+
+        <!-- موقعیت Y -->
+        <div class="toolbar-input-wrapper" title="موقعیت عمودی (Y)">
+            <input type="number" id="toolbar-pos-y" value="0" step="0.1" class="toolbar-number-input">
+            <span class="toolbar-unit">cm</span>
+            <img src="Assets/Icons/balapaeiny.png" class="toolbar-icon" alt="Y">
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- بخش دوم (ب): کنترل‌های نمای 3D (دیوار) -->
+    <!-- ========================================== -->
+    <div id="toolbar-3d-controls" class="toolbar-position-group">
+        
+        <!-- مختصات X سه بعدی -->
+        <div class="toolbar-input-wrapper" title="مختصات X دیوار">
+            <span class="toolbar-label">X:</span>
+            <input type="number" id="wallPosX" step="0.1" class="toolbar-number-input wall-input">
+            <span class="toolbar-unit">cm</span>
+        </div>
+
+        <!-- مختصات Z سه بعدی -->
+        <div class="toolbar-input-wrapper" title="مختصات Z دیوار">
+            <span class="toolbar-label">Z:</span>
+            <input type="number" id="wallPosZ" step="0.1" class="toolbar-number-input wall-input">
+            <span class="toolbar-unit">cm</span>
+        </div>
+
+        <!-- زاویه دیوار -->
+        <div class="toolbar-input-wrapper" title="زاویه دیوار">
+            <span class="toolbar-label">زاویه:</span>
+            <input type="number" id="wallAngle" step="1" class="toolbar-number-input wall-input">
+            <span class="toolbar-unit">°</span>
+        </div>
+        
+    </div>
+    
+    <!-- ========================================== -->
+    <!-- بخش دوم (ج): کنترل‌های نمای Elev (روبرو) -->
+    <!-- ========================================== -->
+    <div id="toolbar-elev-controls" class="toolbar-position-group">
+
+        <!-- عرض حرکت روی دیوار (افقی) -->
+        <div class="toolbar-input-wrapper" title="موقعیت روی دیوار (افقی)">
+            <input type="number" id="toolbar-elev-x" value="0" step="0.1" class="toolbar-number-input">
+            <span class="toolbar-unit">cm</span>
+            <img src="Assets/Icons/chaporastx.png" class="toolbar-icon" alt="X">
+            <button id="toolbar-elev-lock-x" onclick="toggleElevLock('x')" title="قفل حرکت افقی" class="toolbar-btn toolbar-elev-lock-btn">🔓</button>
+        </div>
+
+        <!-- ارتفاع از کف (عمودی) -->
+        <div class="toolbar-input-wrapper" title="ارتفاع از کف (عمودی)">
+            <input type="number" id="toolbar-elev-h" value="0" step="0.1" class="toolbar-number-input">
+            <span class="toolbar-unit">cm</span>
+            <img src="Assets/Icons/balapaeiny.png" class="toolbar-icon" alt="H">
+            <button id="toolbar-elev-lock-h" onclick="toggleElevLock('h')" title="قفل حرکت عمودی" class="toolbar-btn toolbar-elev-lock-btn">🔓</button>
+        </div>
+
+    </div>
+
+</div>

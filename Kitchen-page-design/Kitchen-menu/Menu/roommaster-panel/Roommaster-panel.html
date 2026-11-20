@@ -1,0 +1,455 @@
+<div id="room-master-panel" class="room-wrapper">
+    <div class="room-header">
+        <h3>تنظیمات فضای آشپزخانه</h3>
+        <button class="room-close" onclick="closeRoomMasterPanel()">×</button>
+    </div>
+    
+    <div class="room-body">
+        
+        <!-- 🌟 بخش ارتفاع سقف -->
+        <div class="room-input-group">
+            <label>ارتفاع سقف (cm)</label>
+            <input type="number" id="master-room-h" class="room-input" value="280">
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 🟥 تنظیمات دیوارهای مجزا (بالا، پایین، چپ، راست) -->
+        <!-- ========================================== -->
+        <div id="fixed-mode-settings">
+            <input type="hidden" id="master-room-w" value="400">
+            <input type="hidden" id="master-room-d" value="300">
+
+            <label class="room-section-label">تنظیمات ابعاد و زاویه دیوارها</label>
+
+            <!-- دیوار بالا -->
+            <div id="wall-panel-top" class="room-wall-panel" onclick="selectWallPanel('top')">
+                <div class="room-wall-header">
+                    <strong>دیوار بالا</strong>
+                    <label class="room-switch">
+                        <input type="checkbox" id="wall-top" checked onchange="draw()">
+                        <span class="room-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-sm">سمت دیوار</label>
+                    <select id="wall-top-side" class="room-input">
+                        <option value="front">جلوی دیوار</option>
+                        <option value="back" selected>عقب دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-row">
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">طول (cm)</label>
+                        <input type="number" id="wall-top-len" class="room-input" placeholder="مثلاً 400" value="400">
+                    </div>
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">زاویه (درجه)</label>
+                        <input type="number" id="wall-top-angle" class="room-input" placeholder="مثلاً 0" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- دیوار پایین -->
+            <div id="wall-panel-bottom" class="room-wall-panel" onclick="selectWallPanel('bottom')">
+                <div class="room-wall-header">
+                    <strong>دیوار پایین</strong>
+                    <label class="room-switch">
+                        <input type="checkbox" id="wall-bottom" onchange="draw()">
+                        <span class="room-slider"></span>
+                    </label>
+                </div>
+
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-sm">سمت دیوار</label>
+                    <select id="wall-bottom-side" class="room-input">
+                        <option value="front">جلوی دیوار</option>
+                        <option value="back" selected>عقب دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-row">
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">طول (cm)</label>
+                        <input type="number" id="wall-bottom-len" class="room-input" placeholder="مثلاً 400" value="400">
+                    </div>
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">زاویه (درجه)</label>
+                        <input type="number" id="wall-bottom-angle" class="room-input" placeholder="مثلاً 180" value="180">
+                    </div>
+                </div>
+            </div>
+
+            <!-- دیوار چپ -->
+            <div id="wall-panel-left" class="room-wall-panel" onclick="selectWallPanel('left')">
+                <div class="room-wall-header">
+                    <strong>دیوار چپ</strong>
+                    <label class="room-switch">
+                        <input type="checkbox" id="wall-left" checked onchange="draw()">
+                        <span class="room-slider"></span>
+                    </label>
+                </div>
+
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-sm">سمت دیوار</label>
+                    <select id="wall-left-side" class="room-input">
+                        <option value="front">جلوی دیوار</option>
+                        <option value="back" selected>عقب دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-row">
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">طول (cm)</label>
+                        <input type="number" id="wall-left-len" class="room-input" placeholder="مثلاً 300" value="300">
+                    </div>
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">زاویه (درجه)</label>
+                        <input type="number" id="wall-left-angle" class="room-input" placeholder="مثلاً 90" value="90">
+                    </div>
+                </div>
+            </div>
+
+            <!-- دیوار راست -->
+            <div id="wall-panel-right" class="room-wall-panel" onclick="selectWallPanel('right')">
+                <div class="room-wall-header">
+                    <strong>دیوار راست</strong>
+                    <label class="room-switch">
+                        <input type="checkbox" id="wall-right" onchange="draw()">
+                        <span class="room-slider"></span>
+                    </label>
+                </div>
+
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-sm">سمت دیوار</label>
+                    <select id="wall-right-side" class="room-input">
+                        <option value="front">جلوی دیوار</option>
+                        <option value="back" selected>عقب دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-row">
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">طول (cm)</label>
+                        <input type="number" id="wall-right-len" class="room-input" placeholder="مثلاً 300" value="300">
+                    </div>
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">زاویه (درجه)</label>
+                        <input type="number" id="wall-right-angle" class="room-input" placeholder="مثلاً -90" value="-90">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========================================== -->
+            <!-- 🧱 بخش افزودن دیوار جدید (پویا) -->
+            <!-- ========================================== -->
+            <hr class="room-divider room-my-lg">
+            <label class="room-section-label">➕ افزودن دیوار جدید</label>
+            <div id="wall-panel-new" class="room-new-wall-panel">
+                
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-md-bold">۱. نقطه اتصال</label>
+                    <select id="new-wall-attachment-point" class="room-input">
+                        <option value="start">اتصال به ابتدای دیوار</option>
+                        <option value="end" selected>اتصال به انتهای دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-md-bold">۲. سمت دیوار</label>
+                    <select id="new-wall-target-wall" class="room-input">
+                        <option value="front">جلوی دیوار</option>
+                        <option value="back">عقب دیوار</option>
+                    </select>
+                </div>
+
+                <div class="room-input-group room-margin-bottom-sm">
+                    <label class="room-label-md-bold">۳. جهت شیفت اتصال</label>
+                    <select id="new-wall-shift" class="room-input">
+                        <option value="right">سمت راست</option>
+                        <option value="left">سمت چپ</option>
+                    </select>
+                </div>
+
+                <hr class="room-new-wall-divider">
+
+                <div class="room-input-row">
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">طول دیوار جدید (cm)</label>
+                        <input type="number" id="new-wall-len" class="room-input" placeholder="200">
+                    </div>
+                    <div class="room-input-group room-flex-1">
+                        <label class="room-label-sm">زاویه دیوار جدید (درجه)</label>
+                        <input type="number" id="new-wall-angle" class="room-input" placeholder="45">
+                    </div>
+                </div>
+                <button onclick="addDynamicWallElement()" class="room-btn room-btn-add-wall">
+                    <span>➕ اضافه کردن این دیوار</span>
+                </button>
+            </div>
+
+            <!-- لیست دیوارهای اضافه شده -->
+            <div id="dynamic-walls-list" class="room-elements-list room-mt-sm"></div>
+
+        </div>
+        <!-- دکمه اتصال خودکار دیوارها -->
+        <div class="room-connect-wrapper">
+            <button id="btn-connect-walls" class="room-btn-connect" onclick="toggleAutoConnectWalls()">
+                🔗 بستن فضای باز (دیوار پایین به راست)
+            </button>
+        </div>
+
+        <hr class="room-divider">
+
+        <!-- 🪟 بخش افزودن پنجره -->
+        <div class="room-input-group">
+            <label class="room-section-label room-color-window">🪟 افزودن پنجره</label>
+            
+            <div class="room-margin-bottom-sm">
+                <label>انتخاب دیوار</label>
+                <select id="window-wall" class="room-input">
+                    <option value="top">دیوار بالا</option>
+                    <option value="bottom">دیوار پایین</option>
+                    <option value="left">دیوار چپ</option>
+                    <option value="right">دیوار راست</option>
+                </select>
+            </div>
+
+            <div class="room-input-row room-margin-bottom-sm">
+                <div class="room-input-group room-flex-1">
+                    <label>عرض (cm)</label>
+                    <input type="number" id="window-width" class="room-input" placeholder="120">
+                </div>
+                <div class="room-input-group room-flex-1">
+                    <label>ارتفاع (cm)</label>
+                    <input type="number" id="window-height" class="room-input" placeholder="100">
+                </div>
+            </div>
+
+            <div class="room-input-row room-margin-bottom-md">
+                <div class="room-input-group room-flex-1">
+                    <label>فاصله افقی (cm)</label>
+                    <input type="number" id="window-offset" class="room-input" placeholder="فاصله از ابتدا">
+                </div>
+                <div class="room-input-group room-flex-1">
+                    <label>فاصله از کف (cm)</label>
+                    <input type="number" id="window-elevation" class="room-input" placeholder="90">
+                </div>
+            </div>
+
+            <button onclick="addWindowElement()" class="room-btn room-btn-window">
+                <span>➕ اضافه کردن پنجره</span>
+            </button>
+            <div id="windows-list" class="room-elements-list"></div>
+        </div>
+
+<!-- 🎨 بخش تنظیمات رنگ و متریال محیط -->
+<div class="room-input-group">
+    <label class="room-section-label">🎨 تنظیمات رنگ و متریال محیط</label>
+
+    <!-- پس‌زمینه و سقف -->
+    <div class="room-input-row room-margin-bottom-sm">
+        <div class="room-input-group room-flex-1">
+            <label class="room-label-sm">پس‌زمینه</label>
+            <input type="color" id="color-background" class="room-input room-color-input" onchange="KitchenPanelManager.changeColor('background', this.value)">
+        </div>
+        <div class="room-input-group room-flex-1">
+            <label class="room-label-sm">سقف</label>
+            <input type="color" id="color-ceiling" class="room-input room-color-input" onchange="KitchenPanelManager.changeColor('ceiling', this.value)">
+            <div class="room-input-row room-margin-top-sm" style="margin-top:8px;">
+                <div class="room-input-group room-flex-1">
+                    <label class="room-label-sm">ضخامت سقف (cm)</label>
+                    <input type="number" id="ceiling-thickness" class="room-input" value="18" min="8" max="40" step="1" onchange="KitchenPanelManager.changeCeilingThickness(this.value)">
+                </div>
+                <div class="room-input-group room-flex-1">
+                    <label class="room-label-sm">پرداخت سقف</label>
+                    <select id="ceiling-roughness" class="room-input" onchange="KitchenPanelManager.changeCeilingRoughness(this.value)">
+                        <option value="0.95">مات کامل</option>
+                        <option value="0.82" selected>گچ معمولی</option>
+                        <option value="0.55">نیمه‌مات</option>
+                        <option value="0.3">ساتین</option>
+                    </select>
+                </div>
+            </div>
+            <div class="room-input-row" style="margin-top:8px;">
+                <div class="room-input-group room-flex-1">
+                    <label class="room-label-sm">قرنیز سقف</label>
+                    <select id="ceiling-cornice" class="room-input" onchange="KitchenPanelManager.changeCeilingCornice(this.value)">
+                        <option value="1" selected>فعال</option>
+                        <option value="0">خاموش</option>
+                    </select>
+                </div>
+                <div class="room-input-group room-flex-1">
+                    <label class="room-label-sm">ارتفاع قرنیز (cm)</label>
+                    <input type="number" id="ceiling-cornice-h" class="room-input" value="6" min="2" max="20" step="0.5" onchange="KitchenPanelManager.changeCeilingCorniceSize('h', this.value)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="room-divider room-my-sm">
+
+    <!-- 🧱 دیوارها -->
+    <label class="room-label-md-bold">🧱 متریال دیوارها</label>
+    <div class="room-input-group room-margin-bottom-sm">
+        <label class="room-label-sm">نوع دیوار</label>
+        <select id="wall-style" class="room-input" onchange="KitchenPanelManager.changeWallStyle(this.value)">
+            <option value="ceramic">سرامیک (با باند مشکی)</option>
+            <option value="white">کاملاً سفید</option>
+        </select>
+    </div>
+
+    <div id="wall-ceramic-colors">
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند پایین ۱</label>
+                <input type="color" id="wall-band-lower1" class="room-input room-color-input" value="#fdfbf7" onchange="KitchenPanelManager.changeWallBandColor('lower1', this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند پایین ۲</label>
+                <input type="color" id="wall-band-lower2" class="room-input room-color-input" value="#f4f1ea" onchange="KitchenPanelManager.changeWallBandColor('lower2', this.value)">
+            </div>
+        </div>
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند مشکی ۱</label>
+                <input type="color" id="wall-band-mid1" class="room-input room-color-input" value="#161616" onchange="KitchenPanelManager.changeWallBandColor('mid1', this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند مشکی ۲</label>
+                <input type="color" id="wall-band-mid2" class="room-input room-color-input" value="#1d1d1d" onchange="KitchenPanelManager.changeWallBandColor('mid2', this.value)">
+            </div>
+        </div>
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند بالا ۱</label>
+                <input type="color" id="wall-band-upper1" class="room-input room-color-input" value="#fdfbf7" onchange="KitchenPanelManager.changeWallBandColor('upper1', this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ باند بالا ۲</label>
+                <input type="color" id="wall-band-upper2" class="room-input room-color-input" value="#f4f1ea" onchange="KitchenPanelManager.changeWallBandColor('upper2', this.value)">
+            </div>
+        </div>
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ بند (گروت)</label>
+                <input type="color" id="wall-grout-color" class="room-input room-color-input" value="#c8c2b8" onchange="KitchenPanelManager.changeWallGroutColor(this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">پرداخت سطح دیوار</label>
+                <select id="wall-finish-roughness" class="room-input" onchange="KitchenPanelManager.changeWallRoughness(this.value)">
+                    <option value="0.55">مات</option>
+                    <option value="0.42" selected>نیمه‌مات (سرامیک)</option>
+                    <option value="0.28">ساتین</option>
+                    <option value="0.12">براق</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <hr class="room-divider room-my-sm">
+
+    <!-- 🟫 کف -->
+    <label class="room-label-md-bold">🟫 متریال کف</label>
+    <div class="room-input-group room-margin-bottom-sm">
+        <label class="room-label-sm">نوع کف</label>
+        <select id="floor-style" class="room-input" onchange="KitchenPanelManager.changeFloorStyle(this.value)">
+            <option value="ceramic">سرامیک</option>
+            <option value="parquet">پارکت چوبی</option>
+        </select>
+    </div>
+
+    <div id="floor-ceramic-colors">
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ سرامیک ۱</label>
+                <input type="color" id="floor-tile1" class="room-input room-color-input" value="#DCD3C6" onchange="KitchenPanelManager.changeFloorTileColor('tile1', this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ سرامیک ۲</label>
+                <input type="color" id="floor-tile2" class="room-input room-color-input" value="#CFC4B5" onchange="KitchenPanelManager.changeFloorTileColor('tile2', this.value)">
+            </div>
+        </div>
+        <div class="room-input-row room-margin-bottom-sm">
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">رنگ بندکشی (گروت)</label>
+                <input type="color" id="floor-grout" class="room-input room-color-input" value="#9a8f82" onchange="KitchenPanelManager.changeFloorTileColor('grout', this.value)">
+            </div>
+            <div class="room-input-group room-flex-1">
+                <label class="room-label-sm">اندازه کاشی (cm)</label>
+                <select id="floor-tile-size" class="room-input" onchange="KitchenPanelManager.changeFloorTileSize(this.value)">
+                    <option value="40">۴۰ × ۴۰</option>
+                    <option value="60" selected>۶۰ × ۶۰</option>
+                    <option value="80">۸۰ × ۸۰</option>
+                    <option value="100">۱۰۰ × ۱۰۰</option>
+                </select>
+            </div>
+        </div>
+        <div class="room-input-group">
+            <label class="room-label-sm">پرداخت سطح کف</label>
+            <select id="floor-finish-roughness" class="room-input" onchange="KitchenPanelManager.changeFloorRoughness(this.value)">
+                <option value="0.55">مات</option>
+                <option value="0.38" selected>نیمه‌مات (سرامیک)</option>
+                <option value="0.22">ساتین</option>
+                <option value="0.1">براق</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+        <hr class="room-divider">
+
+        <!-- 🚪 بخش افزودن درب -->
+        <div class="room-input-group">
+            <label class="room-section-label room-color-door">🚪 افزودن درب</label>
+            <div class="room-margin-bottom-sm">
+                <label>انتخاب دیوار</label>
+                <select id="door-wall" class="room-input">
+                    <option value="top">دیوار بالا</option>
+                    <option value="bottom">دیوار پایین</option>
+                    <option value="left">دیوار چپ</option>
+                    <option value="right">دیوار راست</option>
+                </select>
+            </div>
+            <div class="room-input-row room-margin-bottom-sm">
+                <div class="room-input-group room-flex-1">
+                    <label>عرض (cm)</label>
+                    <input type="number" id="door-width" class="room-input" value="90">
+                </div>
+                <div class="room-input-group room-flex-1">
+                    <label>ارتفاع (cm)</label>
+                    <input type="number" id="door-height" class="room-input" value="210">
+                </div>
+            </div>
+            <div class="room-input-row room-margin-bottom-md">
+                <div class="room-input-group room-flex-1">
+                    <label>فاصله افقی (cm)</label>
+                    <input type="number" id="door-offset" class="room-input" placeholder="فاصله از ابتدا">
+                </div>
+            </div>
+            <button onclick="addDoorElement()" class="room-btn room-btn-door">
+                <span>➕ اضافه کردن درب</span>
+            </button>
+            <div id="doors-list" class="room-elements-list"></div>
+        </div>
+
+        <hr class="room-divider">
+
+        <!-- دکمه‌های اصلی پنل -->
+        <div class="room-panel-actions">
+            <button onclick="applyRoomAction('UPDATE')" class="room-btn room-btn-update">
+                <img src="Assets/Icons/check.png" class="room-btn-icon">
+                <span>بروزرسانی ابعاد فعلی</span>
+            </button>
+            <button onclick="applyRoomAction('NEW')" class="room-btn room-btn-danger">
+                <img src="Assets/Icons/room-new.png" class="room-btn-icon">
+                <span>ساخت آشپزخانه جدید</span>
+            </button>
+        </div>
+
+        <div id="new-kitchen-warning" class="room-warning-box">
+            ⚠️ توجه: دکمه قرمز تمام چیدمان فعلی را حذف می‌کند.
+        </div>
+    </div>
+</div>

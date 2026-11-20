@@ -1,0 +1,128 @@
+<div id="rokoob-editor-panel" class="kickboard-wrapper">
+    <!-- هدر پنل -->
+    <div class="kickboard-header">
+        <h3>مدیریت و طراحی روکوب</h3>
+        <button class="kickboard-close-btn" onclick="closeRokoobPanel()">×</button>
+    </div>
+
+    <!-- بدنه اصلی -->
+    <div class="kickboard-body">
+
+        <!-- ۱. لیست قطعات چهارچوب (قابل انتخاب) -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">قطعات چهارچوب</label>
+            <div id="rokoob-parts-container" style="max-height: 140px; overflow-y: auto; background: rgba(15, 23, 42, 0.6); padding: 8px; border-radius: 8px; border: 1px solid #334155;">
+            </div>
+        </div>
+
+        <!-- ۲. اعمال گروهی روی همه قطعات (از نمای روبه‌رو) -->
+        <div id="rokoob-bulk-wrapper" class="kickboard-input-group" style="background: rgba(56, 189, 248, 0.06); padding: 12px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.2);">
+            <label class="kickboard-label" style="color:#38bdf8; font-weight:bold;">اعمال گروهی روی همه قطعات</label>
+            <div style="font-size:11px; color:#94a3b8; margin:4px 0 8px; line-height:1.5;">
+                از نمای روبه‌رو: جلو / عقب / چپ / راست. با تیک زدن، آن سمت روی <strong>همه قطعات</strong> فعال می‌شود.
+            </div>
+            <div id="rokoob-bulk-directions" style="display:flex; flex-direction:column; gap:6px;"></div>
+            <div style="margin-top:10px;">
+                <span style="font-size:11px; color:#94a3b8;">رنگ و جنس مشترک:</span>
+                <input
+                    type="text"
+                    id="rokoob-bulk-color-search"
+                    placeholder="برای انتخاب رنگ گروهی کلیک کنید"
+                    class="kickboard-modern-input"
+                    readonly
+                    onclick="openRokoobBulkColorModal()"
+                    autocomplete="off"
+                    style="margin-top:4px;">
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:10px;">
+                <div>
+                    <span style="font-size:11px; color:#94a3b8;">عرض مشترک (cm):</span>
+                    <input type="number" id="rokoob-bulk-width" value="4" min="0.5" step="0.5" class="kickboard-modern-input" oninput="updateRokoobBulkWidthFromInput()">
+                </div>
+                <div style="display:flex; align-items:flex-end; gap:6px;">
+                    <button type="button" class="kickboard-apply-btn" style="width:100%; padding:8px; font-size:11px;" onclick="applyRokoobBulkWidthToAll()">اعمال عرض</button>
+                    <button type="button" class="kickboard-apply-btn" style="width:100%; padding:8px; font-size:11px; background:#0284c7;" onclick="applyRokoobBulkColorToAll()">اعمال رنگ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ۳. جهت‌های روکوب برای قطعه انتخاب‌شده (از نمای روبه‌رو) -->
+        <div id="rokoob-directions-wrapper" class="kickboard-input-group">
+            <label class="kickboard-label">جهت‌های این قطعه (عمودی: چپ/راست — افقی: بالا/پایین)</label>
+            <div id="rokoob-directions-container" style="display:flex; flex-direction:column; gap:6px;">
+            </div>
+        </div>
+
+        <!-- ۳. تنظیمات جهت انتخاب‌شده (کلا دیده می‌شود) -->
+        <div id="rokoob-settings-wrapper" class="kickboard-input-group" style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);">
+            <label class="kickboard-subtitle" style="color:#38bdf8; font-weight:bold; margin-bottom:8px; display:block;">
+                تنظیمات: <span id="rokoob-settings-title">-</span>
+            </label>
+
+            <!-- قفل / تراز اندازه‌گیری -->
+            <div class="kickboard-input-group" style="background: rgba(56, 189, 248, 0.05); padding: 8px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 10px;">
+                <label class="kickboard-label" style="color:#38bdf8; font-weight:bold; font-size:11px;">قفل تراز اندازه‌گیری</label>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:6px; margin-top:6px;">
+                    <button type="button" id="rokoob-align-top" class="kickboard-apply-btn" style="background:#475569; padding:6px; font-size:11px;" onclick="setRokoobAlign('top')">بالا</button>
+                    <button type="button" id="rokoob-align-center" class="kickboard-apply-btn" style="background:#475569; padding:6px; font-size:11px;" onclick="setRokoobAlign('center')">وسط</button>
+                    <button type="button" id="rokoob-align-bottom" class="kickboard-apply-btn" style="background:#475569; padding:6px; font-size:11px;" onclick="setRokoobAlign('bottom')">پایین</button>
+                </div>
+            </div>
+
+            <!-- رنگ و جنس -->
+            <div class="kickboard-input-group" style="margin-bottom: 10px;">
+                <label class="kickboard-label">رنگ و جنس روکوب</label>
+                <input 
+                    type="text" 
+                    id="rokoob-color-search" 
+                    placeholder="برای انتخاب رنگ کلیک کنید" 
+                    class="kickboard-modern-input"
+                    readonly
+                    onclick="openRokoobColorModal()"
+                    autocomplete="off">
+            </div>
+
+            <!-- طول و عرض -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div>
+                    <span style="font-size:11px; color:#94a3b8;">عرض روکوب (cm):</span>
+                    <input type="number" id="rokoob-width-input" value="4" min="0.5" step="0.5" class="kickboard-modern-input" oninput="updateRokoobDimensionsFromInputs()">
+                </div>
+                <div>
+                    <span style="font-size:11px; color:#94a3b8;">طول روکوب (cm):</span>
+                    <input type="number" id="rokoob-length-input" value="0" min="1" class="kickboard-modern-input" oninput="updateRokoobDimensionsFromInputs()">
+                </div>
+            </div>
+        </div>
+
+        <!-- ۴. پیش‌نمایش موقعیت قطعه در کل چهارچوب -->
+        <div class="kickboard-preview-container">
+            <label class="kickboard-label" style="display: flex; justify-content: space-between;">
+                <span>موقعیت قطعه در چهارچوب</span>
+                <span style="color: #94a3b8; font-size: 11px;">قطعه انتخاب‌شده آبی است</span>
+            </label>
+            <div id="rokoob-overview-wrapper" style="width: 100%; height: 180px; background: #090d16; border-radius: 10px; border: 1px solid #1e293b; overflow: hidden; position: relative;">
+                <svg id="rokoob-overview-svg" width="100%" height="100%" style="display:block;"></svg>
+            </div>
+        </div>
+
+        <!-- ۵. پیش‌نمایش سه‌بعدی زنده قطعه (افقی/عمودی) -->
+        <div class="kickboard-preview-container">
+            <label class="kickboard-label" style="display: flex; justify-content: space-between;">
+                <span>پیش‌نمایش سه‌بعدی قطعه</span>
+                <span style="color: #94a3b8; font-size: 11px;">افقی / عمودی مطابق قطعه</span>
+            </label>
+            <div id="rokoob-preview-wrapper" style="width: 100%; height: 280px; background: #090d16; border-radius: 10px; border: 1px solid #1e293b; overflow: hidden; position: relative;">
+                <div id="rokoob-preview-3d" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+
+        <!-- دکمه ثبت -->
+        <div class="kickboard-actions-container" style="margin-top: 15px;">
+            <button type="button" onclick="applyRokoobSettings()" class="kickboard-apply-btn">
+                <img src="Assets/Icons/check.png" class="kickboard-btn-icon" alt="check"> ثبت و اعمال نهایی روکوب
+            </button>
+        </div>
+
+    </div>
+</div>

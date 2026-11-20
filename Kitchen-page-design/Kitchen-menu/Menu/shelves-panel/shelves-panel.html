@@ -1,0 +1,63 @@
+<div id="shelves-editor-panel" class="shelf-wrapper">
+    <!-- 📌 هدر ثابت -->
+    <div class="shelf-header">
+        <h3>مدیریت طبقه‌ها</h3>
+        <button class="shelf-close-btn" onclick="closeShelvesEditorPanel()">×</button>
+    </div>
+    
+    <!-- 📌 بخش ثابت بالا (اطلاعات، فعال‌سازی و تعداد) -->
+    <div class="shelf-top-fixed">
+        <div class="shelf-cabinet-info">
+            <h4 class="shelf-cabinet-text">
+                کابینت شماره: <span id="shelves-panel-cabinet-id">-</span>
+            </h4>
+        </div>
+
+        <div class="shelf-input-group shelf-margin-bottom-lg">
+            <label class="shelf-checkbox-label">
+                <input type="checkbox" id="shelves-enabled" onchange="toggleShelves()" checked>
+                <span class="shelf-checkmark"></span>
+                فعال‌سازی طبقه‌ها
+            </label>
+        </div>
+
+        <div class="shelf-input-group no-margin">
+            <label class="shelf-label">تعداد طبقه</label>
+            <div class="shelf-stepper">
+                <button type="button" class="shelf-stepper-btn" onclick="changeShelvesCount(-1)">−</button>
+                <input type="number" id="shelves-count" value="1" min="0" max="8" class="shelf-stepper-input">
+                <button type="button" class="shelf-stepper-btn" onclick="changeShelvesCount(1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 بخش متغیر و اسکرول‌پذیر (فقط لیست طبقات) -->
+    <div class="shelf-body">
+        <div class="shelf-input-group">
+            <label class="shelf-label">تنظیمات اختصاصی طبقه‌ها (ارتفاع، جنس ورق، رنگ، پرداخت سطح، چرخش)</label>
+            <div id="shelves-height-list" class="shelf-height-list">
+                <!-- با JS پر میشه -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 فوتر ثابت پایین (موقعیت، پیش‌نمایش و اعمال) -->
+    <div class="shelf-panel-footer">
+        <div class="shelf-position-box">
+            <small id="shelves-position-info">از کف تا سقف کابینت</small>
+        </div>
+
+        <div class="shelf-preview-container">
+            <canvas id="shelves-preview-canvas" width="280" height="360" class="shelf-preview-canvas"></canvas>
+            <p class="shelf-preview-text">پیش‌نمایش واقعی</p>
+        </div>
+
+        <div class="shelf-actions">
+            <button onclick="applyShelvesSettingsFromPanel()" class="shelf-btn shelf-btn-apply">
+                <!-- مسیر عکس خود را چک کنید -->
+                <img src="Assets/Icons/check.png" class="shelf-btn-icon" alt="Apply"> 
+                اعمال تغییرات
+            </button>
+        </div>
+    </div>
+</div>

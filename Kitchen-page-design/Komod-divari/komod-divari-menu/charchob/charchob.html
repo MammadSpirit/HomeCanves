@@ -1,0 +1,86 @@
+<div id="closet-frame-editor-panel" class="kickboard-wrapper">
+    <!-- هدر پنل -->
+    <div class="kickboard-header">
+        <h3>مدیریت و طراحی چهارچوب کمد دیواری</h3>
+        <button class="kickboard-close-btn" onclick="closeClosetFrameEditorPanel()">×</button>
+    </div>
+
+    <!-- بدنه اصلی -->
+    <div class="kickboard-body">
+        
+        <!-- ۱. دکمه افزودن قطعه -->
+        <div class="kickboard-input-group">
+            <button type="button" class="kickboard-apply-btn" onclick="addFramePart()" style="background-color: #0284c7;">
+                ➕ افزودن قطعه جدید
+            </button>
+        </div>
+
+        <!-- ۲. لیست قطعات -->
+        <div class="kickboard-input-group">
+            <label class="kickboard-label">لیست قطعات چهارچوب</label>
+            <div id="frame-parts-container" class="kickboard-grid-2col" style="grid-template-columns: 1fr; max-height: 110px; overflow-y: auto; background: rgba(15, 23, 42, 0.6); padding: 8px; border-radius: 8px; border: 1px solid #334155;">
+            </div>
+        </div>
+
+        <!-- ۳. تنظیمات قطعه انتخاب‌شده -->
+        <div id="frame-part-settings" class="kickboard-input-group" style="display: none; background: rgba(255, 255, 255, 0.03); padding: 12px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);">
+            <label class="kickboard-subtitle" style="color: #38bdf8; font-weight: bold; margin-bottom: 8px; display: block;">
+                ویرایش: <span id="selected-part-title" style="color: #fff;">-</span>
+            </label>
+
+            <!-- تعیین مبدا اختصاصی قطعه -->
+            <div class="kickboard-input-group" style="background: rgba(56, 189, 248, 0.05); padding: 8px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 10px;">
+                <label id="origin-label" class="kickboard-label" style="color: #38bdf8; font-weight: bold; font-size: 11px;">مبداء تراز و جابه‌جایی</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 6px;">
+                    <button type="button" id="origin-btn-1" class="kickboard-apply-btn" style="background: #475569; padding: 6px; font-size: 11px;" onclick="setPartOrigin('pos1')">-</button>
+                    <button type="button" id="origin-btn-2" class="kickboard-apply-btn" style="background: #475569; padding: 6px; font-size: 11px;" onclick="setPartOrigin('pos2')">-</button>
+                    <button type="button" id="origin-btn-3" class="kickboard-apply-btn" style="background: #475569; padding: 6px; font-size: 11px;" onclick="setPartOrigin('pos3')">-</button>
+                </div>
+            </div>
+
+            <div class="kickboard-input-group" style="margin-bottom: 8px;">
+                <label class="kickboard-label">طول قطعه (cm)</label>
+                <input type="number" id="frame-part-length" value="240" min="1" class="kickboard-modern-input" oninput="updateSelectedPartFromInputs()">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                <div>
+                    <span style="font-size: 11px; color: #94a3b8;">فاصله X (cm):</span>
+                    <input type="number" id="frame-part-x" value="0" class="kickboard-modern-input" oninput="updateSelectedPartFromInputs()">
+                </div>
+                <div>
+                    <span style="font-size: 11px; color: #94a3b8;">ارتفاع Y (cm):</span>
+                    <input type="number" id="frame-part-y" min="0" value="0" class="kickboard-modern-input" oninput="updateSelectedPartFromInputs()">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                <button type="button" class="kickboard-apply-btn" style="background: #475569; flex: 1;" onclick="toggleFramePartOrientation()">
+                    🔄 چرخاندن (افقی / عمودی)
+                </button>
+                <button type="button" class="kickboard-apply-btn" style="background-color: #ef4444; width: 70px;" onclick="removeSelectedFramePart()">
+                    🗑️ حذف
+                </button>
+            </div>
+        </div>
+
+        <!-- ۴. پیش‌نمایش گرافیکی -->
+        <div class="kickboard-preview-container">
+            <label class="kickboard-label" style="display: flex; justify-content: space-between;">
+                <span>نقشه دوبعدی ساخت</span>
+                <span style="color: #38bdf8; font-size: 11px;">زوم خودکار ۱۰۰٪</span>
+            </label>
+            <div id="closet-frame-preview-wrapper" style="width: 100%; height: 280px; background: #090d16; border-radius: 10px; border: 1px solid #1e293b; overflow: hidden; position: relative;">
+                <svg id="frame-preview-svg" style="width: 100%; height: 100%; display: block;"></svg>
+            </div>
+        </div>
+
+        <!-- ۵. دکمه ثبت -->
+        <div class="kickboard-actions-container" style="margin-top: 15px;">
+            <button type="button" onclick="applyClosetFrameSettings()" class="kickboard-apply-btn">
+                <img src="Assets/Icons/check.png" class="kickboard-btn-icon" alt="check"> ثبت و اعمال نهایی چهارچوب
+            </button>
+        </div>
+
+    </div>
+</div>

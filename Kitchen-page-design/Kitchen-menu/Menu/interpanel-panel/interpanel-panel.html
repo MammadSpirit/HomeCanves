@@ -1,0 +1,111 @@
+<div id="interpanel-edit-panel" class="interpanel-wrapper">
+    <div class="interpanel-header">
+        <h3>مدیریت بین‌کابینتی</h3>
+        <button class="interpanel-close-btn" onclick="closeInterPanelEdit()">×</button>
+    </div>
+
+    <div class="interpanel-body">
+        <div class="interpanel-input-group interpanel-margin-y">
+            <label class="interpanel-checkbox-label">
+                <input type="checkbox" id="interpanel-enabled" checked onchange="syncInterPanelData()">
+                <span class="interpanel-checkmark"></span>
+                فعال‌سازی ورق بین‌کابینتی
+            </label>
+        </div>
+
+        <div class="interpanel-input-group interpanel-margin-bottom">
+            <button type="button" onclick="addNewInterPanelItem()" class="interpanel-action-btn interpanel-add-btn">
+                + اضافه کردن ورق جدید
+            </button>
+        </div>
+
+        <div class="interpanel-input-group">
+            <label class="interpanel-label">لیست ورق‌ها</label>
+            <div id="interpanel-list-container" class="interpanel-list-box">
+            </div>
+        </div>
+
+        <div class="interpanel-input-group interpanel-position-box">
+            <label class="interpanel-title-label">موقعیت دقیق (cm)</label>
+            <div class="interpanel-flex-row">
+                <div class="interpanel-flex-col">
+                    <label class="interpanel-small-label">جابه‌جایی X</label>
+                    <input type="number" id="interpanel-x" value="0" class="interpanel-modern-input" oninput="syncInterPanelData()">
+                </div>
+                <div class="interpanel-flex-col">
+                    <label class="interpanel-small-label">ارتفاع از کف Y</label>
+                    <input type="number" id="interpanel-y" value="85" class="interpanel-modern-input" oninput="syncInterPanelData()">
+                </div>
+            </div>
+        </div>
+
+        <!-- جایگزین بخش نصب روی دیوار -->
+<div class="interpanel-input-group interpanel-margin-top">
+    <label class="interpanel-label">نصب روی دیوار:</label>
+    <div class="interpanel-grid-2col" id="interpanel-wall-options">
+        <!-- گزینه‌های دیوار به صورت پویا توسط جاوااسکریپت اینجا ساخته می‌شوند -->
+    </div>
+</div>
+
+
+        <div class="interpanel-input-group">
+            <label class="interpanel-label">ابعاد ورق (cm)</label>
+            <div class="interpanel-flex-row">
+                <div class="interpanel-flex-col">
+                    <label class="interpanel-small-label">طول (Length)</label>
+                    <input type="number" id="interpanel-length" value="100" class="interpanel-modern-input" oninput="syncInterPanelData()">
+                </div>
+                <div class="interpanel-flex-col">
+                    <label class="interpanel-small-label">ارتفاع (Width)</label>
+                    <input type="number" id="interpanel-width" value="60" class="interpanel-modern-input" oninput="syncInterPanelData()">
+                </div>
+            </div>
+        </div>
+
+<div class="interpanel-input-group">
+    <label class="interpanel-label">جنس ورق بین‌کابینتی</label>
+    <select id="interpanel-material-type" class="interpanel-modern-select" onchange="syncInterPanelData()">
+        <option value="mdf">ام‌دی‌اف (MDF)</option>
+        <option value="marbleSheet">ماربل شیت (Marble)</option>
+    </select>
+</div>
+
+      <div class="interpanel-input-group">
+    <label class="interpanel-label">رنگ و طرح</label>
+    <div class="interpanel-color-search-container">
+        <input type="text" id="interpanel-color-search" placeholder="انتخاب رنگ..." class="interpanel-color-search-input" readonly onclick="openInterPanelMaterialModal()">
+    </div>
+</div>
+
+<!-- پرداخت سطح — جدا از جنس ورق؛ فقط نور / براقیت -->
+<div class="interpanel-input-group">
+    <label class="interpanel-label">پرداخت سطح (نور / براقیت)</label>
+    <select id="interpanel-finish" class="interpanel-modern-select" onchange="if(typeof onInterPanelFinishChange==='function') onInterPanelFinishChange(this.value); else syncInterPanelData();">
+        <option value="matte">مات (Matte)</option>
+        <option value="semiMatte">نیمه‌مات</option>
+        <option value="satin">ساتین</option>
+        <option value="highGloss">براق / های‌گلاس</option>
+    </select>
+    <p style="margin: 6px 0 0; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+        فقط بازتاب نور روی تکسچر را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+    </p>
+</div>
+
+
+        <div id="interpanel-preview-container" class="interpanel-preview-wrapper">
+            <div id="interpanel-3d-view" class="interpanel-3d-box">
+            </div>
+            <p class="interpanel-hint-text">برای چرخش نمای ۳بعدی بکشید</p>
+        </div>
+
+        <button onclick="deleteCurrentInterPanel()" class="interpanel-action-btn interpanel-delete-btn">
+            حذف این ورق
+        </button>
+
+        <div class="interpanel-actions-container">
+            <button onclick="applyInterPanelSettings()" class="interpanel-action-btn interpanel-apply-btn">
+                اعمال تغییرات نهایی
+            </button>
+        </div>
+    </div>
+</div>

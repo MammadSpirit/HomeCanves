@@ -1,0 +1,216 @@
+<div id="color-manager-panel" class="door-panel-wrapper cm-panel">
+    <div class="door-panel-header">
+        <h3>مدیریت رنگ‌ها</h3>
+        <button class="door-panel-close" onclick="closeColorManagerPanel()">×</button>
+    </div>
+
+    <div class="door-panel-body cm-scroll-body">
+        <p class="cm-hint">اعمال سریع روی همه یونیت‌ها — هر یونیت را از پنل خودش می‌توانید جداگانه عوض کنید</p>
+
+        <!-- رنگ درب‌ها -->
+        <div class="door-panel-card cm-card">
+            <div class="cm-card-title">رنگ درب‌ها</div>
+            <div class="door-input-group">
+                <label>جنس ورق</label>
+                <select id="cm-door-material" class="modern-select" onchange="cmOnMaterialChange('door', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+            <div class="door-input-group">
+                <label>رنگ / تکسچر</label>
+                <input type="text" id="cm-door-color" class="modern-input cm-color-input" readonly
+                    placeholder="برای انتخاب کلیک کنید"
+                    onclick="cmOpenColorPicker('door')"
+                    onfocus="cmOpenColorPicker('door')">
+            </div>
+            <div class="door-input-group">
+                <label>پرداخت سطح</label>
+                <select id="cm-door-finish" class="modern-select">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            <button type="button" class="cm-apply-btn" onclick="cmApplySection('door')">اعمال روی همه درب‌ها</button>
+        </div>
+
+        <!-- رنگ تاج -->
+        <div class="door-panel-card cm-card">
+            <div class="cm-card-title">رنگ تاج</div>
+            <div class="door-input-group">
+                <label>جنس ورق</label>
+                <select id="cm-crown-material" class="modern-select" onchange="cmOnMaterialChange('crown', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+            <div class="door-input-group">
+                <label>رنگ / تکسچر</label>
+                <input type="text" id="cm-crown-color" class="modern-input cm-color-input" readonly
+                    placeholder="برای انتخاب کلیک کنید"
+                    onclick="cmOpenColorPicker('crown')"
+                    onfocus="cmOpenColorPicker('crown')">
+            </div>
+            <div class="door-input-group">
+                <label>پرداخت سطح</label>
+                <select id="cm-crown-finish" class="modern-select">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            <button type="button" class="cm-apply-btn" onclick="cmApplySection('crown')">اعمال روی همه تاج‌ها</button>
+        </div>
+
+        <!-- رنگ پاخور -->
+        <div class="door-panel-card cm-card">
+            <div class="cm-card-title">رنگ پاخور</div>
+            <div class="door-input-group">
+                <label>جنس ورق</label>
+                <select id="cm-kickboard-material" class="modern-select" onchange="cmOnMaterialChange('kickboard', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+            <div class="door-input-group">
+                <label>رنگ / تکسچر</label>
+                <input type="text" id="cm-kickboard-color" class="modern-input cm-color-input" readonly
+                    placeholder="برای انتخاب کلیک کنید"
+                    onclick="cmOpenColorPicker('kickboard')"
+                    onfocus="cmOpenColorPicker('kickboard')">
+            </div>
+            <div class="door-input-group">
+                <label>پرداخت سطح</label>
+                <select id="cm-kickboard-finish" class="modern-select">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            <button type="button" class="cm-apply-btn" onclick="cmApplySection('kickboard')">اعمال روی همه پاخورها</button>
+        </div>
+
+        <!-- رنگ دستگیره مخفی -->
+        <div class="door-panel-card cm-card">
+            <div class="cm-card-title">رنگ دستگیره مخفی</div>
+            <div class="door-input-group">
+                <label>جنس ورق</label>
+                <select id="cm-hiddenHandle-material" class="modern-select" onchange="cmOnMaterialChange('hiddenHandle', this.value)">
+                    <option value="mdf">MDF (ام دی اف)</option>
+                    <option value="highGloss">High-Gloss (هایگلاس)</option>
+                    <option value="leteron">Leteron (لترون)</option>
+                </select>
+            </div>
+            <div class="door-input-group">
+                <label>رنگ / تکسچر</label>
+                <input type="text" id="cm-hiddenHandle-color" class="modern-input cm-color-input" readonly
+                    placeholder="برای انتخاب کلیک کنید"
+                    onclick="cmOpenColorPicker('hiddenHandle')"
+                    onfocus="cmOpenColorPicker('hiddenHandle')">
+            </div>
+            <div class="door-input-group">
+                <label>پرداخت سطح</label>
+                <select id="cm-hiddenHandle-finish" class="modern-select">
+                    <option value="matte">مات (Matte)</option>
+                    <option value="semiMatte">نیمه‌مات</option>
+                    <option value="satin">ساتین</option>
+                    <option value="highGloss">براق / های‌گلاس</option>
+                </select>
+            </div>
+            <button type="button" class="cm-apply-btn" onclick="cmApplySection('hiddenHandle')">اعمال روی همه دستگیره‌های مخفی</button>
+        </div>
+    </div>
+</div>
+
+<style>
+/* پنل مدیریت رنگ — هم‌سبک door-panel با محدودیت ارتفاع و اسکرول */
+.cm-panel.door-panel-wrapper {
+    width: 420px;
+    max-width: 94vw;
+    /* ارتفاع واقعی صفحه (موبایل) تا هدر و ضربدر بریده نشود */
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    z-index: 12050;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.cm-panel.door-panel-wrapper.active {
+    /* همان مرکز، ولی ارتفاع محدود است و بدنه اسکرول می‌شود */
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+}
+.cm-panel .door-panel-header {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.cm-panel .cm-scroll-body,
+.cm-panel .door-panel-body.cm-scroll-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+    padding-bottom: 24px;
+}
+.cm-hint {
+    margin: 0 0 4px;
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.6;
+    text-align: center;
+}
+.cm-card {
+    margin-bottom: 4px;
+}
+.cm-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #38bdf8;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cm-panel .door-input-group {
+    margin-bottom: 12px;
+}
+.cm-panel .door-input-group label {
+    display: block;
+    font-size: 12px;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+}
+.cm-color-input {
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.cm-color-input:hover {
+    border-color: #38bdf8;
+}
+.cm-apply-btn {
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-family: Tahoma, sans-serif;
+    cursor: pointer;
+    font-weight: 600;
+    transition: filter 0.15s, transform 0.1s;
+}
+.cm-apply-btn:hover { filter: brightness(1.08); }
+.cm-apply-btn:active { transform: scale(0.98); }
+</style>

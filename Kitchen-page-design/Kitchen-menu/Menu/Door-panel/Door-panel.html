@@ -1,0 +1,255 @@
+<div id="door-editor-panel" class="door-panel-wrapper">
+    <!-- هدر ثابت بالای پنل -->
+    <div class="door-panel-header">
+        <h3>مدیریت درب‌ها</h3>
+        <button class="door-panel-close" onclick="closeDoorEditorPanel()">×</button>
+    </div>
+    
+    <!-- ساختار دو ستونه اصلی پنل -->
+    <div class="door-panel-main-layout">
+        
+        <!-- ➡️ ستون سمت راست: تنظیمات (قابل اسکرول) -->
+        <div class="door-panel-body">
+            
+            <!-- کارت اول: اطلاعات و نمایش -->
+            <div class="door-panel-card flex-between">
+                <div class="door-cabinet-id-wrapper">
+                    <h4>کابینت: <span id="door-panel-cabinet-id">-</span></h4>
+                </div>
+                <div class="door-input-group no-margin">
+                    <label class="door-checkbox-label">
+                        <input type="checkbox" id="door-panel-show-doors" onchange="toggleShowDoors()" checked>
+                        <span class="door-checkmark"></span>
+                        نمایش درب‌ها
+                    </label>
+                </div>
+            </div>
+
+            <!-- کارت مدل ظاهری درب (Geometry) -->
+            <div class="door-panel-card" id="door-style-card">
+                <div class="door-input-group no-margin">
+                    <label>مدل درب (ظاهر سه‌بعدی)</label>
+                    <select id="door-panel-style" class="modern-select" onchange="updateDoorStyleFromPanel(this.value)">
+                        <option value="flat">ساده (Flat)</option>
+                        <option value="beveled">لبه‌گرد (Beveled)</option>
+                        <option value="shaker">شیکر (Shaker) — قاب + پانل فرورفته</option>
+                        <option value="frame">قاب‌دار (Frame) — قاب + پانل توپر</option>
+                        <option value="glass">شیشه‌خور (Glass)</option>
+                        <option value="fluted">شیاردار عمودی (Fluted)</option>
+                    </select>
+                </div>
+                <p style="margin: 8px 0 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                    این مدل فقط ظاهر سه‌بعدی درب را عوض می‌کند؛ لولا، جهت باز شدن و انیمیشن ثابت می‌مانند.
+                </p>
+            </div>
+
+            <!-- کارت تبدیل به درب شیشه‌ای -->
+            <div class="door-panel-card">
+                <div class="door-input-group no-margin">
+                    <label class="door-checkbox-label glass-door-label">
+                        <input type="checkbox" id="door-panel-is-glass" onchange="toggleGlassDoorOption(this.checked)">
+                        <span class="door-checkmark"></span>
+                        تبدیل به درب شیشه خور (تمامی درب‌ها)
+                    </label>
+                </div>
+                <div class="door-input-group no-margin" id="frosted-glass-wrapper" style="display:none; margin-top: 10px;">
+                    <label class="door-checkbox-label">
+                        <input type="checkbox" id="door-panel-is-frosted" onchange="if(currentCabinetForDoor) currentCabinetForDoor.isFrostedGlass = this.checked; updateDoorPreviewFromPanel();">
+                        <span class="door-checkmark"></span>
+                        شیشه کدر (مشکی مات)
+                    </label>
+                </div>
+            </div>
+
+            <!-- کارت قطعه ثابت (بدون بازشو) -->
+            <div class="door-panel-card" id="fixed-panel-wrapper">
+                <div class="door-input-group no-margin">
+                    <label class="door-checkbox-label">
+                        <input type="checkbox" id="door-panel-fixed-enabled" onchange="toggleFixedPanel(this.checked)">
+                        <span class="door-checkmark"></span>
+                        افزودن قطعه ثابت (بدون بازشو)
+                    </label>
+                </div>
+
+                <div id="fixed-panel-settings" style="display:none; margin-top: 12px;">
+                    <div class="door-grid-2">
+                        <div class="door-input-group no-margin">
+                            <label>تراز قطعه</label>
+                            <select id="fixed-panel-side" class="modern-select" onchange="updateFixedPanelProperty('side', this.value)">
+                                <option value="left">سمت چپ</option>
+                                <option value="right">سمت راست</option>
+                            </select>
+                        </div>
+                        <div class="door-input-group no-margin">
+                            <label>رنگ قطعه</label>
+                            <div class="door-color-search-container">
+                                <input type="text" id="fixed-panel-color-search"
+                                       onclick="openFixedPanelColorPicker()"
+                                       placeholder="جستجوی رنگ... (کلیک کنید)"
+                                       class="modern-input door-readonly-color-input"
+                                       autocomplete="off" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="door-horizontal-spec-row width-row-bg" style="margin-top: 10px;">
+                        <div class="spec-field-value">
+                            <span class="micro-row-tag font-w">عرض قطعه</span>
+                            <input type="number" step="0.1" id="fixed-panel-width" class="modern-input door-row-input" onchange="updateFixedPanelProperty('w', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="door-horizontal-spec-row height-row-bg" style="margin-top: 8px;">
+                        <div class="spec-field-value">
+                            <span class="micro-row-tag font-h">طول قطعه (ارتفاع)</span>
+                            <input type="number" step="0.1" id="fixed-panel-height" class="modern-input door-row-input" onchange="updateFixedPanelProperty('h', this.value)">
+                        </div>
+                        <div class="spec-field-lock">
+                            <span class="micro-row-lock-label">قفل:</span>
+                            <select id="fixed-panel-locky" class="modern-input door-row-select" onchange="updateFixedPanelProperty('lockY', this.value)">
+                                <option value="top">بالا</option>
+                                <option value="center">وسط</option>
+                                <option value="bottom">پایین</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!-- کارت بخش‌های (خانه‌های) چهارچوب — فقط برای حالت کمد دیواری -->
+            <div class="door-panel-card" id="closet-frame-parts-wrapper" style="display: none;">
+                <div class="door-input-group no-margin">
+                    <label>بخش‌های چهارچوب</label>
+                    <div id="closet-frame-parts-list"></div>
+                    <div id="closet-frame-cells-hint" style="font-size:11px; color:#64748b; margin-top:6px; line-height:1.5;">
+                        هر بخش یک خانه باز بین قطعات است. با دکمه فعال، درب همان بخش روشن می‌شود؛ سپس نوع بازشو، تعداد و جهت باز شدن را تنظیم کنید.
+                    </div>
+                </div>
+                <!-- لیست ۴ جهت حذف شد — فعال‌سازی روی خود بخش است -->
+                <div class="door-input-group no-margin" id="closet-frame-cell-sides-wrapper" style="display:none;"></div>
+            </div>
+            <!-- کارت دوم: تنظیمات اصلی (نوع و تعداد) -->
+            <div class="door-panel-card">
+                <div class="door-grid-2">
+                    <div class="door-input-group no-margin">
+                        <label>نوع بازشو</label>
+                        <select id="door-panel-type" class="modern-select">
+                            <option value="side">افقی (لولایی)</option>
+                            <option value="lift">جکی (بالا بازشو)</option>
+                            <option value="lift-side">جکی کنار هم</option>
+                            <option value="split">قدی دو تکه</option>
+                            <option value="combo">ترکیبی</option>
+                            <option value="jaki-ghadi">جکی و قدی</option>
+                            <option value="drawer">درب کشو</option>
+                            <option value="drawer-ghadi">کشو و قدی</option>
+                        </select>
+                    </div>
+                    <div class="door-input-group no-margin">
+                        <label>تعداد درب</label>
+                        <div class="door-stepper">
+                            <button type="button" class="door-stepper-btn" onclick="changeDoorCount(-1)">−</button>
+                            <input type="number" id="door-panel-count" value="2" min="1" max="8" class="door-stepper-input">
+                            <button type="button" class="door-stepper-btn" onclick="changeDoorCount(1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت سوم: متریال و رنگ (جنس ورق + رنگ — داینامیک) -->
+            <div class="door-panel-card">
+                <div id="door-materials-colors-container">
+                    <!-- محتوا داینامیک رندر می‌شود -->
+                </div>
+            </div>
+
+            <!-- کارت پرداخت سطح — ثابت در HTML (جدا از جنس ورق) -->
+            <div class="door-panel-card" id="door-finish-card">
+                <div class="door-input-group no-margin">
+                    <label>پرداخت سطح (نور / براقیت)</label>
+                    <select id="door-panel-finish" class="modern-select" onchange="onDoorFinishChange(this.value)">
+                        <option value="matte">مات (Matte)</option>
+                        <option value="semiMatte">نیمه‌مات</option>
+                        <option value="satin">ساتین</option>
+                        <option value="highGloss">براق / های‌گلاس</option>
+                    </select>
+                    <p style="margin: 8px 0 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
+                        فقط بازتاب نور روی تکسچر را عوض می‌کند؛ جنس ورق و رنگ جدا هستند.
+                    </p>
+                </div>
+            </div>
+
+            <!-- فقط کمد دیواری: جبهه کشوهای بخش انتخاب‌شده (جدا از درب بخش) -->
+            <div class="door-panel-card" id="closet-drawer-fronts-card" style="display:none;">
+                <div class="door-input-group no-margin">
+                    <label>درب کشوهای این بخش</label>
+                    <p class="door-hint-text" style="margin-bottom:8px;">جنس ورق، رنگ و پرداخت هر جبهه کشو جداگانه تنظیم می‌شود.</p>
+                    <div id="closet-drawer-fronts-container"></div>
+                </div>
+            </div>
+
+            <!-- کارت‌های چیدمان سفارشی -->
+            <div class="door-panel-card" id="combo-layout-wrapper">
+                <div class="door-input-group no-margin">
+                    <label>محل قرارگیری درب قدی (ترکیبی)</label>
+                    <select id="combo-door-layout" class="modern-select" onchange="updateComboLayout(this.value)">
+                        <option value="left-big">درب قدی سمت چپ</option>
+                        <option value="right-big">درب قدی سمت راست</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="door-panel-card" id="jaki-ghadi-layout-wrapper">
+                <div class="door-input-group no-margin">
+                    <label>محل قرارگیری درب جکی:</label>
+                    <select id="jaki-ghadi-layout" class="modern-select" onchange="updateJakiGhadiLayout(this.value)">
+                        <option value="top">جکی در بالا (دو قدی در پایین)</option>
+                        <option value="bottom">جکی در پایین (دو قدی در بالا)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- کارت ابعاد درب‌ها -->
+            <div class="door-panel-card" id="door-dimensions-wrapper">
+                <div class="door-input-group no-margin">
+                    <label>ابعاد درب‌ها (عرض × ارتفاع)</label>
+                    <p class="door-hint-text">در صورت خالی گذاشتن، ابعاد به صورت خودکار محاسبه می‌شود.</p>
+                    <div id="door-dimensions-container" class="door-dimensions-list"></div>
+                </div>
+            </div>
+
+            <!-- کارت دستگیره مخفی -->
+            <div class="door-panel-card" id="door-hidden-handle-wrapper">
+                <div class="door-input-group no-margin">
+                    <label>دستگیره مخفی</label>
+                    <div id="door-hidden-handle-container"></div>
+                </div>
+            </div>
+
+            <!-- کارت جهت باز شدن درب‌ها -->
+            <div class="door-panel-card" id="door-directions-wrapper">
+                <div class="door-input-group no-margin">
+                    <label>جهت باز شدن درب‌ها</label>
+                    <div id="door-directions-container" class="door-directions-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ⬅️ ستون سمت چپ: پیش‌نمایش و عملیات (ثابت) -->
+        <div class="door-panel-left-column">
+<div class="door-preview-box">
+                <div class="door-preview-wrapper">
+                    <canvas id="door-panel-3d-canvas" class="door-preview-canvas"></canvas>
+                    <p class="door-preview-label">پیش‌نمایش سه‌بعدی زنده</p>
+                </div>
+            </div>
+            
+            <div class="door-action-box">
+                <button onclick="applyDoorSettingsFromPanel()" class="door-apply-btn">
+                    <img src="Assets/Icons/check.png" class="btn-icon" alt="check"> 
+                    <span>اعمال تغییرات</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<!-- فایل: display-controls.html (بخش کنترل‌های نما) -->
+<div id="display-mode-controls" class="view-controls-group">
+    
+    <!-- 🟢 بخش کنترل‌های لایه‌های دو بعدی (فقط در نمای 2D پلان نشان داده می‌شود) -->
+    <div id="floor-layer-controls" style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" class="display-btn-circle active" id="btn-floor" onclick="setActiveView('floor')" title="نمای زمینی">
+            <img src="Assets/Icons/floor-view.png" class="display-icon" alt="زمینی">
+        </button>
+
+        <button type="button" class="display-btn-circle" id="btn-wall" onclick="setActiveView('wall')" title="نمای دیواری">
+            <img src="Assets/Icons/wall-view.png" class="display-icon" alt="دیواری">
+        </button>
+
+        <button type="button" class="display-btn-circle" id="btn-wall-top" onclick="setActiveView('wall-top')" title="نمای دیواری ردیف دوم">
+            <img src="Assets/Icons/double-wall.png" class="display-icon" alt="طبقه دوم">
+        </button>
+
+        <!-- یک خط جداکننده برای زیبایی -->
+        <div class="view-divider"></div>
+
+        <!-- دکمه ترکیب صفحه و کابینت زمینی -->
+        <button type="button" class="display-btn-circle merged-btn" id="btn-worktop-merged" onclick="toggleWorktopMergedView()" title="نمای صفحه و زمینی">
+            <img src="Assets/Icons/worktop-view.png" class="display-icon" alt="صفحه و زمینی">
+        </button>
+
+        <button type="button" class="display-btn-circle merged-btn" id="btn-merged" onclick="toggleMergedView()" title="نمای ادغام شده">
+            <img src="Assets/Icons/merged-view.png" class="display-icon" alt="ادغام شده">
+        </button>
+    </div>
+
+    <!-- 🟢 بخش جدید: دکمه‌های انتخاب دیوار فعال (فقط در نمای Elev نشان داده می‌شود) -->
+    <div id="elev-wall-controls" style="display: none; gap: 8px; align-items: center;">
+        <button type="button" class="display-btn-circle active" id="btn-elev-top" onclick="changeElevActiveWall('top')" title="نمای دیوار بالا (پشتی)">
+            <span style="color: #38bdf8; font-weight: bold; font-size: 11px;">بالا</span>
+        </button>
+        <button type="button" class="display-btn-circle" id="btn-elev-bottom" onclick="changeElevActiveWall('bottom')" title="نمای دیوار پایین (جلویی)">
+            <span style="color: #38bdf8; font-weight: bold; font-size: 11px;">پایین</span>
+        </button>
+        <button type="button" class="display-btn-circle" id="btn-elev-left" onclick="changeElevActiveWall('left')" title="نمای دیوار چپ">
+            <span style="color: #38bdf8; font-weight: bold; font-size: 11px;">چپ</span>
+        </button>
+        <button type="button" class="display-btn-circle" id="btn-elev-right" onclick="changeElevActiveWall('right')" title="نمای دیوار راست">
+            <span style="color: #38bdf8; font-weight: bold; font-size: 11px;">راست</span>
+        </button>
+    </div>
+
+</div>
